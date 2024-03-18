@@ -1,0 +1,52 @@
+/* Footer.css */
+
+.footer {
+  background-color: #000;
+  /* Black background */
+  color: #40f4ee;
+  /* White text */
+  padding: 20px 0;
+  /* Add some padding for spacing */
+  position: fixed;
+  bottom: 0;
+  width: 100%;
+}
+
+.container {
+  max-width: 1200px;
+  /* Set maximum width for content */
+  margin: 0 auto;
+  /* Center align content within footer */
+}
+
+.footer-content {
+  display: flex;
+  justify-content: space-between;
+}
+
+.contact-info,
+.social-media {
+  flex: 1;
+}
+
+.social-media ul {
+  list-style: none;
+  padding: 0;
+}
+
+.social-media ul li {
+  margin-bottom: 5px;
+}
+
+.social-media ul li a {
+  color: #fff;
+  text-decoration: none;
+}
+
+.social-media ul li a:hover {
+  text-decoration: underline;
+}
+
+.copyright {
+  text-align: center;
+}

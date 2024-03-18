@@ -1,0 +1,36 @@
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    
+}
+
+:root {
+    --main-color: #06b88c;
+    --secondary-color: #d7e3ef;
+    --box-shadow: 0 0 7px 0 var(--secondary-color);
+    --main-color-hover: #06b88c;
+}
+
+body {
+    background-image: url('../../assets/images/bg.jpg');
+    background-size: cover;
+    font-size: 14px;
+    color: #303030;
+    overflow-x: hidden;
+    font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", "Roboto", "Oxygen", "Ubuntu", "Cantarell", "Fira Sans", "Droid Sans", "Helvetica Neue", sans-serif;
+}
+
+a {
+    text-decoration: none;
+    color: var(--main-color);
+    transition: all 0.3s ease-in-out;
+    -webkit-transition: all 0.3s ease-in-out;
+    -moz-transition: all 0.3s ease-in-out;
+    -ms-transition: all 0.3s ease-in-out;
+    -o-transition: all 0.3s ease-in-out;
+}
+
+a:hover {
+    color: var(--main-color-hover);
+}
