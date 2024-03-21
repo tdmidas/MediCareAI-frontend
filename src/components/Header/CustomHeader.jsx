@@ -5,6 +5,8 @@ import { Input } from 'antd';
 import './CustomHeader.css';
 import { useNavigate } from 'react-router-dom';
 const { Search } = Input;
+const { Title } = Typography;
+
 const CustomHeader = () => {
     const navigate = useNavigate();
 
@@ -15,9 +17,8 @@ const CustomHeader = () => {
     return (
         <Flex align="center" justify="space-between">
 
-            <Typography.Title level={4} type="secondary">
-                <bold>Welcom back Dai</bold>
-            </Typography.Title>
+            <Title className="welcome-title" level={4}>Welcome back, Dai</Title>
+
             <Flex align="center" gap="20rem">
                 <Search className="search-btn" placeholder="Tìm kiếm bác sĩ, blog,..." allowClear />
 
