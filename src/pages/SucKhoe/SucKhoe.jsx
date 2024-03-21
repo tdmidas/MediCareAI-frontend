@@ -1,9 +1,9 @@
+import './SucKhoe.css';
 import DefaultLayout from '../../layout/DefaultLayout';
-import "./Profile.css"
-const Profile = () => {
+const SucKhoe = () => {
     return (
         <DefaultLayout />
     );
 }
 
-export default Profile;
+export default SucKhoe;

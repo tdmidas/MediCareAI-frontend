@@ -6,7 +6,8 @@ import Home from "./pages/Home/Home";
 import Profile from "./pages/Profile/Profile";
 import LichKham from "./pages/LichKham/LichKham";
 import Chat from "./pages/Chat/Chat";
-import TheoDoi from "./pages/TheoDoi/TheoDoi";
+import SucKhoe from "./pages/SucKhoe/SucKhoe";
+import Blog from "./pages/Blog/Blog";
 function App() {
 	return (
 		<Router>
@@ -16,8 +17,9 @@ function App() {
 				<Route path="/register" element={<Register />} />
 				<Route path="/lichkham" element={<LichKham />} />
 				<Route path="/chat" element={<Chat />} />
-				<Route path="/theodoi" element={<TheoDoi />} />
+				<Route path="/suckhoe" element={<SucKhoe />} />
 				<Route path="/profile" element={<Profile />} />
+				<Route path="/blog" element={<Blog />} />
 			</Routes>
 		</Router>
 	);

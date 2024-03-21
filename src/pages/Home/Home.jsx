@@ -1,18 +1,14 @@
 import './Home.css';
-
-import HomeLayout from '../../layout/HomeLayout';
+import DefaultLayout from '../../layout/DefaultLayout';
 const Home = () => {
-    return ( 
-     
-        <div>
-                                <HomeLayout/>
+    return (
 
-            <h1>Home</h1>
-            <p>Welcome to the Home page</p>
+        <DefaultLayout />
 
-        </div>
-        
-     );
+
+
+
+    );
 }
- 
+
 export default Home;

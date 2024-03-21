@@ -1,11 +1,9 @@
+import DefaultLayout from '../../layout/DefaultLayout';
 
 const Chat = () => {
-    return ( 
-        <div className="chat">
-            <h1>Chat</h1>
-            <p>Welcome to the Chat page</p>
-        </div>
-     );
+    return (
+        <DefaultLayout />
+    );
 }
- 
+
 export default Chat;

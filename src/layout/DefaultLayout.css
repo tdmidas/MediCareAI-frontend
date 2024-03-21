@@ -1,0 +1,38 @@
+/* Main */
+.header {
+    padding-top: 12px;
+    background: #fff;
+}
+
+.content {
+    padding: 20px;
+    margin: 24px 16px;
+}
+
+.trigger-btn {
+    font-size: 16px;
+    width: 50px;
+    height: 50px;
+    position: fixed;
+    bottom: 10px;
+    left: 10px;
+}
+
+
+
+/* Sider */
+.sider {
+    height: 100vh;
+    position: sticky !important;
+    top: 0;
+    left: 0;
+    bottom: 0;
+}
+
+.logo {
+
+    color: black;
+    margin: 30px 0;
+    font-size: 1.5rem;
+}
+

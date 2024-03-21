@@ -1,0 +1,13 @@
+.login-btn{
+    background-color: #06b88c;
+box-shadow: 0px 4px 8px rgba(0, 0, 0, 0.3);}
+.login-btn:hover {
+    background-color: #5af5ce !important;
+    color: black !important;
+}
+.search-btn{
+            border-color: #06b88c !important;
+}
+.search-btn:hover {
+        border-color: #06b88c !important;
+}

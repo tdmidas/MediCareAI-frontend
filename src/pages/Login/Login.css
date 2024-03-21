@@ -1,9 +1,4 @@
-* {
-    margin: 0;
-    padding: 0;
-    box-sizing: border-box;
-    
-}
+
 
 :root {
     --main-color: #06b88c;
@@ -13,7 +8,7 @@
 }
 
 body {
-    background-image: url('../../assets/images/bg.jpg');
+   
     background-size: cover;
     font-size: 14px;
     color: #303030;

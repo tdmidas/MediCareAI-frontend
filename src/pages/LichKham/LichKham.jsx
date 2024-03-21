@@ -1,11 +1,10 @@
 import './LichKham.css';
+import DefaultLayout from '../../layout/DefaultLayout';
+
 const LichKham = () => {
-    return ( 
-        <div>
-            <h1>Lịch Khám</h1>
-            <p>Welcome to the Lịch Khám page</p>
-        </div>
-     );
+    return (
+        <DefaultLayout />
+    );
 }
- 
+
 export default LichKham;
