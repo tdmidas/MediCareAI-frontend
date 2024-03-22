@@ -1,0 +1,17 @@
+.blood-pressure-card {
+    flex: 1;
+    height: 250px;
+    text-align: center;
+        background: #c0f1ef !important;
+}
+.sugar-blood-card {
+    flex: 1;
+    height: 250px;
+    text-align: center;
+    background: #f8e9e4 !important;
+}
+
+
+.ant-image-preview-operations-operation:not(:first-child) {
+    display: none;
+}

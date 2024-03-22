@@ -1,23 +1,22 @@
 .login-btn {
-	background-color: #06b88c;
+	background-color: #069390 !important;
 	box-shadow: 0px 4px 8px rgba(0, 0, 0, 0.3);
     border-radius: 20px;
 }
 .login-btn:hover {
-	background-color: #5af5ce !important;
-	color: black !important;
+	background-color: #07afac !important;
 }
 
 .ant-input-outlined:hover {
-    border-color: #06b88c !important;
+    border-color: #069390 !important;
 }
 .ant-input-outlined:focus {	
-    border-color: #06b88c !important;
+    border-color: #069390 !important;
 }
 .ant-input-search-button:hover{
-        border-color: #06b88c !important;
+        border-color: #069390 !important;
 }
 .welcome-title{
-    color: #06b88c !important;
+    color: #069390 !important;
     font-size: 15pt !important;
 }

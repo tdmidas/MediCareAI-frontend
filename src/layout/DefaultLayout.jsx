@@ -4,9 +4,10 @@ import Sidebar from "../components/Sidebar/Sidebar";
 import { MenuFoldOutlined } from "@ant-design/icons";
 import CustomHeader from "../components/Header/CustomHeader";
 import CustomFooter from "../components/Footer/Footer";
+
 import "./DefaultLayout.css";
 const { Header, Footer, Sider, Content } = Layout;
-const DefaultLayout = () => {
+const DefaultLayout = ({ children }) => {
     const [collapsed, setCollapsed] = useState(false);
     return (
         <Layout>
@@ -18,7 +19,9 @@ const DefaultLayout = () => {
                 <Header className="header">
                     <CustomHeader />
                 </Header>
-                <Content className="content"></Content>
+                <Content className="content">
+                    {children}
+                </Content>
                 <Footer className="footer">
                     <CustomFooter />
 
