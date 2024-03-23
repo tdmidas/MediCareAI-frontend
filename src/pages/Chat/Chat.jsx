@@ -1,8 +1,10 @@
 import DefaultLayout from '../../layout/DefaultLayout';
-
+import LoginRequired from '../LoginRequired/LoginRequired';
 const Chat = () => {
     return (
-        <DefaultLayout />
+        <DefaultLayout>
+            <LoginRequired />
+        </DefaultLayout>
     );
 }
 

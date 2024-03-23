@@ -1,15 +1,21 @@
 import { Flex, Card, Typography, Button, Image, Tag } from "antd";
 import BlogData from "../../BlogData";
 import React from "react";
-import "./BlogList.css"
+import "./BlogList.css";
+import { useNavigate } from "react-router-dom";
 const BLogList = () => {
+    const navigate = useNavigate();
+
+    const handleClick = () => {
+        navigate('/blog');
+    };
     return (
         <>
             <Flex align="center" justify="space-between" >
                 <Typography.Title level={3} strong>
                     Bài viết nổi bật
                 </Typography.Title>
-                <Button type="link" className="primary--color">
+                <Button type="link" className="primary--color" onClick={handleClick}>
                     Xem thêm
                 </Button>
             </Flex>
@@ -23,7 +29,7 @@ const BLogList = () => {
                             <Image
                                 alt="example"
                                 src={item.picture}
-                                style={{ height: "150px", maxWidth: "100%", objectFit: "cover" }}
+                                style={{ display: "block", height: "150px", maxWidth: "100%", objectFit: "cover" }}
                             />
                         }
                         style={{ height: "400px", width: "400px", padding: "20px", marginBottom: "20px" }}

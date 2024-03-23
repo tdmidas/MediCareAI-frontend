@@ -2,14 +2,21 @@ import React from "react";
 import HealthTrackData from "../../HealthTrackData";
 import { Button, Card, Flex, Typography, Image } from "antd";
 import "./HealthTrack.css";
+import { useNavigate } from 'react-router-dom';
+
 const HealthTrackList = () => {
+    const navigate = useNavigate();
+
+    const handleClick = () => {
+        navigate('/suckhoe');
+    };
     return (
         <>
             <Flex align="center" justify="space-between" >
                 <Typography.Title level={3} strong>
-                    Theo dõi sức khỏe
+                    Nhật ký sức khỏe
                 </Typography.Title>
-                <Button type="link" className="primary--color">
+                <Button type="link" className="primary--color" onClick={handleClick}>
                     Xem thêm
                 </Button>
             </Flex>

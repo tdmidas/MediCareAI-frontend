@@ -2,7 +2,17 @@ import React from "react";
 import { Button, Card, Flex, Typography } from "antd";
 import "./Banner.css";
 import promo from "../../assets/promo.png";
+import { useNavigate } from "react-router-dom";
 const Banner = () => {
+    const navigate = useNavigate();
+
+    const handleClick = (destination) => {
+        if (destination === 'healthCheck') {
+            navigate('/suckhoe');
+        } else if (destination === 'support') {
+            navigate('/chat');
+        }
+    };
     return (
         <Card className="banner-card" style={{ height: 260, padding: "20px" }} cover={
             <div >
@@ -25,11 +35,11 @@ const Banner = () => {
                     </Typography.Text>
                 </Flex>
                 <Flex gap="large">
-                    <Button className="banner-btn" size="large" type="primary">
-                        Khám phá
+                    <Button className="banner-btn" size="large" type="primary" onClick={() => handleClick('healthCheck')}>
+                        Kiểm tra sức khỏe
                     </Button>
-                    <Button className="banner-btn-sub" size="large">
-                        Top bài viết
+                    <Button className="banner-btn-sub" size="large" onClick={() => handleClick('support')}>
+                        Cần hỗ trợ
                     </Button>
                 </Flex>
 

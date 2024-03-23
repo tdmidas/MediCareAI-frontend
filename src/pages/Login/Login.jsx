@@ -14,7 +14,7 @@ const Login = () => {
 
 	const [touched, setTouched] = useState({});
 
-	const chaeckData = (obj) => {
+	const checkData = (obj) => {
 		const { email, password } = obj;
 		const urlApi = `http://localhost:5000/api/auth/login?email=${email}&password=${password}`;
 		const api = axios
@@ -46,7 +46,7 @@ const Login = () => {
 
 	const submitHandler = (event) => {
 		event.preventDefault();
-		chaeckData(data);
+		checkData(data);
 	};
 
 	return (

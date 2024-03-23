@@ -1,12 +1,13 @@
-import { Flex, Menu } from 'antd';
+import { Flex, Menu, Image, Typography } from 'antd';
 import { React, useState, useEffect } from 'react';
 import { FaHandHoldingMedical, FaRegHeart } from "react-icons/fa6";
 import { LuNewspaper } from "react-icons/lu";
 import { FaRegCalendarAlt } from "react-icons/fa";
-import { RiHome6Line } from "react-icons/ri";
+import { RiHome6Line, RiNurseLine } from "react-icons/ri";
 import { IoPersonOutline, IoChatbubbleOutline } from "react-icons/io5";
 import { NavLink, useLocation } from 'react-router-dom';
 import './Sidebar.css';
+const logo = require("../../assets/logo-final.png")
 const Sidebar = () => {
     const location = useLocation();
     const [isCollapsed, setIsCollapsed] = useState(false);
@@ -22,23 +23,30 @@ const Sidebar = () => {
                 return '2';
             case '/lichkham':
                 return '3';
-            case '/chat':
+            case '/doctor':
                 return '4';
-            case '/blog':
+            case '/chat':
                 return '5';
-            case '/profile':
+            case '/blog':
                 return '6';
+            case '/profile':
+                return '7';
             default:
                 return '1'; // Default to 'Trang chủ'
         }
     }
     return (
         <>
-            <Flex align="center" justify="center">
+            <Flex justify="center">
                 <div className="logo">
-                    <FaHandHoldingMedical />
+                    <Image src={logo} style={{
+                        width: "30px", height: "25px"
+                    }} />
+
+                    <Typography.Title level={4} strong style={{ color: "#036e6c", textAlign: "center", marginLeft: 10, display: isCollapsed ? "none" : "none" }}>MediCareAI</Typography.Title>
                 </div>
-            </Flex>
+
+            </Flex >
             <Menu mode="inline" defaultSelectedKeys={[getActiveTabKey()]} className="menu-bar" inlineCollapsed={isCollapsed} >
                 <Menu.Item key="1">
                     <RiHome6Line />
@@ -59,18 +67,24 @@ const Sidebar = () => {
                     </NavLink>
                 </Menu.Item>
                 <Menu.Item key="4">
+                    <RiNurseLine />
+                    <NavLink to="/doctor" className="nav-text">
+                        Bác sĩ
+                    </NavLink>
+                </Menu.Item>
+                <Menu.Item key="5">
                     <IoChatbubbleOutline />
                     <NavLink to="/chat" className="nav-text">
                         Chat
                     </NavLink>
                 </Menu.Item>
-                <Menu.Item key="5">
+                <Menu.Item key="6">
                     <LuNewspaper />
                     <NavLink to="/blog" className="nav-text">
                         Blog
                     </NavLink>
                 </Menu.Item>
-                <Menu.Item key="6">
+                <Menu.Item key="7">
                     <IoPersonOutline />
                     <NavLink to="/profile" className="nav-text">
                         Cá nhân

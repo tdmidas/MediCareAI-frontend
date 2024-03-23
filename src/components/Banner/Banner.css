@@ -5,6 +5,9 @@
     box-shadow: 0px 4px 8px rgba(0, 0, 0, 0.3);
     border-radius: 20px;
 }
+.banner-btn:hover {
+    background-color: #08aeac !important;
+}
 .banner-btn-sub{
     color: #069390 !important;
     box-shadow: 0px 4px 8px rgba(0, 0, 0, 0.3);
@@ -16,9 +19,7 @@
     background-color: #069390 !important;
     color: #ffffff !important;
 }
-.banner-btn:hover {
-    background-color: #08aeac !important;
-}
+
 .ant-btn-primary {
     background-color: #069390;
 }

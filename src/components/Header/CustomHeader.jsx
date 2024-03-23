@@ -17,7 +17,7 @@ const CustomHeader = () => {
     return (
         <Flex align="center" justify="space-between">
 
-            <Title className="welcome-title" level={4}>Welcome back, Dai</Title>
+            <Title className="welcome-title" level={4}>Great to see you</Title>
 
             <Flex align="center" gap="20rem">
                 <Search className="search-btn" placeholder="Tìm kiếm bác sĩ, blog,..." allowClear />

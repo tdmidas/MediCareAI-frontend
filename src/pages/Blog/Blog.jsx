@@ -1,12 +1,12 @@
-import { Flex, Card, Image, Typography, Tag } from "antd";
+import { Flex, Card, Image, Typography, Tag, Pagination } from "antd";
 import React from "react";
 import DefaultLayout from "../../layout/DefaultLayout";
-import HealthTrackList from "../../components/HealthTrackList/HealthTrackList";
 import MainContentLayout from "../../layout/MainContentLayout";
 import SideContentLayout from "../../layout/SideContentLayout";
 import BlogData from "../../BlogData";
 import "./Blog.css"
 const doctor = require("../../assets/doctor-1.png")
+const eat_food = require("../../assets/eat-food.png")
 
 const Blog = () => {
     return (
@@ -14,44 +14,45 @@ const Blog = () => {
             <Flex gap="large">
 
                 <MainContentLayout>
-                    <Flex vertical gap="2.3rem">
-                        <Flex vertical align="center" gap="large">
-                            {BlogData.map((item) => (
-                                <Card
-                                    key="1"
-                                    className="blog-card"
-                                    hoverable
-                                    cover={
-                                        <Image
-                                            alt="example"
-                                            src={item.picture}
-                                            style={{ height: "150px", maxWidth: "100%", objectFit: "cover" }}
-                                        />
-                                    }
-                                    style={{ height: "400px", width: "800px", padding: "20px", marginBottom: "20px" }}
-                                >
-                                    <Flex >
-                                        <Flex vertical aligh="flex-start" gap="10px">
-                                            <Typography.Title level={4} strong>
-                                                {item.title}
-                                            </Typography.Title>
-                                            <Typography.Text type="secondary" >
-                                                {item.description}
-                                            </Typography.Text>
-                                            <Flex gap="10px">
-                                                <Tag color="#069390">{item.tag}</Tag>
-                                                <Typography.Text level={5} strong>
-                                                    {item.date}
-                                                </Typography.Text></Flex>
+                    <Flex vertical align="center" gap="large">
+                        {BlogData.slice(0, 4).map((item) => (
+                            <Card
+                                key="1"
+                                className="blog-card"
+                                hoverable
+                                cover={
+                                    <Image
+                                        alt="example"
+                                        src={item.picture}
+                                        style={{
+                                            float: "right", width: "200px", height: "150px", objectFit: "cover"
+                                        }}
+                                    />
+                                }
+                                style={{ height: "400px", width: "800px", padding: "20px", marginBottom: "20px" }}
+                            >
+                                <Flex >
+                                    <Flex vertical aligh="flex-start" gap="10px">
+                                        <Typography.Title level={4} strong>
+                                            {item.title}
+                                        </Typography.Title>
+                                        <Typography.Text type="secondary" >
+                                            {item.description}
+                                        </Typography.Text>
+                                        <Flex gap="10px">
+                                            <Tag color="#069390">{item.tag}</Tag>
+                                            <Typography.Text level={5} strong>
+                                                {item.date}
+                                            </Typography.Text></Flex>
 
-                                        </Flex>
                                     </Flex>
-                                </Card>))
+                                </Flex>
+                            </Card>))
 
-                            }
-
-                        </Flex>
+                        }
+                        <Pagination className="blog-pagination" defaultCurrent={1} total={50} />
                     </Flex>
+
                 </MainContentLayout>
                 <SideContentLayout>
                     <Flex vertical gap="large">
@@ -68,7 +69,7 @@ const Blog = () => {
                             </ul>
 
                         </Flex>
-                        <Card className="side-card" cover={
+                        <Card className="blog-side-card-1" cover={
                             <Image
                                 alt="example"
                                 src={doctor}
@@ -81,6 +82,23 @@ const Blog = () => {
                                 </Typography.Title>
                                 <Typography.Title level={4} strong>
                                     The better<br /> life
+                                </Typography.Title>
+
+                            </Flex >
+                        </Card >
+                        <Card className="blog-side-card-2" cover={
+                            <Image
+                                alt="example"
+                                src={eat_food}
+                                style={{ float: "right", position: "absolute", paddingBottom: "72px", paddingLeft: "90px", width: "auto", height: "300px" }}
+                            />
+                        }>
+                            <Flex vertical gap="large">
+                                <Typography.Title level={4} strong>
+                                    Eat<br />  right
+                                </Typography.Title>
+                                <Typography.Title level={4} strong>
+                                    Live<br /> right
                                 </Typography.Title>
 
                             </Flex >

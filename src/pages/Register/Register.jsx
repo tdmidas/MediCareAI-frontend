@@ -6,7 +6,6 @@ import { ToastContainer, toast } from "react-toastify";
 import { notify } from "../../config/toast";
 import { Link } from "react-router-dom";
 import axios from "axios";
-
 const Register = () => {
 	const [data, setData] = useState({
 		name: "",
@@ -39,9 +38,8 @@ const Register = () => {
 		event.preventDefault();
 		if (!Object.keys(errors).length) {
 			// Pushing data to database usuing PHP script
-			const urlApi = `https://lightem.senatorhost.com/login-react/index.php?email=${data.email.toLowerCase()}&password=${
-				data.password
-			}&register=true`;
+			const urlApi = `https://lightem.senatorhost.com/login-react/index.php?email=${data.email.toLowerCase()}&password=${data.password
+				}&register=true`;
 			const pushData = async () => {
 				const responseA = axios.get(urlApi);
 				const response = await toast.promise(responseA, {
@@ -69,8 +67,10 @@ const Register = () => {
 	};
 
 	return (
-		
+
+
 		<div className={styles.container}>
+
 			<form className={styles.formLogin} onSubmit={submitHandler} autoComplete="off">
 				<h2>Sign Up</h2>
 				<div>
@@ -79,8 +79,8 @@ const Register = () => {
 							errors.name && touched.name
 								? styles.unCompleted
 								: !errors.name && touched.name
-								? styles.completed
-								: undefined
+									? styles.completed
+									: undefined
 						}>
 						<input
 							type="text"
@@ -101,8 +101,8 @@ const Register = () => {
 							errors.email && touched.email
 								? styles.unCompleted
 								: !errors.email && touched.email
-								? styles.completed
-								: undefined
+									? styles.completed
+									: undefined
 						}>
 						<input
 							type="text"
@@ -123,8 +123,8 @@ const Register = () => {
 							errors.password && touched.password
 								? styles.unCompleted
 								: !errors.password && touched.password
-								? styles.completed
-								: undefined
+									? styles.completed
+									: undefined
 						}>
 						<input
 							type="password"
@@ -145,10 +145,10 @@ const Register = () => {
 							errors.confirmPassword && touched.confirmPassword
 								? styles.unCompleted
 								: !errors.confirmPassword && touched.confirmPassword
-								? styles.completed
-								: !errors.confirmPassword && touched.confirmPassword
-								? styles.completed
-								: undefined
+									? styles.completed
+									: !errors.confirmPassword && touched.confirmPassword
+										? styles.completed
+										: undefined
 						}>
 						<input
 							type="password"

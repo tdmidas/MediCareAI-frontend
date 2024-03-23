@@ -1,0 +1,6 @@
+.ant-image-preview-operations-operation:not(:first-child) {
+    display: none;
+}
+.ant-image-mask{
+    display: none;
+}

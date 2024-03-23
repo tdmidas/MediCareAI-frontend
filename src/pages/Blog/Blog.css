@@ -19,3 +19,24 @@ display: flex;
         margin: 0 8px 8px 0;
         padding: 6px 16px
 }
+
+.ant-pagination-item-active{
+    border-radius: 20px !important;
+    color: #fff;
+    background-color: #069390 !important;
+}
+.blog-side-card-1{
+        background: #c0f1ef !important;
+        background-image: linear-gradient(to bottom, #87e8de, #17c4c1) !important;
+
+    
+}
+.blog-side-card-2 {
+    background: #c0f1ef !important;
+    background-image: linear-gradient(to bottom, #e8bb87, #ed8b3f) !important;
+
+
+}
+.ant-card{
+    border-color: #cfe5e5 !important;
+}

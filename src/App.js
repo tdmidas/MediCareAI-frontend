@@ -8,6 +8,7 @@ import LichKham from "./pages/LichKham/LichKham";
 import Chat from "./pages/Chat/Chat";
 import SucKhoe from "./pages/SucKhoe/SucKhoe";
 import Blog from "./pages/Blog/Blog";
+import Doctor from "./pages/Doctor/Doctor";
 function App() {
 	return (
 		<Router>
@@ -16,6 +17,7 @@ function App() {
 				<Route path="/login" element={<Login />} />
 				<Route path="/register" element={<Register />} />
 				<Route path="/lichkham" element={<LichKham />} />
+				<Route path="/doctor" element={<Doctor />} />
 				<Route path="/chat" element={<Chat />} />
 				<Route path="/suckhoe" element={<SucKhoe />} />
 				<Route path="/profile" element={<Profile />} />
