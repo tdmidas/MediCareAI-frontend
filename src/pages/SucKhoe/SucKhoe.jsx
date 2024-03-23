@@ -10,9 +10,11 @@ const SucKhoe = () => {
             <>
                 <Flex align="center" gap="large">
                     <Image preview={false} src={meditation} style={{ width: 600, height: 400 }} />
-                    <Flex gap="small" wrap="wrap">
+                    <Card style={{ width: 600, height: 400 }}>
                         <Progress type="circle" percent={100} format={() => '100'} />
-                    </Flex>
+                    </Card>
+
+
                 </Flex>
                 <Flex align="center" justify="space-between" >
                     <Typography.Title level={3} strong>
