@@ -1,5 +1,5 @@
 import { Flex, Menu } from 'antd';
-import React from 'react';
+import { React, useState, useEffect } from 'react';
 import { FaHandHoldingMedical, FaRegHeart } from "react-icons/fa6";
 import { LuNewspaper } from "react-icons/lu";
 import { FaRegCalendarAlt } from "react-icons/fa";
@@ -9,6 +9,10 @@ import { NavLink, useLocation } from 'react-router-dom';
 import './Sidebar.css';
 const Sidebar = () => {
     const location = useLocation();
+    const [isCollapsed, setIsCollapsed] = useState(false);
+    useEffect(() => {
+        setIsCollapsed(false); // Reset collapse state when navigating to a new page
+    }, [location, setIsCollapsed]);
 
     const getActiveTabKey = () => {
         switch (location.pathname) {
@@ -35,7 +39,7 @@ const Sidebar = () => {
                     <FaHandHoldingMedical />
                 </div>
             </Flex>
-            <Menu mode="inline" defaultSelectedKeys={[getActiveTabKey()]} className="menu-bar" >
+            <Menu mode="inline" defaultSelectedKeys={[getActiveTabKey()]} className="menu-bar" inlineCollapsed={isCollapsed} >
                 <Menu.Item key="1">
                     <RiHome6Line />
                     <NavLink to="/" className="nav-text">

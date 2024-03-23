@@ -1,0 +1,6 @@
+.blog-card{
+    flex: 1;
+}
+.ant-image-preview-operations-operation:not(:first-child) {
+    display: none;
+}

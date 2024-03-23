@@ -14,55 +14,32 @@ const HealthTrackList = () => {
                 </Button>
             </Flex>
             <Flex align="center" gap="large">
-
-                <Card
+                {HealthTrackData.slice(0, 2).map((item) => (<Card
                     key="1"
                     className="blood-pressure-card"
                     hoverable
                     cover={
                         <Image
                             alt="example"
-                            src={HealthTrackData[0].picture}
+                            src={item.picture}
                             style={{ float: "right", width: "120px", height: "120px" }}
                         />
                     }
-                    style={{ height: "200px", width: "400px", padding: "20px" }}
+                    style={{ height: "180px", width: "400px", padding: "20px", marginBottom: "20px" }}
                 >
                     <Flex >
                         <Flex vertical aligh="flex-start">
                             <Typography.Title level={2} strong>
-                                {HealthTrackData[0].name}
+                                {item.name}
                             </Typography.Title>
                             <Typography.Text type="secondary" strong>
-                                ---mmHg
+                                ---{item.measure}
                             </Typography.Text>
                         </Flex>
                     </Flex>
-                </Card>
-                <Card
-                    key="2"
-                    className="sugar-blood-card"
-                    hoverable
-                    cover={
-                        <Image
-                            alt="example"
-                            src={HealthTrackData[1].picture}
-                            style={{ float: "right", width: "140px", height: "140px" }}
-                        />
-                    }
-                    style={{ height: "200px", width: "400px", padding: "20px" }}
-                >
-                    <Flex >
-                        <Flex vertical aligh="flex-start">
-                            <Typography.Title level={2} strong>
-                                {HealthTrackData[1].name}
-                            </Typography.Title>
-                            <Typography.Text type="secondary" strong>
-                                ---mmol/L
-                            </Typography.Text>
-                        </Flex>
-                    </Flex>
-                </Card>
+                </Card>))
+
+                }
 
             </Flex>
         </>

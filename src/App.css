@@ -12,7 +12,9 @@
 .secondary--color {
     color: #07c3c0 !important;
 }
-
+.gray--color {
+    color: #303030 !important;
+}
 .light--color {
     color: #d2e3c8;
 }

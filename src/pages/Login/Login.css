@@ -1,10 +1,10 @@
 
 
 :root {
-    --main-color: #06b88c;
+    --main-color: #069390;
     --secondary-color: #d7e3ef;
     --box-shadow: 0 0 7px 0 var(--secondary-color);
-    --main-color-hover: #06b88c;
+    --main-color-hover: #069390;
 }
 
 body {
