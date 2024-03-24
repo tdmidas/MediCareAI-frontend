@@ -1,4 +1,6 @@
 import React, { useState } from "react";
+import { useNavigate } from "react-router-dom";
+
 import styles from "../Register/Register.module.css";
 import { ToastContainer, toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
@@ -6,6 +8,9 @@ import { notify } from "../../config/toast";
 import { Link } from "react-router-dom";
 import axios from "axios";
 import "./Login.css";
+import { auth, googleAuthProvider, signInWithPopup, getEmail } from "../../firebaseConfig";
+const googleLogo = require('../../assets/google-18px.svg').default;
+
 const Login = () => {
 	const [data, setData] = useState({
 		email: "",
@@ -13,6 +18,7 @@ const Login = () => {
 	});
 
 	const [touched, setTouched] = useState({});
+	const navigate = useNavigate();
 
 	const checkData = (obj) => {
 		const { email, password } = obj;
@@ -48,11 +54,20 @@ const Login = () => {
 		event.preventDefault();
 		checkData(data);
 	};
-
+	const signInWithGoogle = async () => {
+		try {
+			const result = await signInWithPopup(auth, googleAuthProvider);
+			const user = result.user;
+			navigate("/");
+			console.log("Google Sign-in Successful:", user);
+		} catch (error) {
+			console.error("Google Sign-in Error:", error.message);
+		}
+	};
 	return (
 		<div className={styles.container}>
 			<form className={styles.formLogin} onSubmit={submitHandler} autoComplete="off">
-				<h2>Sign In</h2>
+				<h2>Đăng nhập</h2>
 				<div>
 					<div>
 						<input
@@ -83,9 +98,13 @@ const Login = () => {
 				</div>
 
 				<div>
-					<button type="submit">Login</button>
+					<button type="submit">Đăng nhập</button>
+					<button className={styles['google-btn']}
+						onClick={signInWithGoogle}>
+						<img src={googleLogo} style={{ paddingRight: 10 }} /> Đăng nhập với Google
+					</button>
 					<span style={{ color: "#a29494", textAlign: "center", display: "inline-block", width: "100%" }}>
-						Don't have a account? <Link to="/register">Create account</Link>
+						Bạn chưa có tài khoản? <Link to="/register">Create account</Link>
 					</span>
 				</div>
 			</form>

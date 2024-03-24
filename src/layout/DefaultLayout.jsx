@@ -19,7 +19,7 @@ const DefaultLayout = ({ children }) => {
                 <Header className="header">
                     <CustomHeader />
                 </Header>
-                <Content className="content" >
+                <Content className="content"  >
                     {children}
 
                 </Content>

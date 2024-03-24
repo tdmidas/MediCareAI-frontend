@@ -5,6 +5,7 @@ import React from "react";
 import Banner from '../../components/Banner/Banner';
 import HealthTrackList from '../../components/HealthTrackList/HealthTrackList';
 import BLogList from '../../components/BlogList/BlogList';
+import DoctorList from '../../components/DoctorList/DoctorList';
 import MainContentLayout from "../../layout/MainContentLayout";
 import SideContentLayout from '../../layout/SideContentLayout';
 import BasicDateCalendar from '../../components/Calendar/Calendar';
@@ -24,8 +25,9 @@ const Home = () => {
                 <Flex vertical gap="2.3rem">
                     <Banner />
                     <HealthTrackList />
+                    <DoctorList />
+
                     <BLogList />
-                    <HealthTrackList />
                 </Flex>
                 <MainContentLayout />
                 <SideContentLayout>

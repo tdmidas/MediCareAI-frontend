@@ -12,7 +12,7 @@ const Sidebar = () => {
     const location = useLocation();
     const [isCollapsed, setIsCollapsed] = useState(false);
     useEffect(() => {
-        setIsCollapsed(false); // Reset collapse state when navigating to a new page
+        setIsCollapsed(false);
     }, [location, setIsCollapsed]);
 
     const getActiveTabKey = () => {
@@ -23,16 +23,15 @@ const Sidebar = () => {
                 return '2';
             case '/lichkham':
                 return '3';
-            case '/doctor':
+            case '/doctors':
                 return '4';
             case '/chat':
                 return '5';
             case '/blog':
                 return '6';
-            case '/profile':
-                return '7';
+
             default:
-                return '1'; // Default to 'Trang chủ'
+                return '1';
         }
     }
     return (
@@ -68,7 +67,7 @@ const Sidebar = () => {
                 </Menu.Item>
                 <Menu.Item key="4">
                     <RiNurseLine />
-                    <NavLink to="/doctor" className="nav-text">
+                    <NavLink to="/doctors" className="nav-text">
                         Bác sĩ
                     </NavLink>
                 </Menu.Item>
@@ -84,12 +83,7 @@ const Sidebar = () => {
                         Blog
                     </NavLink>
                 </Menu.Item>
-                <Menu.Item key="7">
-                    <IoPersonOutline />
-                    <NavLink to="/profile" className="nav-text">
-                        Cá nhân
-                    </NavLink>
-                </Menu.Item>
+
             </Menu>
         </>
     );

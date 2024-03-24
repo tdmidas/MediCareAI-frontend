@@ -4,7 +4,10 @@ import DefaultLayout from "../../layout/DefaultLayout";
 import MainContentLayout from "../../layout/MainContentLayout";
 import SideContentLayout from "../../layout/SideContentLayout";
 import BlogData from "../../BlogData";
+import { Link } from 'react-router-dom';
+
 import "./Blog.css"
+import slug from "slug";
 const doctor = require("../../assets/doctor-1.png")
 const eat_food = require("../../assets/eat-food.png")
 
@@ -16,38 +19,40 @@ const Blog = () => {
                 <MainContentLayout>
                     <Flex vertical align="center" gap="large">
                         {BlogData.slice(0, 4).map((item) => (
-                            <Card
-                                key="1"
-                                className="blog-card"
-                                hoverable
-                                cover={
-                                    <Image
-                                        alt="example"
-                                        src={item.picture}
-                                        style={{
-                                            float: "right", width: "200px", height: "150px", objectFit: "cover"
-                                        }}
-                                    />
-                                }
-                                style={{ height: "400px", width: "800px", padding: "20px", marginBottom: "20px" }}
-                            >
-                                <Flex >
-                                    <Flex vertical aligh="flex-start" gap="10px">
-                                        <Typography.Title level={4} strong>
-                                            {item.title}
-                                        </Typography.Title>
-                                        <Typography.Text type="secondary" >
-                                            {item.description}
-                                        </Typography.Text>
-                                        <Flex gap="10px">
-                                            <Tag color="#069390">{item.tag}</Tag>
-                                            <Typography.Text level={5} strong>
-                                                {item.date}
-                                            </Typography.Text></Flex>
+                            <Link to={`/blog/${slug(item.title)}`}>
+                                <Card
+                                    key="1"
+                                    className="blog-card"
+                                    hoverable
+                                    cover={
+                                        <Image
+                                            alt="example"
+                                            src={item.picture}
+                                            style={{
+                                                float: "right", width: "200px", height: "150px", objectFit: "cover"
+                                            }}
+                                        />
+                                    }
+                                    style={{ height: "250px", width: "800px", padding: "20px", marginBottom: "20px" }}
+                                >
+                                    <Flex >
+                                        <Flex vertical aligh="flex-start" gap="10px">
+                                            <Typography.Title level={4} strong>
+                                                {item.title}
+                                            </Typography.Title>
+                                            <Typography.Text type="secondary" >
+                                                {item.description}
+                                            </Typography.Text>
+                                            <Flex gap="10px">
+                                                <Tag color="#069390">{item.tag}</Tag>
+                                                <Typography.Text level={5} strong>
+                                                    {item.date}
+                                                </Typography.Text></Flex>
 
+                                        </Flex>
                                     </Flex>
-                                </Flex>
-                            </Card>))
+                                </Card>
+                            </Link>))
 
                         }
                         <Pagination className="blog-pagination" defaultCurrent={1} total={50} />

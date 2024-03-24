@@ -141,7 +141,7 @@
   display: block;
   text-align: center;
   width: 100%;
-  border-radius: 8px;
+  border-radius: 20px;
   outline: 0;
   border: none;
   color: #fff;
@@ -178,4 +178,17 @@
   .formLogin input[type="password"] {
     padding: 10px 32px;
   }
+}
+.google-btn{
+  display: block;
+    text-align: center;
+    width: 100%;
+    border-radius: 20px;
+    outline: 0;
+    border-color: black;
+    color: black;
+    padding: 10px;
+    margin: 15px 0;
+  background-color: #f4ecec ;
+  width: 100% ; 
 }

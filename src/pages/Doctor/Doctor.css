@@ -1,0 +1,19 @@
+.doctor-card {
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    height: 500px;
+    /* hoặc bất kỳ chiều cao nào bạn muốn */
+    width: 300px;
+    /* hoặc bất kỳ chiều rộng nào bạn muốn */
+    padding: 20px;
+    margin-bottom: 20px;
+}
+
+.doctor-card .ant-card-cover {
+    flex: 1;
+}
+
+.doctor-card .ant-card-body {
+    flex: 0 0 auto !important;
+}

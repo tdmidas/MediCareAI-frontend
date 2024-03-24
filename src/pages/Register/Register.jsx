@@ -1,4 +1,5 @@
 import React, { useEffect, useState } from "react";
+import { useNavigate } from "react-router-dom";
 import { validate } from "./validate";
 import styles from "./Register.module.css";
 import "react-toastify/dist/ReactToastify.css";
@@ -6,7 +7,10 @@ import { ToastContainer, toast } from "react-toastify";
 import { notify } from "../../config/toast";
 import { Link } from "react-router-dom";
 import axios from "axios";
+import { auth, googleAuthProvider, signInWithPopup, getEmail } from "../../firebaseConfig";
+const googleLogo = require('../../assets/google-18px.svg').default;
 const Register = () => {
+	const navigate = useNavigate();
 	const [data, setData] = useState({
 		name: "",
 		email: "",
@@ -34,28 +38,19 @@ const Register = () => {
 		setTouched({ ...touched, [event.target.name]: true });
 	};
 
-	const submitHandler = (event) => {
+	const submitHandler = async (event) => {
 		event.preventDefault();
 		if (!Object.keys(errors).length) {
-			// Pushing data to database usuing PHP script
-			const urlApi = `https://lightem.senatorhost.com/login-react/index.php?email=${data.email.toLowerCase()}&password=${data.password
-				}&register=true`;
-			const pushData = async () => {
-				const responseA = axios.get(urlApi);
-				const response = await toast.promise(responseA, {
-					pending: "Check your data",
-					success: "Checked!",
-					error: "Something went wrong!",
-				});
-				if (response.data.ok) {
+			try {
+				const response = await axios.post("http://localhost:5000/api/auth/signup", data);
+				if (response.user) {
 					notify("You signed Up successfully", "success");
-				} else {
-					notify("You have already registered, log in to your account", "warning");
 				}
-			};
-			pushData();
+			} catch (error) {
+				notify(error.message, "error");
+			}
 		} else {
-			notify("Please Check fileds again", "error");
+			notify("Please Check fields again", "error");
 			setTouched({
 				name: true,
 				email: true,
@@ -66,13 +61,30 @@ const Register = () => {
 		}
 	};
 
+
+
+	const signUpWithGoogle = async () => {
+		try {
+			const result = await signInWithPopup(auth, googleAuthProvider);
+			if (getEmail) {
+				notify("Email đã tồn tại, vui lòng đăng nhập");
+				return;
+			}
+			const user = result.user;
+			navigate("/");
+			console.log("Google Sign-in Successful:", user);
+		} catch (error) {
+			console.error("Google Sign-in Error:", error.message);
+		}
+	};
+
 	return (
 
 
 		<div className={styles.container}>
 
 			<form className={styles.formLogin} onSubmit={submitHandler} autoComplete="off">
-				<h2>Sign Up</h2>
+				<h2 >Đăng ký tài khoản</h2>
 				<div>
 					<div
 						className={
@@ -175,16 +187,21 @@ const Register = () => {
 							onChange={changeHandler}
 							onFocus={focusHandler}
 						/>
-						<label htmlFor="accept">I accept terms of privacy policy</label>
+						<label htmlFor="accept">Tôi đồng ý với các điều khoản và quy tắc</label>
 					</div>
 					{errors.IsAccepted && touched.IsAccepted && (
 						<span className={styles.error}>{errors.IsAccepted}</span>
 					)}
 				</div>
 				<div>
-					<button type="submit">Create Account</button>
+					<button type="submit">Tạo tài khoản</button>
+					<button className={styles['google-btn']}
+						onClick={signUpWithGoogle}>
+						<img src={googleLogo} style={{ paddingRight: 10 }} /> Đăng ký với Google
+					</button>
+
 					<span style={{ color: "#a29494", textAlign: "center", display: "inline-block", width: "100%" }}>
-						Already have a account? <Link to="/login">Sign In</Link>
+						Bạn đã có tài khoản? <Link to="/login">Đăng nhập</Link>
 					</span>
 				</div>
 			</form>
