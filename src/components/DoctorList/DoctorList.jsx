@@ -1,5 +1,5 @@
 import { Flex, Card, Typography, Button, Image, Tag } from "antd";
-import { doctors } from "../../data/doctors";
+import doctors from "../../data/doctors";
 import React from "react";
 import "./DoctorList.css";
 import { useNavigate } from "react-router-dom";

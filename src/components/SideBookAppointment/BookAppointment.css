@@ -1,0 +1,24 @@
+.book-appointment-card {
+    width: 300px;
+    padding: 20px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+}
+
+.book-appointment-card .ant-typography {
+    margin-bottom: 10px;
+}
+
+.time-slots {
+    padding-left: 0;
+}
+
+.time-slots li {
+    display: flex;
+    justify-content: space-between;
+    margin-bottom: 6px;
+}
+
+.book-appointment-button {
+    margin-top: 20px;
+    width: 100%;
+}

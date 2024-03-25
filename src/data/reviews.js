@@ -1,5 +1,5 @@
 import patients from "../assets/patient-avatar.png";
-export const reviews = [
+const reviews = [
 	{
 		id: "01",
 		name: "Yugesh",
@@ -35,3 +35,4 @@ export const reviews = [
 		rating: "3",
 	},
 ];
+export default reviews;

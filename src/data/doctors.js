@@ -5,7 +5,7 @@ const doctorImg04 = require("../assets/doctor-img04.png");
 const doctorImg05 = require("../assets/doctor-img05.png");
 const doctorImg06 = require("../assets/doctor-1.png");
 
-export const doctors = [
+const doctors = [
 	{
 		id: "01",
 		name: "Dr. Thruptis",
@@ -85,3 +85,4 @@ export const doctors = [
 		short: "Lorem ipsum dolor sit amet consectetur adipisicing elit. Dicta, alias!",
 	},
 ];
+export default doctors;
