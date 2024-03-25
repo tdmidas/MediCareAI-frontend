@@ -1,6 +1,5 @@
 import React, { useState } from "react";
 import { Layout, Typography, Image, Row, Col, Card, Modal, Form, Space, Input, Button, Flex } from 'antd';
-import CustomHeader from "../components/Header/CustomHeader";
 import './BlogLayout.css';
 import { AiOutlineHeart, AiOutlineComment } from 'react-icons/ai';
 const { Content, Header } = Layout;
@@ -31,9 +30,7 @@ const BlogLayout = ({ title, content, imageUrl, date }) => {
 
     return (
         <Layout className="blog-layout" style={{ maxHeight: "100vh", overflowY: "scroll", overflowX: "hidden" }}>
-            <Header className="header">
-                <CustomHeader />
-            </Header>
+
             <Content className="blog-content">
                 <Row justify="center" align="middle">
                     <Col xs={24} md={6} lg={6} className="user-info-col">

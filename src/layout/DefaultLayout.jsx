@@ -9,7 +9,7 @@ const { Header, Sider, Content } = Layout;
 const DefaultLayout = ({ children }) => {
     const [collapsed, setCollapsed] = useState(false);
     return (
-        <Layout style={{ maxHeight: "100vh", overflowY: "scroll" }} >
+        <Layout style={{ maxHeight: "100vh", overflowY: "scroll", overflowX: "hidden" }} >
 
             <Sider theme="light" className="sider" trigger={null} collapsible collapsed={collapsed} >
                 <Sidebar />
