@@ -7,8 +7,10 @@ import { ToastContainer, toast } from "react-toastify";
 import { notify } from "../../config/toast";
 import { Link } from "react-router-dom";
 import axios from "axios";
-import { auth, googleAuthProvider, signInWithPopup, getEmail } from "../../firebaseConfig";
+import { auth, googleAuthProvider, signInWithPopup, getEmail, facebookAuthProvider } from "../../firebaseConfig";
 const googleLogo = require('../../assets/google-18px.svg').default;
+const facebookLogo = require('../../assets/facebook-18px.svg').default;
+
 const Register = () => {
 	const navigate = useNavigate();
 	const [data, setData] = useState({
@@ -70,6 +72,17 @@ const Register = () => {
 				notify("Email đã tồn tại, vui lòng đăng nhập");
 				return;
 			}
+			const user = result.user;
+			navigate("/");
+			console.log("Google Sign-in Successful:", user);
+		} catch (error) {
+			console.error("Google Sign-in Error:", error.message);
+		}
+	};
+	const signUpWithFacebook = async () => {
+		try {
+			const result = await signInWithPopup(auth, facebookAuthProvider);
+
 			const user = result.user;
 			navigate("/");
 			console.log("Google Sign-in Successful:", user);
@@ -195,10 +208,15 @@ const Register = () => {
 				</div>
 				<div>
 					<button type="submit">Tạo tài khoản</button>
+					<button className={styles['facebook-btn']}
+						onClick={signUpWithFacebook}>
+						<img src={facebookLogo} style={{ paddingRight: 10 }} /> Đăng ký với Facebook
+					</button>
 					<button className={styles['google-btn']}
 						onClick={signUpWithGoogle}>
 						<img src={googleLogo} style={{ paddingRight: 10 }} /> Đăng ký với Google
 					</button>
+
 
 					<span style={{ color: "#a29494", textAlign: "center", display: "inline-block", width: "100%" }}>
 						Bạn đã có tài khoản? <Link to="/login">Đăng nhập</Link>

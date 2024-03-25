@@ -2,10 +2,6 @@
     flex: 1;
         background: #c0f1ef !important;
 }
-.sugar-blood-card {
-    flex: 1;
-    background: #f8e9e4 !important;
-}
 
 
 .ant-image-preview-operations-operation:not(:first-child) {

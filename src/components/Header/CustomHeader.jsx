@@ -62,7 +62,6 @@ const CustomHeader = () => {
             text: 'Notification 2',
             link: '/notification-2',
         },
-        // Add more notifications as needed
     ];
 
     const notificationMenu = (
@@ -80,16 +79,19 @@ const CustomHeader = () => {
             <Flex align="center" gap="20rem">
                 <Search className="search-btn" placeholder="Tìm kiếm bác sĩ, blog,..." allowClear />
                 <Flex align="center" gap="10px">
-                    <Dropdown overlay={notificationMenu} trigger={['click']}>
-                        <Badge count={notifications.length} dot>
-                            <BellOutlined style={{ fontSize: '20px' }} />
-                        </Badge>
-                    </Dropdown>
+
 
                     {user ? (
-                        <Dropdown overlay={menu}>
-                            <img src={user.photoURL} alt="Profile" className="profile-photo" style={{ borderRadius: 30, width: 80, height: 40 }} />
-                        </Dropdown>
+                        <>
+                            <Dropdown overlay={notificationMenu} trigger={['click']}>
+                                <Badge count={notifications.length} dot>
+                                    <BellOutlined style={{ fontSize: '20px' }} />
+                                </Badge>
+                            </Dropdown>
+                            <Dropdown overlay={menu}>
+                                <img src={user.photoURL} alt="Profile" className="profile-photo" style={{ borderRadius: 30, width: 80, height: 40 }} />
+                            </Dropdown>
+                        </>
                     ) : (
                         <Button type="primary" className='login-btn' onClick={handleLoginClick}>Đăng nhập</Button>
                     )}

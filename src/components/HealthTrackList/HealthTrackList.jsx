@@ -32,7 +32,7 @@ const HealthTrackList = () => {
                             style={{ float: "right", width: "120px", height: "120px" }}
                         />
                     }
-                    style={{ height: "180px", width: "400px", padding: "20px", marginBottom: "20px" }}
+                    style={{ height: "180px", width: "400px", padding: "20px", marginBottom: "20px", background: item.color }}
                 >
                     <Flex >
                         <Flex vertical aligh="flex-start">

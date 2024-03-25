@@ -8,8 +8,9 @@ import { notify } from "../../config/toast";
 import { Link } from "react-router-dom";
 import axios from "axios";
 import "./Login.css";
-import { auth, googleAuthProvider, signInWithPopup, getEmail } from "../../firebaseConfig";
+import { auth, googleAuthProvider, signInWithPopup, facebookAuthProvider } from "../../firebaseConfig";
 const googleLogo = require('../../assets/google-18px.svg').default;
+const facebookLogo = require('../../assets/facebook-18px.svg').default;
 
 const Login = () => {
 	const [data, setData] = useState({
@@ -64,6 +65,17 @@ const Login = () => {
 			console.error("Google Sign-in Error:", error.message);
 		}
 	};
+	const signInWithFacebook = async () => {
+		try {
+			const result = await signInWithPopup(auth, facebookAuthProvider);
+
+			const user = result.user;
+			navigate("/");
+			console.log("Google Sign-in Successful:", user);
+		} catch (error) {
+			console.error("Google Sign-in Error:", error.message);
+		}
+	};
 	return (
 		<div className={styles.container}>
 			<form className={styles.formLogin} onSubmit={submitHandler} autoComplete="off">
@@ -99,10 +111,15 @@ const Login = () => {
 
 				<div>
 					<button type="submit">Đăng nhập</button>
+					<button className={styles['facebook-btn']}
+						onClick={signInWithFacebook}>
+						<img src={facebookLogo} style={{ paddingRight: 10 }} /> Đăng nhập với Facebook
+					</button>
 					<button className={styles['google-btn']}
 						onClick={signInWithGoogle}>
 						<img src={googleLogo} style={{ paddingRight: 10 }} /> Đăng nhập với Google
 					</button>
+
 					<span style={{ color: "#a29494", textAlign: "center", display: "inline-block", width: "100%" }}>
 						Bạn chưa có tài khoản? <Link to="/register">Create account</Link>
 					</span>
