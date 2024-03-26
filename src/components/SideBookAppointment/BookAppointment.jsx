@@ -1,6 +1,7 @@
 import React from 'react';
-import { Card, Typography, Button, Flex } from 'antd';
-import './BookAppointment.css'; // Add CSS file for custom styles
+import { Card, Typography, Button, Flex, } from 'antd';
+import './BookAppointment.css';
+const { Text } = Typography;
 
 const BookAppointment = () => {
     return (
@@ -10,24 +11,28 @@ const BookAppointment = () => {
                 <Typography.Text strong>₹200</Typography.Text>
             </Flex>
             <Typography.Text strong>Available Time Slots:</Typography.Text>
-            <ul className="time-slots">
-                <li>
-                    <span>Sunday</span>
-                    <span>4:00 PM - 9:30 PM</span>
-                </li>
-                <li>
-                    <span>Monday</span>
-                    <span>4:00 PM - 9:30 PM</span>
-                </li>
-                <li>
-                    <span>Tuesday</span>
-                    <span>4:00 PM - 9:30 PM</span>
-                </li>
-                <li>
-                    <span>Wednesday</span>
-                    <span>4:00 PM - 9:30 PM</span>
-                </li>
-            </ul>
+
+            <Flex align='center' gap="20px" >
+                <ul className="time-slots">
+                    <li>
+                        <Text strong>Sunday</Text>
+                        <Text type="secondary">4:00 PM - 9:30 PM</Text>
+                    </li>
+                    <li>
+                        <Text strong>Monday</Text>
+                        <Text type="secondary">4:00 PM - 9:30 PM</Text>
+                    </li>
+                    <li>
+                        <Text strong>Tuesday</Text>
+                        <Text type="secondary">4:00 PM - 9:30 PM</Text>
+                    </li>
+                    <li>
+                        <Text strong>Wednesday</Text>
+                        <Text type="secondary">4:00 PM - 9:30 PM</Text>
+                    </li>
+                </ul>
+            </Flex>
+
             <Button type="primary" className="book-appointment-button">
                 Book Appointment
             </Button>

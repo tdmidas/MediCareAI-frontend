@@ -7,6 +7,7 @@ import Profile from "./pages/Profile/Profile";
 import LichKham from "./pages/LichKham/LichKham";
 import Chat from "./pages/Chat/Chat";
 import SucKhoe from "./pages/SucKhoe/SucKhoe";
+import SucKhoeDetail from "./pages/SucKhoe/SucKhoeDetail";
 import Blog from "./pages/Blog/Blog";
 import Doctor from "./pages/Doctor/Doctor";
 import DoctorDetail from "./pages/Doctor/DoctorDetail";
@@ -25,6 +26,7 @@ function App() {
 				<Route path="/doctor/:slug" element={<DoctorDetail />} />
 				<Route path="/chat" element={<Chat />} />
 				<Route path="/suckhoe" element={<SucKhoe />} />
+				<Route path="/suckhoe/:slug" element={<SucKhoeDetail />} />
 				<Route path="/profile" element={<Profile />} />
 				<Route path="/blog" element={<Blog />} />
 				{blogData.map((blog) => (

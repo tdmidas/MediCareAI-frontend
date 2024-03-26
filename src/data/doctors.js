@@ -34,7 +34,7 @@ const doctors = [
 	},
 	{
 		id: "03",
-		name: "Dr. Charu Yadav",
+		name: "Dr. Jennie Nguyen",
 		specialty: "Gynaecology",
 		avgRating: 4.8,
 		totalRating: 272,
@@ -47,7 +47,7 @@ const doctors = [
 	},
 	{
 		id: "04",
-		name: "Dr. Thruptis",
+		name: "Dr. Thiago",
 		specialty: "Surgeon",
 		avgRating: 4.8,
 		totalRating: 272,
@@ -60,7 +60,7 @@ const doctors = [
 	},
 	{
 		id: "05",
-		name: "Dr. D K Gupta",
+		name: "Dr. Wendy Hill",
 		specialty: "Neurologist",
 		avgRating: 4.8,
 		totalRating: 272,
@@ -73,7 +73,7 @@ const doctors = [
 	},
 	{
 		id: "06",
-		name: "Dr. Charu Yadav",
+		name: "Dr. Justin ",
 		specialty: "Gynaecology",
 		avgRating: 4.8,
 		totalRating: 272,

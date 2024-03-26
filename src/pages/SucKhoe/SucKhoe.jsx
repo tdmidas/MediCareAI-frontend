@@ -1,4 +1,5 @@
 import React from "react";
+import { Link } from "react-router-dom";
 import HealthTrackData from "../../HealthTrackData";
 import { Card, Flex, Typography, Image, Progress } from "antd";
 import './SucKhoe.css';
@@ -22,31 +23,35 @@ const SucKhoe = () => {
                     </Typography.Title>
 
                 </Flex>
-                <Flex align="center" gap="large">
-                    {HealthTrackData.map((item) => (<Card
-                        key="1"
-                        className="blood-pressure-card"
-                        hoverable
-                        cover={
-                            <Image
-                                alt="example"
-                                src={item.picture}
-                                style={{ float: "right", width: "120px", height: "120px" }}
-                            />
-                        }
-                        style={{ height: "180px", width: "400px", padding: "20px", marginBottom: "20px" }}
-                    >
-                        <Flex >
-                            <Flex vertical aligh="flex-start">
-                                <Typography.Title level={2} strong>
-                                    {item.name}
-                                </Typography.Title>
-                                <Typography.Text type="secondary" strong>
-                                    ---{item.measure}
-                                </Typography.Text>
-                            </Flex>
-                        </Flex>
-                    </Card>))
+                <Flex wrap="wrap" align="center" gap="large">
+                    {HealthTrackData.map((item, index) => (
+                        <Link to={`/suckhoe/${item.id}`} key={index}>
+
+                            <Card
+                                key="1"
+                                className="health-card"
+                                hoverable
+                                cover={
+                                    <Image
+                                        alt="example"
+                                        src={item.picture}
+                                        style={{ float: "right", width: "120px", height: "120px" }}
+                                    />
+                                }
+                                style={{ height: "180px", width: "350px", padding: "20px", marginBottom: "20px" }}
+                            >
+                                <Flex >
+                                    <Flex vertical aligh="flex-start">
+                                        <Typography.Title level={2} strong>
+                                            {item.name}
+                                        </Typography.Title>
+                                        <Typography.Text type="secondary" strong>
+                                            ---{item.measure}
+                                        </Typography.Text>
+                                    </Flex>
+                                </Flex>
+                            </Card>
+                        </Link>))
 
                     }
 

@@ -7,6 +7,7 @@ import DefaultLayout from '../../layout/DefaultLayout';
 import MainContentLayout from "../../layout/MainContentLayout";
 import SideContentLayout from '../../layout/SideContentLayout';
 import BookAppointment from '../../components/SideBookAppointment/BookAppointment';
+import "./DoctorDetail.css";
 const { TabPane } = Tabs;
 
 const DoctorDetail = () => {
@@ -33,13 +34,14 @@ const DoctorDetail = () => {
                 <MainContentLayout>
                     <Flex align="center" justify="space-between">
                         <Card style={{ marginBottom: 16, width: 800, background: "transparent", border: "none" }}>
-                            <Flex gap="large"><Image src={doctor.photo} alt={doctor.name} style={{ height: 200, width: 200, float: "left" }} />
+                            <Flex gap="large"><Image preview={false} src={doctor.photo} alt={doctor.name} style={{ borderRadius: 10, height: 200, width: 200, float: "left" }} />
 
-                                <Flex gap="10px" style={{ flex: 1, flexDirection: "column" }}>
-                                    <Typography.Title level={3}>{doctor.name}</Typography.Title>
-                                    <Typography.Text style={{ background: "#c0f1ef", borderRadius: 10, width: 100, height: 40, textAlign: "center", padding: 10, fontWeight: 550, color: "#069390" }}>
+                                <Flex gap="5px" style={{ flex: 1, flexDirection: "column" }}>
+                                    <Typography.Text style={{ background: "#c0f1ef", borderRadius: 10, width: 130, height: 40, textAlign: "center", padding: 10, fontWeight: 550, color: "#069390" }}>
                                         {doctor.specialty}
                                     </Typography.Text>
+                                    <Typography.Title level={3}>{doctor.name}</Typography.Title>
+
                                     <Rate disabled defaultValue={doctor.avgRating} />
                                     <Typography.Text>{doctor.totalRating} reviews</Typography.Text>
                                     <Typography.Text>{doctor.short}</Typography.Text>

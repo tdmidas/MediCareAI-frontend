@@ -1,0 +1,13 @@
+/* HeartRate.css */
+
+.heart-rate-container {
+    text-align: center;
+}
+
+.video-container {
+    margin-top: 20px;
+}
+
+.heart-rate-display {
+    margin-top: 20px;
+}
