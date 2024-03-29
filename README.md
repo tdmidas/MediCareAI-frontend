@@ -19,9 +19,9 @@ MediCareAI is a web application designed for user to manage their health and boo
 - **Heart rate monitoring**  through the camera using zero-crossing detection (based on light passing through your fingertip).
 - **Blood pressure**, **Sugar blood** and **BMI** value take from user input  
   
-=> Synthesize all health information to evaluate the user's health status.
+=> Synthesize all health information to predict the user's health status with machine learning models.
 
-3. **Integrated Health Chatbot**: Offers various health chatbots fine-tuned on different health field datasets to help patients better understand their health conditions and receive advice.
+3. **Integrated AI Health Chatbot**: Offers various health chatbots fine-tuned on different health field datasets to help patients better understand their health conditions and receive advice.
 4. **Appointment Doctor**: Users can schedule appointments with doctors based on their availability and specialization.
 5. **Medical Blog Sharing**: Read helpful health blogs and able to comment on it.
 
@@ -57,7 +57,14 @@ npm start
 ![readBlog](./public/read-post.png)
 ### Doctor
 ![doctor](./public/doctor.png)
+### Doctor Detail
+![doctorDetail](./public/doctor-detail.png)
+### Health Predicting
+#### Blood Pressure 
+![bloodPressure](./public/blood-pressure.png)
 
+#### BMI
+![bmi](./public/bmi.png)
 
 ### Login required
 ![loginreq](./public/loginrequired.png)
