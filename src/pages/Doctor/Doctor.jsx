@@ -21,7 +21,7 @@ const Doctor = () => {
                     <Flex wrap="wrap" align="center" gap="large">
 
                         {doctors.map((doctor, index) => (
-                            <Link to={`/doctor/${doctor.id}`} key={index}>
+                            <Link to={`/doctors/${doctor.name}`} key={index}>
                                 <Card
                                     key={index}
                                     className="doctor-card"

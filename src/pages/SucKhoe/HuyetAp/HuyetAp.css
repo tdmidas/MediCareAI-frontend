@@ -1,0 +1,18 @@
+:root {
+    --low: #0b5edb;
+    --normal: #069390;
+    --high: #d2c63f;
+    --stage1: #f7a440;
+    --stage2: #cd5e09;
+    --critical: #a72420;
+}
+.submit-btn:hover{
+    background: #229c9e !important;
+}
+.bp-card{
+    display: grid;
+        gap: 1rem;
+    width: 90%;
+    max-width: 100vh;
+    box-shadow: 0 10px 15px rgba(5, 125, 129, 0.25);
+}

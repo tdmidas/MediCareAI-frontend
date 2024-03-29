@@ -23,7 +23,7 @@ function App() {
 				<Route path="/register" element={<Register />} />
 				<Route path="/lichkham" element={<LichKham />} />
 				<Route path="/doctors" element={<Doctor />} />
-				<Route path="/doctor/:slug" element={<DoctorDetail />} />
+				<Route path="/doctors/:slug" element={<DoctorDetail />} />
 				<Route path="/chat" element={<Chat />} />
 				<Route path="/suckhoe" element={<SucKhoe />} />
 				<Route path="/suckhoe/:slug" element={<SucKhoeDetail />} />

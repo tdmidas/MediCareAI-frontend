@@ -4,6 +4,7 @@ import HealthTrackData from "../../HealthTrackData";
 import { Card, Flex, Typography, Image, Progress } from "antd";
 import './SucKhoe.css';
 import DefaultLayout from '../../layout/DefaultLayout';
+import slug from "slug";
 const meditation = require("../../assets/meditation.png")
 const SucKhoe = () => {
     return (
@@ -25,7 +26,7 @@ const SucKhoe = () => {
                 </Flex>
                 <Flex wrap="wrap" align="center" gap="large">
                     {HealthTrackData.map((item, index) => (
-                        <Link to={`/suckhoe/${item.id}`} key={index}>
+                        <Link to={`/suckhoe/${slug(item.name)}`} key={index}>
 
                             <Card
                                 key="1"

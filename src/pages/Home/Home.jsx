@@ -25,9 +25,10 @@ const Home = () => {
                 <Flex vertical gap="2.3rem">
                     <Banner />
                     <HealthTrackList />
+                    <BLogList />
                     <DoctorList />
 
-                    <BLogList />
+
                 </Flex>
                 <MainContentLayout />
                 <SideContentLayout>

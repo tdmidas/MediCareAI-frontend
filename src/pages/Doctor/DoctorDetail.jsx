@@ -12,7 +12,7 @@ const { TabPane } = Tabs;
 
 const DoctorDetail = () => {
     const { slug } = useParams();
-    const doctor = doctors.find(doc => doc.id === slug);
+    const doctor = doctors.find(doc => doc.name === slug);
 
     if (!doctor) {
         return <div>Doctor not found</div>;
