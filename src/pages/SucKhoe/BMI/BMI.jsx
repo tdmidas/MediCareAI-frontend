@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { Input, Button, Typography, Form, Flex, Card } from 'antd';
+import { Input, Button, Typography, Form, Card } from 'antd';
 import './BMI.css';
 import DefaultLayout from '../../../layout/DefaultLayout';
 

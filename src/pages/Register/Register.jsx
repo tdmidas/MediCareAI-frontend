@@ -3,7 +3,7 @@ import { useNavigate } from "react-router-dom";
 import { validate } from "./validate";
 import styles from "./Register.module.css";
 import "react-toastify/dist/ReactToastify.css";
-import { ToastContainer, toast } from "react-toastify";
+import { ToastContainer } from "react-toastify";
 import { notify } from "../../config/toast";
 import { Link } from "react-router-dom";
 import axios from "axios";

@@ -1,5 +1,4 @@
 import { useParams } from 'react-router-dom';
-import HeartRate from './HeartRate/HeartRate';
 import BMI from './BMI/BMI';
 import DuongHuyet from './DuongHuyet/DuongHuyet';
 import HuyetAp from './HuyetAp/HuyetAp';
