@@ -2,7 +2,7 @@ import { initializeApp } from "firebase/app";
 import { getAuth, GoogleAuthProvider, signInWithPopup, FacebookAuthProvider } from "firebase/auth";
 
 const firebaseConfig = {
-	apiKey: "AIzaSyCrKEWN_0gFq66oURJCdcMkfGrdgcKVYk0",
+	apiKey: process.env.REACT_APP_FIREBASE_API_KEY,
 	authDomain: "medicareai.firebaseapp.com",
 	projectId: "medicareai",
 	storageBucket: "medicareai.appspot.com",

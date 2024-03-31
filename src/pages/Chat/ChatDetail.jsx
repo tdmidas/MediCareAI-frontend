@@ -44,7 +44,7 @@ const ChatDetail = () => {
 
     const getBotResponse = async (userInput) => {
         const endpoint = "https://api.openai.com/v1/chat/completions";
-        const apiKey = "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";
+        const apiKey = process.env.REACT_APP_OPENAI_API_KEY;
         const requestData = {
             model: "gpt-3.5-turbo",
             messages: [{ role: "user", content: userInput }],
