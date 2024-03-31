@@ -51,6 +51,17 @@ npm start
 ![home](./public/home.png)
 ### Logged in
 ![logged](./public/logged-in.png)
+### Chatbot
+![chat](./public/chat.png)
+#### Chat interacting
+![chatInt](./public/chat-interact.png)
+### Book Appointment
+#### Step 1
+![book1](./public/step1.png)
+#### Step 2
+![book2](./public/step2.png)
+#### Step 3
+![book3](./public/step3.png)
 ### Blog screenshot
 ![blog](./public/blog.png)
 ### Read Blog screenshot
@@ -60,8 +71,12 @@ npm start
 ### Doctor Detail
 ![doctorDetail](./public/doctor-detail.png)
 ### Health Predicting
+![overall](./public/overall-health.png)
+
 #### Blood Pressure 
 ![bloodPressure](./public/blood-pressure.png)
+#### Sugar Blood
+![sugar](./public/sugar-blood.png)
 
 #### BMI
 ![bmi](./public/bmi.png)
