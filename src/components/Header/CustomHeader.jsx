@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import { Flex, Typography, Badge } from 'antd';
+import { Flex, Badge } from 'antd';
 import { Button } from 'antd';
 import { Input } from 'antd';
 import './CustomHeader.css';
@@ -10,7 +10,6 @@ import { BellOutlined, SearchOutlined } from '@ant-design/icons';
 import { MenuFoldOutlined } from "@ant-design/icons";
 import { useMediaQuery } from "react-responsive";
 
-const { Title } = Typography;
 
 const CustomHeader = ({ toggleDrawer }) => {
     const navigate = useNavigate();

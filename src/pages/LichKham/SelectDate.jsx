@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import { Row, Col, Card, Typography, Button, DatePicker, Select } from 'antd';
+import { Row, Col, Card, Button, DatePicker, Select } from 'antd';
 import doctors from "../../data/doctors";
 
 const { Option } = Select;
@@ -8,7 +8,6 @@ const SelectDate = ({ onNext }) => {
     const [selectedDate, setSelectedDate] = useState(null);
     const [selectedDoctor, setSelectedDoctor] = useState(null);
     const [selectedTime, setSelectedTime] = useState(null);
-    const [selectedDoctorInfo, setSelectedDoctorInfo] = useState(null);
 
     useEffect(() => {
         const storedDoctor = JSON.parse(localStorage.getItem('selectedDoctor'));

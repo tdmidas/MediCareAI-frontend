@@ -1,9 +1,8 @@
 import React, { useState } from 'react';
-import { Row, Col, Card, Typography, Form, Input, Button } from 'antd';
+import { Row, Col, Card, Form, Input, Button } from 'antd';
 import { useMediaQuery } from 'react-responsive';
 
 
-const { Title } = Typography;
 
 const PatientInfo = ({ user, onNext, onPrev, doctorInfo }) => {
     const isMobile = useMediaQuery({ maxWidth: 768 });
@@ -14,7 +13,6 @@ const PatientInfo = ({ user, onNext, onPrev, doctorInfo }) => {
     const [phone, setPhone] = useState('');
     const [reasonForVisit, setReasonForVisit] = useState('');
     const [address, setAddress] = useState('');
-    const [showAdditionalInfo, setShowAdditionalInfo] = useState(false);
     const handleNext = () => {
         // You can perform validation here before proceeding to the next step
         const patientInfo = {

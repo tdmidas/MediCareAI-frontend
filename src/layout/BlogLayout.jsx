@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import { Layout, Typography, Image, Col, Card, Modal, Form, Input, Button, Flex } from 'antd';
+import { Layout, Typography, Image, Col, Modal, Form, Input, Button, Flex } from 'antd';
 import './BlogLayout.css';
 import { AiOutlineHeart, AiOutlineComment } from 'react-icons/ai';
 
