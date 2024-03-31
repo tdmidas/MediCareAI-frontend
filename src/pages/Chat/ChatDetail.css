@@ -25,3 +25,20 @@ input[type="text"] {
     margin-right: 10px;
 }
 
+
+
+.message.user {
+    align-self: flex-end;
+}
+
+.message.bot {
+    align-self: flex-start;
+}
+.textarea-container {
+    position: relative;
+}
+
+
+.send-btn {
+    margin-bottom: 10px;
+}

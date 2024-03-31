@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import { useParams } from "react-router-dom";
 import { Input, Button, Typography, Avatar, Flex, Card, Spin } from "antd";
 import chatbotData from "../../data/chat";
@@ -7,7 +7,8 @@ import defaultAvatar from "../../assets/patient-avatar.png";
 import DefaultLayout from "../../layout/DefaultLayout";
 import MainContentLayout from "../../layout/MainContentLayout";
 import { useMediaQuery } from 'react-responsive';
-
+import { SendOutlined } from '@ant-design/icons';
+import { LoadingOutlined } from '@ant-design/icons';
 const { TextArea } = Input;
 const { Text } = Typography;
 
@@ -16,8 +17,27 @@ const ChatDetail = () => {
     const [messages, setMessages] = useState([]);
     const [userInput, setUserInput] = useState("");
     const [loading, setLoading] = useState(false);
-    const chatbot = chatbotData.find((chatbot) => chatbot.name === slug);
+    const [chatbot, setChatbot] = useState(null);
     const isMobile = useMediaQuery({ maxWidth: 768 });
+    const getFormattedName = (slug) => {
+        switch (slug) {
+            case "bac-si-tim-mach":
+                return "Bác sĩ tim mạch";
+            case "bac-si-noi-khoa":
+                return "Bác sĩ nội khoa";
+            case "bac-si-noi-tiet":
+                return "Bác sĩ nội tiết";
+            case "bac-si-dinh-duong":
+                return "Bác sĩ dinh dưỡng";
+            default:
+                return slug; // Return slug as is if no match found
+        }
+    };
+    useEffect(() => {
+        const bot = chatbotData.find((chatbot) => chatbot.name === getFormattedName(slug));
+        setChatbot(bot);
+        setMessages([{ sender: bot.name, content: "Xin chào, bạn cần hỗ trợ gì về sức khỏe ạ? Hãy chia sẻ thêm thông tin để mình có thể hỗ trợ bạn tốt hơn nhé." }]);
+    }, [slug]);
 
     const sendMessage = async () => {
         if (!userInput.trim()) return;
@@ -30,12 +50,12 @@ const ChatDetail = () => {
 
         try {
             const botResponse = await getBotResponse(userInput);
-            const updatedMessagesWithBot = [...updatedMessages, { sender: "Bot", content: botResponse }];
+            const updatedMessagesWithBot = [...updatedMessages, { sender: chatbot.name, content: botResponse }];
             setMessages(updatedMessagesWithBot);
         } catch (error) {
             console.error("Error fetching bot response:", error);
-            const errorMessage = "Sorry, I encountered an error.";
-            const updatedMessagesWithError = [...updatedMessages, { sender: "Bot", content: errorMessage }];
+            const errorMessage = "Xin lỗi bạn, tôi đang gặp chút sự cố.";
+            const updatedMessagesWithError = [...updatedMessages, { sender: chatbot.name, content: errorMessage }];
             setMessages(updatedMessagesWithError);
         }
 
@@ -64,6 +84,10 @@ const ChatDetail = () => {
         return data.choices[0].message.content;
     };
 
+    if (!chatbot) {
+        return null; // Render nothing until chatbot data is loaded
+    }
+
     return (
         <DefaultLayout>
             <MainContentLayout>
@@ -71,15 +95,31 @@ const ChatDetail = () => {
                     <Card id="chat-container" className="chat-container" style={{ width: isMobile ? 300 : 800, height: 600 }}>
                         {loading ? ( // Conditionally render loading indicator
                             <div style={{ textAlign: "center", marginTop: 20 }}>
-                                <Spin size="large" />
+                                <Spin size="large"
+                                    indicator={
+                                        <LoadingOutlined
+                                            style={{
+                                                fontSize: 24,
+                                            }}
+                                            spin
+                                        />
+                                    }
+                                />
                                 <Text type="secondary">Waiting for response...</Text>
                             </div>
                         ) : (
                             messages.map((message, index) => (
                                 <div key={index} className={`message ${message.sender.toLowerCase()}`}>
-                                    <Avatar src={message.sender === "Bot" ? chatbot.picture : defaultAvatar} />
+                                    <Avatar src={message.sender === chatbot.name ? chatbot.picture : defaultAvatar} style={{ marginBottom: 20 }} />
                                     <div className="message-content">
-                                        <Text strong>{message.sender}:</Text> <Text>{message.content}</Text>
+                                        <Flex vertical gap="small">
+                                            <Text strong>{message.sender}:</Text>
+                                            <div className="message-bubble" style={{
+                                                backgroundColor: message.sender === chatbot.name ? "#069390" : "white", borderRadius: 30, padding: 20,
+                                            }}>
+                                                <Text color="white" style={{ color: message.sender === chatbot.name ? "white" : "black" }}>{message.content}</Text>
+                                            </div>
+                                        </Flex>
                                     </div>
                                 </div>
                             ))
@@ -91,12 +131,15 @@ const ChatDetail = () => {
                             value={userInput}
                             onChange={(e) => setUserInput(e.target.value)}
                             wrap="wrap"
-                            style={{ width: isMobile ? 300 : 800, borderRadius: 50, marginBottom: 20, height: 50 }}
-                            placeholder="Type your message..."
-                        />
-                        <Button type="primary" onClick={sendMessage}>
-                            Send
-                        </Button>
+                            style={{ width: isMobile ? 300 : 750, borderRadius: 50, marginBottom: 20, height: 50, overflow: "hidden" }}
+                            placeholder="Nhập tin nhắn của bạn..."
+                            onPressEnter={sendMessage}
+                            className="textarea-container"
+                        >
+
+                        </TextArea>
+                        <Button className="send-btn" type="primary" icon={<SendOutlined />} onClick={sendMessage} />
+
                     </Flex>
                 </Flex>
             </MainContentLayout>

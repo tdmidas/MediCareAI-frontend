@@ -9,6 +9,7 @@ import MainContentLayout from "../../layout/MainContentLayout";
 import chatbotData from '../../data/chat';
 import { useNavigate } from "react-router-dom";
 import { useMediaQuery } from 'react-responsive';
+import slug from 'slug';
 const Chat = () => {
     const [isLoggedIn, setIsLoggedIn] = useState(false);
     const navigate = useNavigate();
@@ -75,7 +76,7 @@ const Chat = () => {
                             <Flex wrap="wrap" align="center" gap="large">
 
                                 {chatbotData.map((chatbot, index) => (
-                                    <Link to={`/chat/${chatbot.name}`} key={index}>
+                                    <Link to={`/chat/${slug(chatbot.name)}`} key={index}>
                                         <Card
                                             key={index}
                                             className="chat-card"
