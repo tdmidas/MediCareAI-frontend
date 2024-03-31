@@ -12,7 +12,7 @@ const DoctorList = () => {
     };
     return (
         <>
-            <Flex align="center" justify="space-between" >
+            <Flex align="center" justify="space-between" wrap="wrap">
                 <Typography.Title level={3} strong>
                     Bác sĩ nổi bật
                 </Typography.Title>
@@ -20,7 +20,7 @@ const DoctorList = () => {
                     Xem thêm
                 </Button>
             </Flex>
-            <Flex align="center" gap="large">
+            <Flex align="center" gap="large" wrap="wrap">
                 {doctors.slice(0, 2).map((doctor) => (
                     <Card
                         key="1"
@@ -33,7 +33,7 @@ const DoctorList = () => {
                                 style={{ display: "block", height: "250px", maxWidth: "100%", objectFit: "cover" }}
                             />
                         }
-                        style={{ height: "500px", width: "300px", padding: "20px", marginBottom: "20px" }}
+                        style={{ flex: "0 1 300px", height: "500px", width: "300px", padding: "20px", marginBottom: "20px" }}
                     >
                         <Flex >
                             <Flex vertical aligh="center" gap="10px">

@@ -6,7 +6,7 @@ import "./Calendar.css"
 export default function BasicDateCalendar() {
     return (
         <LocalizationProvider dateAdapter={AdapterDayjs}>
-            <DateCalendar />
+            <DateCalendar className='calendar' />
         </LocalizationProvider>
     );
 }

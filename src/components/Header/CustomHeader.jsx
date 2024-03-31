@@ -6,16 +6,20 @@ import './CustomHeader.css';
 import { useNavigate } from 'react-router-dom';
 import { auth } from '../../firebaseConfig';
 import { Menu, Dropdown } from 'antd';
-import { BellOutlined } from '@ant-design/icons';
-const { Search } = Input;
+import { BellOutlined, SearchOutlined } from '@ant-design/icons';
+import { MenuFoldOutlined } from "@ant-design/icons";
+import { useMediaQuery } from "react-responsive";
+
 const { Title } = Typography;
 
-const CustomHeader = () => {
+const CustomHeader = ({ toggleDrawer }) => {
     const navigate = useNavigate();
     const [user, setUser] = useState(null);
 
-    useEffect(() => {
+    const isMobile = useMediaQuery({ maxWidth: 768 });
+    const isSmallScreen = useMediaQuery({ maxWidth: 1024 });
 
+    useEffect(() => {
         const unsubscribe = auth.onAuthStateChanged(user => {
             if (user) {
                 setUser(user);
@@ -23,7 +27,6 @@ const CustomHeader = () => {
                 setUser(null);
             }
         });
-
         return () => unsubscribe();
     }, []);
 
@@ -48,9 +51,9 @@ const CustomHeader = () => {
             <Menu.Item key="logout" onClick={handleLogout}>
                 Đăng xuất
             </Menu.Item>
-
         </Menu>
     );
+
     const notifications = [
         {
             id: 1,
@@ -73,14 +76,22 @@ const CustomHeader = () => {
             ))}
         </Menu>
     );
+
     return (
-        <Flex align="center" justify="space-between">
-            <Title className="welcome-title" level={4}>Great to see you</Title>
-            <Flex align="center" gap="20rem">
-                <Search className="search-btn" placeholder="Tìm kiếm bác sĩ, blog,..." allowClear />
+        <Flex align="center" >
+            <Flex align="center" gap={isSmallScreen ? "1rem" : "40rem"}>
+                {isMobile && (
+                    <Button
+                        type="text"
+                        icon={<MenuFoldOutlined />}
+                        onClick={toggleDrawer}
+                        className="drawer-toggle-btn"
+                    />
+
+                )}
+                <Input placeholder="Tìm kiếm bác sĩ, blog,..." prefix={<SearchOutlined />} style={{ borderRadius: 30, minWidth: 150, marginLeft: isSmallScreen ? 0 : 300 }} />
+
                 <Flex align="center" gap="10px">
-
-
                     {user ? (
                         <>
                             <Dropdown overlay={notificationMenu} trigger={['click']}>

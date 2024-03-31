@@ -1,8 +1,11 @@
 /* Main */
 
 .header {
-    padding-top: 12px;
+    display: flex;
+    padding: 0 24px;
+    
     background: #fff;
+
 }
 
 .content {
@@ -38,3 +41,7 @@
     font-size: 1.5rem;
 }
 
+.ant-drawer .ant-drawer-body {
+
+    padding: 0;
+}

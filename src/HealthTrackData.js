@@ -20,13 +20,6 @@ const HealthTrackData = [
 		measure: "BMI",
 		color: "#caffe0 !important",
 	},
-	{
-		id: 4,
-		name: "Nhịp tim",
-		picture: require("./assets/heart-rate.png"),
-		measure: "bpm",
-		color: "#caffe0 !important",
-	},
 ];
 
 export default HealthTrackData;

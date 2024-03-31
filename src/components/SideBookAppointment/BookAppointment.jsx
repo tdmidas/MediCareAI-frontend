@@ -5,7 +5,7 @@ const { Text } = Typography;
 
 const BookAppointment = () => {
     return (
-        <Card className="book-appointment-card" bordered={false} style={{ width: 350, height: 800 }}>
+        <Card className="book-appointment-card" bordered={false} style={{ maxWidth: 350, height: 400 }}>
             <Flex gap="10px" align='center'>
                 <Typography.Title level={4}>Ticket Price</Typography.Title>
                 <Typography.Text strong>₹200</Typography.Text>

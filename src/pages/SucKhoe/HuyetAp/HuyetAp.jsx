@@ -8,6 +8,7 @@ const { Title, Paragraph } = Typography;
 const HuyetAp = () => {
     const [tamTruong, setTamTruong] = useState(120);
     const [tamThu, setTamThu] = useState(80);
+    const [nhipTim, setNhipTim] = useState(70);
     const [bloodPressureClassification, setBloodPressureClassification] = useState("");
     const [bloodPressureColor, setBloodPressureColor] = useState("");
 
@@ -20,11 +21,9 @@ const HuyetAp = () => {
             return "Huyết áp cao";
         } else if ((tamTruong >= 130 && tamTruong <= 139) || (tamThu >= 80 && tamThu <= 89)) {
             return "Tăng huyết áp giai đoạn 1";
-        }
-        else if ((tamTruong >= 140 && tamTruong <= 180) || (tamThu >= 90 && tamThu <= 120)) {
+        } else if ((tamTruong >= 140 && tamTruong <= 180) || (tamThu >= 90 && tamThu <= 120)) {
             return "Tăng huyết áp giai đoạn 2";
-        }
-        else if (tamTruong >= 180 || tamThu >= 120) {
+        } else if (tamTruong >= 180 || tamThu >= 120) {
             return "Tăng huyết áp";
         } else {
             return "Không xác định";
@@ -69,21 +68,24 @@ const HuyetAp = () => {
     return (
         <DefaultLayout>
             <Flex vertical gap="large" align="center">
-                <Card className="bp-card" style={{ width: 700 }}>
+                <Card className="bp-card" style={{ width: "100%", maxWidth: 700 }}>
                     <Title level={1} style={{ textAlign: "center" }}>Nhập bản ghi huyết áp
                     </Title>
 
                     <Form className="calculator" onFinish={handleSubmit} style={{ justifyItems: "center" }}>
                         <Form.Item label="Tâm trương (mmHg)" name="tamTruong">
-                            <Input type="number" min={20} max={300} value={tamTruong} onChange={(e) => setTamTruong(parseFloat(e.target.value))} style={{ borderRadius: 30, width: 250 }} />
+                            <Input type="number" min={20} max={300} value={tamTruong} onChange={(e) => setTamTruong(parseFloat(e.target.value))} style={{ borderRadius: 30, width: "100%" }} />
                         </Form.Item>
                         <Form.Item label="Tâm thu (mmHg)" name="tamThu">
-                            <Input type="number" min={20} max={300} value={tamThu} onChange={(e) => setTamThu(parseFloat(e.target.value))} style={{ borderRadius: 30, width: 250 }} />
+                            <Input type="number" min={20} max={300} value={tamThu} onChange={(e) => setTamThu(parseFloat(e.target.value))} style={{ borderRadius: 30, width: "100%" }} />
+                        </Form.Item>
+                        <Form.Item label="Nhịp tim (BPM)" name="bpm">
+                            <Input type="number" min={0} max={300} value={nhipTim} onChange={(e) => setNhipTim(parseFloat(e.target.value))} style={{ borderRadius: 30, width: "100%" }} />
                         </Form.Item>
 
                     </Form>
                     <Row align="center">
-                        <Button type="primary" className="submit-btn" onClick={handleSubmit} style={{ justifyItems: "center", borderRadius: 30, width: 100, height: 40 }}>Submit</Button>
+                        <Button type="primary" className="submit-btn" onClick={handleSubmit} style={{ justifyItems: "center", borderRadius: 30, width: "100%", maxWidth: 150 }}>Submit</Button>
 
                     </Row>
 

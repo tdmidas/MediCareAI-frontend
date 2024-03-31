@@ -1,8 +1,9 @@
 import React, { useState } from "react";
-import { Layout, Typography, Image, Row, Col, Card, Modal, Form, Space, Input, Button, Flex } from 'antd';
+import { Layout, Typography, Image, Col, Card, Modal, Form, Input, Button, Flex } from 'antd';
 import './BlogLayout.css';
 import { AiOutlineHeart, AiOutlineComment } from 'react-icons/ai';
-const { Content, Header } = Layout;
+
+const { Content } = Layout;
 const { Title, Text } = Typography;
 
 const BlogLayout = ({ title, content, imageUrl, date }) => {
@@ -29,32 +30,26 @@ const BlogLayout = ({ title, content, imageUrl, date }) => {
     };
 
     return (
-        <Layout className="blog-layout" style={{ maxHeight: "100vh", overflowY: "scroll", overflowX: "hidden" }}>
-
+        <Layout className="blog-layout" style={{ height: "100vh", overflowY: "scroll", overflowX: "hidden" }}>
             <Content className="blog-content">
-                <Row justify="center" align="middle">
-                    <Col xs={24} md={6} lg={6} className="user-info-col">
-                        <Card className="user-info-card" style={{ width: 200, background: "Transparent" }}>
+                <Col xs={600} md={800} lg={1200}>
+                    <div className="blog-card">
+                        <Flex vertical align="center" justify="center">
+                            <Title level={2}>{title}</Title>
+                            <Image preview={false} src={imageUrl} alt={title} className="blog-image" />
+                        </Flex>
+                        <Flex justify="center" align="center">
                             <Title level={4}>Dai Tran</Title>
-                            <Text>Researcher</Text>
-
                             <div className="user-info-icons">
                                 <AiOutlineHeart onClick={increaseLikes} className="like-icon" />
                                 <Text style={{ fontSize: 20, fontWeight: 500 }} strong>{likes}</Text>
                                 <AiOutlineComment onClick={handleCommentVisible} className="comment-icon" />
-
                             </div>
-                        </Card>
-                    </Col>
-                    <Col xs={24} md={18} lg={18}>
-                        <div className="blog-card">
-                            <Title level={2}>{title}</Title>
-                            <Image preview={false} src={imageUrl} alt={title} className="blog-image" />
-                            <Text className="blog-date">{date}</Text>
-                            <div className="blog-content">{content}</div>
-                        </div>
-                    </Col>
-                </Row>
+                        </Flex>
+                        <Text className="blog-date">{date}</Text>
+                        <div className="blog-content">{content}</div>
+                    </div>
+                </Col>
             </Content>
             <Modal
                 title="Comments"

@@ -20,9 +20,9 @@ const Home = () => {
     };
     return (
         <DefaultLayout>
-            <Flex gap="large">
+            <Flex gap="large" wrap='wrap'>
                 <MainContentLayout />
-                <Flex vertical gap="2.3rem">
+                <Flex vertical gap="2.3rem" wrap='wrap'>
                     <Banner />
                     <HealthTrackList />
                     <BLogList />
@@ -40,7 +40,7 @@ const Home = () => {
                                 src={doctor}
                                 style={{ float: "right", position: "absolute", paddingBottom: "72px", paddingLeft: "90px", width: "auto", height: "300px" }}
                             />
-                        }>
+                        } style={{ maxWidth: 300 }}>
                             <Flex vertical gap="large">
                                 <Typography.Title level={4} strong>
                                     The better<br />  health

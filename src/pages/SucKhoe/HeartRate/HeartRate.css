@@ -1,13 +1,26 @@
-/* HeartRate.css */
-
-.heart-rate-container {
-    text-align: center;
+:root {
+    /* Variables for both color schemes */
+    --transition-duration: 0.2s;
+    --border-radius-small: 6px;
+    --border-radius-medium: 10px;
+    --border-radius-large: 15px;
 }
+body{
+    background-color: var(--page-background);
+    color: var(--page-color);
+    font-family: 'Roboto', sans-serif;
+    font-size: 16px;
+    margin: 0;
+    padding: 0;
+    transition: background-color var(--transition-duration);
 
-.video-container {
-    margin-top: 20px;
 }
-
-.heart-rate-display {
-    margin-top: 20px;
+:root {
+    --page-background: #111;
+    --page-color: #ddd;
+    --text-color-muted: #666;
+    --graph-background: transparent;
+    --graph-color: #f76;
+    --backdrop-background: rgba(0, 0, 0, 0.3);
+    --nav-item-background: #151515;
 }

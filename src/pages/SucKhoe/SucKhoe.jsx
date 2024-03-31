@@ -4,17 +4,19 @@ import HealthTrackData from "../../HealthTrackData";
 import { Card, Flex, Typography, Image, Progress } from "antd";
 import './SucKhoe.css';
 import DefaultLayout from '../../layout/DefaultLayout';
+import HealthEvaluate from "../../components/HealthEvaluate/HealthEvaluate";
 import slug from "slug";
+import { useMediaQuery } from 'react-responsive';
+
 const meditation = require("../../assets/meditation.png")
 const SucKhoe = () => {
+    const isMobile = useMediaQuery({ maxWidth: 768 });
     return (
         <DefaultLayout>
             <>
-                <Flex align="center" gap="large">
-                    <Image preview={false} src={meditation} style={{ width: 600, height: 400 }} />
-                    <Card style={{ width: 600, height: 400 }}>
-                        <Progress type="circle" percent={100} format={() => '100'} />
-                    </Card>
+                <Flex align="center" gap="large" wrap="wrap">
+                    <Image preview={false} src={meditation} style={{ maxWidth: 600, maxHeight: 400, marginLeft: 30 }} />
+                    <HealthEvaluate />
 
 
                 </Flex>
@@ -39,7 +41,7 @@ const SucKhoe = () => {
                                         style={{ float: "right", width: "120px", height: "120px" }}
                                     />
                                 }
-                                style={{ height: "180px", width: "350px", padding: "20px", marginBottom: "20px" }}
+                                style={{ height: "180px", width: isMobile ? "300px" : "350px", padding: "20px", marginBottom: "20px", backgroundColor: item.color }}
                             >
                                 <Flex >
                                     <Flex vertical aligh="flex-start">

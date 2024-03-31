@@ -3,8 +3,11 @@ import BlogData from "../../BlogData";
 import React from "react";
 import "./BlogList.css";
 import { useNavigate } from "react-router-dom";
+import { useMediaQuery } from 'react-responsive';
+
 const BLogList = () => {
     const navigate = useNavigate();
+    const isMobile = useMediaQuery({ maxWidth: 768 });
 
     const handleClick = () => {
         navigate('/blog');
@@ -19,7 +22,7 @@ const BLogList = () => {
                     Xem thêm
                 </Button>
             </Flex>
-            <Flex align="center" gap="large">
+            <Flex align="center" gap="large" wrap="wrap">
                 {BlogData.slice(0, 2).map((item) => (
                     <Card
                         key="1"
@@ -32,7 +35,7 @@ const BLogList = () => {
                                 style={{ display: "block", height: "150px", maxWidth: "100%", objectFit: "cover" }}
                             />
                         }
-                        style={{ height: "400px", width: "400px", padding: "20px", marginBottom: "20px" }}
+                        style={{ height: isMobile ? "500px" : "400px", maxWidth: "400px", padding: "20px", marginBottom: "20px" }}
                     >
                         <Flex >
                             <Flex vertical aligh="flex-start" gap="10px">

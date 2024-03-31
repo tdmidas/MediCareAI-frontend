@@ -1,19 +1,18 @@
 import { Flex, Menu, Image, Typography } from 'antd';
 import { React, useState, useEffect } from 'react';
-import { FaHandHoldingMedical, FaRegHeart } from "react-icons/fa6";
+import { FaRegHeart } from "react-icons/fa6";
 import { LuNewspaper } from "react-icons/lu";
 import { FaRegCalendarAlt } from "react-icons/fa";
 import { RiHome6Line, RiNurseLine } from "react-icons/ri";
-import { IoPersonOutline, IoChatbubbleOutline } from "react-icons/io5";
+import { IoChatbubbleOutline } from "react-icons/io5";
 import { NavLink, useLocation } from 'react-router-dom';
 import './Sidebar.css';
 const logo = require("../../assets/logo-final.png")
 const Sidebar = () => {
     const location = useLocation();
     const [isCollapsed, setIsCollapsed] = useState(false);
-    useEffect(() => {
-        setIsCollapsed(false);
-    }, [location, setIsCollapsed]);
+
+
 
     const getActiveTabKey = () => {
         switch (location.pathname) {
