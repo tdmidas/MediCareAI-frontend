@@ -1,0 +1,22 @@
+.payment-card {
+    background-color: #f0f2f5;
+    border-radius: 8px;
+    padding: 20px;
+}
+
+.payment-card .ant-card-head {
+    background-color: #1890ff;
+    border-radius: 8px 8px 0 0;
+}
+
+.payment-card .ant-card-head-title {
+    color: #fff;
+}
+
+.payment-card .ant-card-body {
+    padding: 0;
+}
+
+.payment-card .ant-typography {
+    margin-bottom: 20px;
+}

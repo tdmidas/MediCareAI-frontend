@@ -1,7 +1,7 @@
 import React from "react";
 import { Link } from "react-router-dom";
 import HealthTrackData from "../../HealthTrackData";
-import { Card, Flex, Typography, Image, Progress } from "antd";
+import { Card, Flex, Typography, Image } from "antd";
 import './SucKhoe.css';
 import DefaultLayout from '../../layout/DefaultLayout';
 import HealthEvaluate from "../../components/HealthEvaluate/HealthEvaluate";

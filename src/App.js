@@ -14,6 +14,7 @@ import DoctorDetail from "./pages/Doctor/DoctorDetail";
 import BlogLayout from "./layout/BlogLayout";
 import blogData from "./BlogData";
 import slug from "slug";
+import ChatDetail from "./pages/Chat/ChatDetail";
 function App() {
 	return (
 		<Router>
@@ -25,6 +26,8 @@ function App() {
 				<Route path="/doctors" element={<Doctor />} />
 				<Route path="/doctors/:slug" element={<DoctorDetail />} />
 				<Route path="/chat" element={<Chat />} />
+				<Route path="/chat/:slug" element={<ChatDetail />} />
+
 				<Route path="/suckhoe" element={<SucKhoe />} />
 				<Route path="/suckhoe/:slug" element={<SucKhoeDetail />} />
 				<Route path="/profile" element={<Profile />} />

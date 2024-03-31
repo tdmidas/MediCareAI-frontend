@@ -1,9 +1,18 @@
-const doctorImg01 = require("../assets/doctor-img01.png");
-const doctorImg02 = require("../assets/doctor-img02.png");
-const doctorImg03 = require("../assets/doctor-img03.png");
-const doctorImg04 = require("../assets/doctor-img04.png");
-const doctorImg05 = require("../assets/doctor-img05.png");
-const doctorImg06 = require("../assets/doctor-1.png");
+import doctorImg01 from "../assets/doctor-img01.png";
+import doctorImg02 from "../assets/doctor-img02.png";
+import doctorImg03 from "../assets/doctor-img03.png";
+import doctorImg04 from "../assets/doctor-img04.png";
+import doctorImg05 from "../assets/doctor-img05.png";
+import doctorImg06 from "../assets/doctor-1.png";
+
+// Function to generate random time slots
+const generateRandomTimeSlots = () => {
+	const timeSlots = ["Morning", "Afternoon"];
+	const randomTime = timeSlots[Math.floor(Math.random() * timeSlots.length)];
+	const startHour = Math.floor(Math.random() * (17 - 8 + 1)) + 8; // Random start hour between 8 and 17 (5 PM)
+	const endHour = startHour + Math.floor(Math.random() * (4 - 1 + 1)) + 1; // Random duration of 1 to 4 hours
+	return [{ time: randomTime, startHour, endHour }];
+};
 
 const doctors = [
 	{
@@ -18,6 +27,11 @@ const doctors = [
 		education: "PHD in Surgeon",
 		hospital: "Kangaroo Hospital.",
 		short: "Lorem ipsum dolor sit amet consectetur adipisicing elit. Dicta, alias!",
+		availableTimes: [
+			{ time: "Morning", startHour: 8, endHour: 12 },
+			{ time: "Afternoon", startHour: 13, endHour: 17 },
+		],
+		price: 200,
 	},
 	{
 		id: "02",
@@ -31,6 +45,11 @@ const doctors = [
 		hospital: "Flex Hospital",
 		education: "PHD in Neurologist",
 		short: "Lorem ipsum dolor sit amet consectetur adipisicing elit. Dicta, alias!",
+		availableTimes: [
+			{ time: "Morning", startHour: 9, endHour: 11 },
+			{ time: "Afternoon", startHour: 16, endHour: 17 },
+		],
+		price: 230,
 	},
 	{
 		id: "03",
@@ -44,6 +63,8 @@ const doctors = [
 		education: "PHD in Gynaecology",
 		hospital: "Flex Hospital",
 		short: "Lorem ipsum dolor sit amet consectetur adipisicing elit. Dicta, alias!",
+		availableTimes: generateRandomTimeSlots(),
+		price: 350,
 	},
 	{
 		id: "04",
@@ -70,6 +91,8 @@ const doctors = [
 		hospital: "Flex Hospital",
 		education: "PHD in Neurologist",
 		short: "Lorem ipsum dolor sit amet consectetur adipisicing elit. Dicta, alias!",
+		availableTimes: generateRandomTimeSlots(),
+		price: 170,
 	},
 	{
 		id: "06",
@@ -83,6 +106,9 @@ const doctors = [
 		education: "PHD in Gynaecology",
 		hospital: "Flex Hospital",
 		short: "Lorem ipsum dolor sit amet consectetur adipisicing elit. Dicta, alias!",
+		availableTimes: generateRandomTimeSlots(),
+		price: 220,
 	},
 ];
+
 export default doctors;

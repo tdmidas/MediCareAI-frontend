@@ -79,7 +79,7 @@ const CustomHeader = ({ toggleDrawer }) => {
 
     return (
         <Flex align="center" >
-            <Flex align="center" gap={isSmallScreen ? "1rem" : "40rem"}>
+            <Flex align="center" gap={isSmallScreen ? "1rem" : "38rem"}>
                 {isMobile && (
                     <Button
                         type="text"
@@ -100,7 +100,7 @@ const CustomHeader = ({ toggleDrawer }) => {
                                 </Badge>
                             </Dropdown>
                             <Dropdown overlay={menu}>
-                                <img src={user.photoURL} alt="Profile" className="profile-photo" style={{ borderRadius: 30, width: 80, height: 40 }} />
+                                <img src={user.photoURL} alt="Profile" className="profile-photo" style={{ borderRadius: 30, width: 90, height: 35 }} />
                             </Dropdown>
                         </>
                     ) : (

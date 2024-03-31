@@ -63,7 +63,7 @@ const DoctorDetail = () => {
                 </MainContentLayout>
                 <SideContentLayout>
 
-                    <BookAppointment />
+                    <BookAppointment doctor={doctor} />
                 </SideContentLayout>
             </Flex>
         </DefaultLayout>

@@ -1,0 +1,25 @@
+.ant-steps .ant-steps-item-process .ant-steps-item-icon{
+    background-color: #069390;
+        border-color: #069390;
+}
+.ant-steps .ant-steps-item-finish .ant-steps-item-icon {
+    background-color: #aee9ba;
+    border-color: #a5eef4;
+}
+.anticon svg {
+    color: black;
+}
+.ant-btn-default {
+    border-radius: 20px !important;
+}
+.ant-btn {
+    border-radius: 20px !important;
+}
+.ant-btn:hover{
+    background-color: #16acac !important;
+}
+.ant-btn-default:hover{
+            border-color: #069390 !important;
+        background-color: #c7f9f8 !important;
+        color: black !important;
+}
