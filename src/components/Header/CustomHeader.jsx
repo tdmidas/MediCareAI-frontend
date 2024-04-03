@@ -10,8 +10,8 @@ import { BellOutlined, SearchOutlined } from '@ant-design/icons';
 import { MenuFoldOutlined } from "@ant-design/icons";
 import { useMediaQuery } from "react-responsive";
 import { doc, setDoc, collection, getDoc } from "firebase/firestore";
-
 const fallbackAvatar = require("../../assets/fallback-avatar.jpg")
+
 const CustomHeader = ({ toggleDrawer }) => {
     const navigate = useNavigate();
     const [user, setUser] = useState(null);
@@ -52,13 +52,19 @@ const CustomHeader = ({ toggleDrawer }) => {
             console.error("Logout Error:", error.message);
         }
     };
-
+    const handleMenuClick = (event) => {
+        if (event.key === 'profile') {
+            navigate('/profile'); // Navigate to "/profile" route
+        } else if (event.key === 'logout') {
+            handleLogout();
+        }
+    };
     const menu = (
-        <Menu>
-            <Menu.Item key="profile">
+        <Menu onClick={handleMenuClick}>
+            <Menu.Item key="profile" >
                 Cài đặt tài khoản
             </Menu.Item>
-            <Menu.Item key="logout" onClick={handleLogout}>
+            <Menu.Item key="logout" >
                 Đăng xuất
             </Menu.Item>
         </Menu>
