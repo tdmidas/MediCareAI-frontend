@@ -40,7 +40,7 @@ const Home = () => {
                                 src={doctor}
                                 style={{ float: "right", position: "absolute", paddingBottom: "72px", paddingLeft: "90px", width: "auto", height: "300px" }}
                             />
-                        } style={{ maxWidth: 300 }}>
+                        } style={{ maxWidth: 400 }}>
                             <Flex vertical gap="large">
                                 <Typography.Title level={4} strong>
                                     The better<br />  health
@@ -51,9 +51,10 @@ const Home = () => {
 
                             </Flex >
                         </Card >
-                        <Card  >
+                        <Card style={{ maxWidth: 400 }}>
+
                             <BasicDateCalendar />
-                            <Button className="calendar-btn" size="large" type="primary" onClick={handleClick}>
+                            <Button className="calendar-btn" size="large" type="primary" onClick={handleClick} style={{ alignContent: "center" }}>
                                 Đặt lịch khám
                             </Button>
                         </Card>

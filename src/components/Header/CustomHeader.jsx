@@ -1,33 +1,44 @@
 import React, { useState, useEffect } from 'react';
-import { Flex, Badge } from 'antd';
+import { Flex, Badge, Typography, Image } from 'antd';
 import { Button } from 'antd';
 import { Input } from 'antd';
 import './CustomHeader.css';
 import { useNavigate } from 'react-router-dom';
-import { auth } from '../../firebaseConfig';
+import { auth, db } from '../../firebaseConfig';
 import { Menu, Dropdown } from 'antd';
 import { BellOutlined, SearchOutlined } from '@ant-design/icons';
 import { MenuFoldOutlined } from "@ant-design/icons";
 import { useMediaQuery } from "react-responsive";
+import { doc, setDoc, collection, getDoc } from "firebase/firestore";
 
-
+const fallbackAvatar = require("../../assets/fallback-avatar.jpg")
 const CustomHeader = ({ toggleDrawer }) => {
     const navigate = useNavigate();
     const [user, setUser] = useState(null);
-
     const isMobile = useMediaQuery({ maxWidth: 768 });
     const isSmallScreen = useMediaQuery({ maxWidth: 1024 });
 
     useEffect(() => {
-        const unsubscribe = auth.onAuthStateChanged(user => {
+        const unsubscribe = auth.onAuthStateChanged(async (user) => {
             if (user) {
                 setUser(user);
+
+                const userDocRef = doc(collection(db, 'users'), user.email);
+                const userDocSnapshot = await getDoc(userDocRef);
+                if (userDocSnapshot.exists()) {
+                    await setDoc(userDocRef, { lastLogin: new Date() }, { merge: true });
+                    setUser(user);
+
+                }
+
             } else {
                 setUser(null);
             }
         });
         return () => unsubscribe();
     }, []);
+
+
 
     const handleLoginClick = () => {
         navigate('/login');
@@ -99,7 +110,7 @@ const CustomHeader = ({ toggleDrawer }) => {
                                 </Badge>
                             </Dropdown>
                             <Dropdown overlay={menu}>
-                                <img src={user.photoURL} alt="Profile" className="profile-photo" style={{ borderRadius: 30, width: 90, height: 35 }} />
+                                <img src={user.photoURL ? user.photoURL : fallbackAvatar} alt="Profile" className="profile-photo" style={{ borderRadius: 30, width: 90, height: 35, marginRight: 10 }} />
                             </Dropdown>
                         </>
                     ) : (

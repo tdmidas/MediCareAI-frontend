@@ -20,7 +20,7 @@ const Banner = () => {
         <Flex gap="large" wrap="wrap">
             <Card className="banner-card" style={{ padding: "20px", width: isMobile ? 300 : 800 }} cover={
                 <Image style={{
-                    float: isMobile ? "none" : "right", backgroundSize: "cover", width: isMobile ? "100%" : "40%", height: "260px", marginTop: "-20px"
+                    float: isMobile ? "none" : "right", backgroundSize: "cover", width: isMobile ? "100%" : "40%", height: "260px", marginTop: "-40px"
                 }}
                     src={promo}>
 

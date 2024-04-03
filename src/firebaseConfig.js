@@ -1,5 +1,6 @@
 import { initializeApp } from "firebase/app";
-import { getAuth, GoogleAuthProvider, signInWithPopup, FacebookAuthProvider } from "firebase/auth";
+import { getAuth, GoogleAuthProvider, signInWithPopup } from "firebase/auth";
+import { getFirestore } from "firebase/firestore";
 
 const firebaseConfig = {
 	apiKey: process.env.REACT_APP_FIREBASE_API_KEY,
@@ -14,8 +15,9 @@ const firebaseConfig = {
 // Initialize Firebase
 const app = initializeApp(firebaseConfig);
 const auth = getAuth(app);
+const db = getFirestore(app);
+
 const googleAuthProvider = new GoogleAuthProvider();
-const facebookAuthProvider = new FacebookAuthProvider();
-facebookAuthProvider.addScope("user_birthday");
+
 const getEmail = auth.currentUser?.email;
-export { auth, googleAuthProvider, signInWithPopup, getEmail, facebookAuthProvider };
+export { auth, googleAuthProvider, signInWithPopup, getEmail, db };

@@ -2,15 +2,17 @@ import React, { useState } from "react";
 import { useNavigate } from "react-router-dom";
 
 import styles from "../Register/Register.module.css";
-import { ToastContainer, toast } from "react-toastify";
+import { ToastContainer } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 import { notify } from "../../config/toast";
 import { Link } from "react-router-dom";
-import axios from "axios";
 import "./Login.css";
-import { auth, googleAuthProvider, signInWithPopup, facebookAuthProvider } from "../../firebaseConfig";
+import { auth, googleAuthProvider, signInWithPopup, db } from "../../firebaseConfig";
+import { signInWithEmailAndPassword } from "firebase/auth";
+import { setDoc, doc, collection } from "firebase/firestore";
+import axios from "axios";
+
 const googleLogo = require('../../assets/google-18px.svg').default;
-const facebookLogo = require('../../assets/facebook-18px.svg').default;
 
 const Login = () => {
 	const [data, setData] = useState({
@@ -21,23 +23,6 @@ const Login = () => {
 	const [touched, setTouched] = useState({});
 	const navigate = useNavigate();
 
-	const checkData = (obj) => {
-		const { email, password } = obj;
-		const urlApi = `http://localhost:5000/api/auth/login?email=${email}&password=${password}`;
-		const api = axios
-			.get(urlApi)
-			.then((response) => response.data)
-			.then((data) =>
-				data.ok
-					? notify("You login to your account successfully", "success")
-					: notify("Your password or your email is wrong", "error")
-			);
-		toast.promise(api, {
-			pending: "Loading your data...",
-			success: false,
-			error: "Something went wrong!",
-		});
-	};
 
 	const changeHandler = (event) => {
 		if (event.target.name === "IsAccepted") {
@@ -50,11 +35,28 @@ const Login = () => {
 	const focusHandler = (event) => {
 		setTouched({ ...touched, [event.target.name]: true });
 	};
-
-	const submitHandler = (event) => {
-		event.preventDefault();
-		checkData(data);
+	const signInWithEmail = async () => {
+		try {
+			await signInWithEmailAndPassword(auth, data.email, data.password);
+			notify("You logged in to your account successfully", "success");
+			//store accessToken
+			const response = await axios.post("http://localhost:5000/api/auth/login", {
+				email: data.email,
+				password: data.password,
+			});
+			const token = response.data.token;
+			localStorage.setItem("accessToken", token);
+			//Update lastLogin
+			const usersCollection = collection(db, "users");
+			const userDoc = doc(usersCollection, data.email);
+			await setDoc(userDoc, { userLastlogin: new Date() }, { merge: true });
+			navigate("/");
+		} catch (error) {
+			console.error('Error:', error);
+			notify("Your password or your email is wrong", "error");
+		}
 	};
+
 	const signInWithGoogle = async () => {
 		try {
 			const result = await signInWithPopup(auth, googleAuthProvider);
@@ -65,21 +67,14 @@ const Login = () => {
 			console.error("Google Sign-in Error:", error.message);
 		}
 	};
-	const signInWithFacebook = async () => {
-		try {
-			const result = await signInWithPopup(auth, facebookAuthProvider);
-
-			const user = result.user;
-			navigate("/");
-			console.log("Google Sign-in Successful:", user);
-		} catch (error) {
-			console.error("Google Sign-in Error:", error.message);
-		}
+	const submitHandler = async (event) => {
+		event.preventDefault();
+		signInWithEmail();
 	};
 	return (
 		<div className={styles.container}>
 			<form className={styles.formLogin} onSubmit={submitHandler} autoComplete="off">
-				<h2>Đăng nhập</h2>
+				<h2><b>Đăng nhập</b></h2>
 				<div>
 					<div>
 						<input
@@ -111,21 +106,18 @@ const Login = () => {
 
 				<div>
 					<button type="submit">Đăng nhập</button>
-					<button className={styles['facebook-btn']}
-						onClick={signInWithFacebook}>
-						<img src={facebookLogo} style={{ paddingRight: 10 }} /> Đăng nhập với Facebook
-					</button>
+					<ToastContainer />
+
 					<button className={styles['google-btn']}
 						onClick={signInWithGoogle}>
 						<img src={googleLogo} style={{ paddingRight: 10 }} /> Đăng nhập với Google
 					</button>
 
 					<span style={{ color: "#a29494", textAlign: "center", display: "inline-block", width: "100%" }}>
-						Bạn chưa có tài khoản? <Link to="/register">Create account</Link>
+						Bạn chưa có tài khoản? <Link to="/register">Tạo tài khoản</Link>
 					</span>
 				</div>
 			</form>
-			<ToastContainer />
 		</div>
 	);
 };

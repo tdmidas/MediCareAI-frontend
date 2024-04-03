@@ -7,9 +7,8 @@ import { ToastContainer } from "react-toastify";
 import { notify } from "../../config/toast";
 import { Link } from "react-router-dom";
 import axios from "axios";
-import { auth, googleAuthProvider, signInWithPopup, getEmail, facebookAuthProvider } from "../../firebaseConfig";
+import { auth, googleAuthProvider, signInWithPopup, getEmail } from "../../firebaseConfig";
 const googleLogo = require('../../assets/google-18px.svg').default;
-const facebookLogo = require('../../assets/facebook-18px.svg').default;
 
 const Register = () => {
 	const navigate = useNavigate();
@@ -45,14 +44,15 @@ const Register = () => {
 		if (!Object.keys(errors).length) {
 			try {
 				const response = await axios.post("http://localhost:5000/api/auth/signup", data);
-				if (response.user) {
-					notify("You signed Up successfully", "success");
+				if (response.status === 201) {
+					notify("Đăng ký tài khoản thành công", "success");
+					navigate("/login");
 				}
 			} catch (error) {
 				notify(error.message, "error");
 			}
 		} else {
-			notify("Please Check fields again", "error");
+			notify("Check lại thông tin đăng ký", "error");
 			setTouched({
 				name: true,
 				email: true,
@@ -79,17 +79,7 @@ const Register = () => {
 			console.error("Google Sign-in Error:", error.message);
 		}
 	};
-	const signUpWithFacebook = async () => {
-		try {
-			const result = await signInWithPopup(auth, facebookAuthProvider);
 
-			const user = result.user;
-			navigate("/");
-			console.log("Google Sign-in Successful:", user);
-		} catch (error) {
-			console.error("Google Sign-in Error:", error.message);
-		}
-	};
 
 	return (
 
@@ -97,7 +87,7 @@ const Register = () => {
 		<div className={styles.container}>
 
 			<form className={styles.formLogin} onSubmit={submitHandler} autoComplete="off">
-				<h2 >Đăng ký tài khoản</h2>
+				<h2 > <b>Đăng ký tài khoản</b></h2>
 				<div>
 					<div
 						className={
@@ -111,7 +101,7 @@ const Register = () => {
 							type="text"
 							name="name"
 							value={data.name}
-							placeholder="Name"
+							placeholder="Họ và tên"
 							onChange={changeHandler}
 							onFocus={focusHandler}
 							autoComplete="off"
@@ -155,7 +145,7 @@ const Register = () => {
 							type="password"
 							name="password"
 							value={data.password}
-							placeholder="Password"
+							placeholder="Nhập mật khẩu"
 							onChange={changeHandler}
 							onFocus={focusHandler}
 							autoComplete="off"
@@ -179,7 +169,7 @@ const Register = () => {
 							type="password"
 							name="confirmPassword"
 							value={data.confirmPassword}
-							placeholder="Confirm Password"
+							placeholder="Nhập lại mật khẩu"
 							onChange={changeHandler}
 							onFocus={focusHandler}
 							autoComplete="off"
@@ -208,10 +198,7 @@ const Register = () => {
 				</div>
 				<div>
 					<button type="submit">Tạo tài khoản</button>
-					<button className={styles['facebook-btn']}
-						onClick={signUpWithFacebook}>
-						<img src={facebookLogo} style={{ paddingRight: 10 }} /> Đăng ký với Facebook
-					</button>
+
 					<button className={styles['google-btn']}
 						onClick={signUpWithGoogle}>
 						<img src={googleLogo} style={{ paddingRight: 10 }} /> Đăng ký với Google
