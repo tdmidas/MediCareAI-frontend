@@ -44,7 +44,7 @@ const BMI = () => {
 
         const userId = localStorage.getItem("userId");
 
-        await axios.post(`http://localhost:5000/api/health/bmi/${userId}`, {
+        await axios.post(`http://${process.env.REACT_APP_API_PORT}api/health/bmi/${userId}`, {
             bmi: parseFloat(bmi),
             status: bmiCategory
 

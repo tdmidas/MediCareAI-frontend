@@ -59,7 +59,7 @@ const DuongHuyet = () => {
         setBloodSugarClassification(classification);
         setBloodSugarColor(color);
         const userId = localStorage.getItem("userId");
-        await axios.post(`http://localhost:5000/api/health/glucose/${userId}`, {
+        await axios.post(`http://${process.env.REACT_APP_API_PORT}/api/health/glucose/${userId}`, {
             glucose: parseFloat(glucose),
             status: bloodSugarClassification,
         });

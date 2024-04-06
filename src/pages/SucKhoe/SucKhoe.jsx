@@ -19,8 +19,8 @@ const SucKhoe = () => {
         const fetchAndUpdateHealthData = async () => {
             try {
                 const userId = localStorage.getItem("userId");
-                await axios.post(`http://localhost:5000/api/health/overall/${userId}`);
-                const response = await axios.get(`http://localhost:5000/api/health/overall/${userId}`);
+                await axios.post(`http://${process.env.REACT_APP_API_PORT}/api/health/overall/${userId}`);
+                const response = await axios.get(`http://${process.env.REACT_APP_API_PORT}/api/health/overall/${userId}`);
                 const { BMI, diaBP, glucose, sysBP } = response.data;
 
                 const updatedHealthData = [

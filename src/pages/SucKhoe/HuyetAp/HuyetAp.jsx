@@ -55,7 +55,7 @@ const HuyetAp = () => {
         setBloodPressureClassification(classification);
         setBloodPressureColor(color);
         const userId = localStorage.getItem("userId");
-        await axios.post(`http://localhost:5000/api/health/bloodPressure/${userId}`, {
+        await axios.post(`http://${process.env.REACT_APP_API_PORT}/api/health/bloodPressure/${userId}`, {
             sysBP: parseFloat(tamTruong),
             diaBP: parseFloat(tamThu),
             heartRate: parseFloat(nhipTim),
