@@ -7,10 +7,11 @@ import DefaultLayout from '../../layout/DefaultLayout';
 import HealthEvaluate from "../../components/HealthEvaluate/HealthEvaluate";
 import slug from "slug";
 import { useMediaQuery } from 'react-responsive';
-
 const meditation = require("../../assets/meditation.png")
+const { Text } = Typography;
 const SucKhoe = () => {
     const isMobile = useMediaQuery({ maxWidth: 768 });
+
     return (
         <DefaultLayout>
             <>
@@ -48,8 +49,11 @@ const SucKhoe = () => {
                                         <Typography.Title level={2} strong>
                                             {item.name}
                                         </Typography.Title>
-                                        <Typography.Text type="secondary" strong>
-                                            ---{item.measure}
+                                        <Typography.Text type="secondary" strong >
+                                            <Text style={{ fontSize: 20, padding: 5 }}>
+                                                {item.value}
+                                            </Text>
+                                            {item.measure}
                                         </Typography.Text>
                                     </Flex>
                                 </Flex>

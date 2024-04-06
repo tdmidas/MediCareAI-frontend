@@ -2,7 +2,7 @@ import React, { useState } from "react";
 import DefaultLayout from "../../../layout/DefaultLayout";
 import "./HuyetAp.css";
 import { Card, Flex, Typography, Row, Button, Form, Input } from "antd";
-
+import axios from "axios";
 const { Title, Paragraph } = Typography;
 
 const HuyetAp = () => {
@@ -49,11 +49,18 @@ const HuyetAp = () => {
         }
     };
 
-    const handleSubmit = () => {
+    const handleSubmit = async () => {
         const classification = classifyBloodPressure(tamTruong, tamThu);
         const color = classifyBloodPressureColor(classification);
         setBloodPressureClassification(classification);
         setBloodPressureColor(color);
+        const userId = localStorage.getItem("userId");
+        await axios.post(`http://localhost:5000/api/health/bloodPressure/${userId}`, {
+            sysBloodPressure: parseFloat(tamTruong),
+            diaBloodPressure: parseFloat(tamThu),
+            heartRate: parseFloat(nhipTim),
+            status: bloodPressureClassification,
+        });
     };
 
     const BloodPressureScale = [

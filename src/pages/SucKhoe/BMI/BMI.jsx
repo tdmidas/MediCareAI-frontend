@@ -2,14 +2,14 @@ import React, { useState } from 'react';
 import { Input, Button, Typography, Form, Card } from 'antd';
 import './BMI.css';
 import DefaultLayout from '../../../layout/DefaultLayout';
-
-const { Title, Paragraph } = Typography;
+import axios from 'axios';
+const { Title, Paragraph, Text } = Typography;
 
 const BMI_CATEGORIES = [
-    { category: 'Underweight', range: '< 18.5', color: 'underweight' },
-    { category: 'Healthy', range: '18.5 – 25', color: 'healthy' },
-    { category: 'Overweight', range: '25 – 30', color: 'overweight' },
-    { category: 'Obese', range: '≥ 30', color: 'obese' }
+    { category: 'Thiếu cân', range: '< 18.5', color: 'underweight' },
+    { category: 'Bình thường', range: '18.5 – 25', color: 'healthy' },
+    { category: 'Thừa cân', range: '25 – 30', color: 'overweight' },
+    { category: 'Béo phì', range: '≥ 30', color: 'obese' }
 ];
 
 const BMI = () => {
@@ -23,7 +23,6 @@ const BMI = () => {
         const calculatedBMI = weight / (heightMeters * heightMeters);
         setBMI(calculatedBMI.toFixed(2));
 
-        // Determine BMI category
         for (const category of BMI_CATEGORIES) {
             const [min, max] = category.range.split(' – ');
             if (max === '30') {
@@ -38,8 +37,20 @@ const BMI = () => {
                 }
             }
         }
-    };
+        return calculatedBMI;
 
+    };
+    const handleSubmit = async () => {
+
+        const userId = localStorage.getItem("userId");
+
+        await axios.post(`http://localhost:5000/api/health/bmi/${userId}`, {
+            bmi: parseFloat(bmi),
+            status: bmiCategory
+
+        });
+
+    };
     const handleReset = () => {
         setWeight(0);
         setHeight(0);
@@ -63,8 +74,15 @@ const BMI = () => {
                             style={{ borderRadius: 30 }} />
                     </Form.Item>
                     <Form.Item style={{ justifyContent: "center" }}>
-                        <Button type="primary" htmlType="submit" style={{ borderRadius: 20, fontSize: 14, textAlign: "center" }} >Submit</Button>
-                        <Button htmlType="reset" style={{ borderRadius: 20 }}>Reset</Button>
+                        <Button type="primary" htmlType="submit" style={{ borderRadius: 20 }} onClick={handleSubmit} >
+                            <Text style={{ color: "white", paddingBottom: 16, fontSize: 14 }}>
+                                Submit
+                            </Text>
+                        </Button>
+                        <Button htmlType="reset" style={{ borderRadius: 20 }}>
+                            <Text strong style={{ color: "white", paddingBottom: 16, fontSize: 14 }}>
+                                Reset
+                            </Text></Button>
                     </Form.Item>
                 </Form>
 
@@ -83,7 +101,7 @@ const BMI = () => {
                     ))}
                 </div>
             </Card>
-        </DefaultLayout>
+        </DefaultLayout >
 
     );
 };

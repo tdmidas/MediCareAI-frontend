@@ -44,7 +44,9 @@ const Login = () => {
 				email: data.email,
 				password: data.password,
 			});
-			const token = response.data.token;
+			const { userId, token } = response.data
+			localStorage.setItem("userId", userId);
+
 			localStorage.setItem("accessToken", token);
 			//Update lastLogin
 			const usersCollection = collection(db, "users");

@@ -1,7 +1,15 @@
-.ant-progress.ant-progress-status-success .ant-progress-inner:not(.ant-progress-circle-gradient) .ant-progress-circle-path {
-    stroke: #15c4c1;
+.green-progress .ant-progress-inner:not(.ant-progress-circle-gradient) .ant-progress-circle-path {
+    stroke: #15c4c1 !important;
     stroke-width: 15;
 }
-.ant-progress-text{
+
+.red-progress .ant-progress-inner:not(.ant-progress-circle-gradient) .ant-progress-circle-path {
+    stroke: rgb(250, 94, 94) !important;
+    stroke-width: 15;
+}
+.green-progress .ant-progress-text {
     color: #15c4c1 !important;
+}
+.red-progress .ant-progress-text {
+    color: red !important;
 }

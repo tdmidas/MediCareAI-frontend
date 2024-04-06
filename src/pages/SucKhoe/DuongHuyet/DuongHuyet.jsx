@@ -2,7 +2,7 @@ import React, { useState } from 'react';
 import { Input, Button, Typography, Form, Card } from 'antd';
 import DefaultLayout from '../../../layout/DefaultLayout';
 import './DuongHuyet.css';
-
+import axios from 'axios';
 const { Title, Paragraph } = Typography;
 
 const GLUCOSE_CATEGORIES = [
@@ -53,11 +53,16 @@ const DuongHuyet = () => {
         }
     };
 
-    const handleSubmit = () => {
+    const handleSubmit = async () => {
         const classification = classifyBloodSugar(glucose);
         const color = classifyBloodSugarColor(classification);
         setBloodSugarClassification(classification);
         setBloodSugarColor(color);
+        const userId = localStorage.getItem("userId");
+        await axios.post(`http://localhost:5000/api/health/glucose/${userId}`, {
+            glucose: parseFloat(glucose),
+            status: bloodSugarClassification,
+        });
     };
     return (
         <DefaultLayout>

@@ -7,7 +7,7 @@ MediCareAI is a web application designed for user to manage their health and boo
 - **ReactJS** JavaScript library for building user interfaces.
 - **AntDesign**  UI library for ReactJS.
 - **ExpressJS** for backend (working on it..),
-- **MongoDB** document database
+- **Firestore** NoSQL document database
 - **AWS Cloudfront** for CDN and **AWS EC2** for deploying(hope so..)
 - **Firebase** for Google Authentication
 
@@ -16,14 +16,13 @@ MediCareAI is a web application designed for user to manage their health and boo
 1. **Login and Register Authentication**: Utilizes Firebase Authentication for logging in and registering with Google.
 
 2. **Health Information Management**: Provides functionalities to manage and detect their health problem.
-- **Heart rate monitoring**  through the camera using zero-crossing detection (based on light passing through your fingertip).
 - **Blood pressure**, **Sugar blood** and **BMI** value take from user input  
   
-=> Synthesize all health information to predict the user's health status with machine learning models.
+=> Synthesize all health information to predict the user's health status with machine learning models (request to Flask model server).
 
-3. **Integrated AI Health Chatbot**: Offers various health chatbots fine-tuned on different health field datasets to help patients better understand their health conditions and receive advice.
-4. **Appointment Doctor**: Users can schedule appointments with doctors based on their availability and specialization.
-5. **Medical Blog Sharing**: Read helpful health blogs and able to comment on it.
+1. **Integrated AI Health Chatbot**: Offers various health chatbots fine-tuned on different health field datasets to help patients better understand their health conditions and receive advice.
+2. **Appointment Doctor**: Users can schedule appointments with doctors based on their availability and specialization.
+3. **Medical Blog Sharing**: Read helpful health blogs and able to comment on it.
 
 ## Installation and Running the Application
 

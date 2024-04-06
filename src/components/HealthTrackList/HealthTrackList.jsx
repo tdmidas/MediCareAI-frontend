@@ -1,18 +1,20 @@
 import React from "react";
 import HealthTrackData from "../../HealthTrackData";
 import "./HealthTrack.css";
-
 import { Button, Card, Flex, Typography, Image } from "antd";
 import { useNavigate } from 'react-router-dom';
 import { useMediaQuery } from 'react-responsive';
 import { Link } from "react-router-dom";
 import slug from "slug";
+const { Text } = Typography;
 const HealthTrackList = () => {
     const navigate = useNavigate();
     const isMobile = useMediaQuery({ maxWidth: 768 });
     const handleClick = () => {
         navigate('/suckhoe');
     };
+
+
     return (
         <Flex gap="large" vertical>
             <Flex align="center" justify="space-between" wrap="wrap">
@@ -46,7 +48,10 @@ const HealthTrackList = () => {
                                         {item.name}
                                     </Typography.Title>
                                     <Typography.Text type="secondary" strong>
-                                        ---{item.measure}
+                                        <Text style={{ fontSize: 20, padding: 5 }}>
+                                            {item.value}
+                                        </Text>
+                                        {item.measure}
                                     </Typography.Text>
                                 </Flex>
                             </Flex>
