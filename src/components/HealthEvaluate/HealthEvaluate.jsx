@@ -15,6 +15,7 @@ const HealthEvaluate = () => {
     const fetchData = async () => {
         try {
             const userId = localStorage.getItem("userId");
+            await axios.post(`http://localhost:5000/api/health/overall/${userId}`);
             const response = await axios.get(`http://localhost:5000/api/health/overall/${userId}`);
             setHealthData(response.data);
         } catch (error) {
@@ -26,7 +27,7 @@ const HealthEvaluate = () => {
         <Card style={{ maxWidth: 500, height: 400, borderRadius: 20, marginBottom: 30 }}>
             <Flex align="center" justify="center">
                 <Progress type="circle" percent={100} format={() => healthData ? healthData.predict : '0'}
-                    className={healthData ? (healthData.predict === 'great' ? 'green-progress' : 'red-progress') : ''} />
+                    className={healthData ? (healthData.predict === 'Great' ? 'green-progress' : 'red-progress') : ''} />
             </Flex>
             <Title level={3} strong style={{ textAlign: "center" }}>
                 Sức khỏe tổng thể

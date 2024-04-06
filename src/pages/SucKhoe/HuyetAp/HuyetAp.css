@@ -10,9 +10,6 @@
     background: #229c9e !important;
 }
 .bp-card{
-    display: grid;
-        gap: 1rem;
-    width: 90%;
-    max-width: 100vh;
+  
     box-shadow: 0 10px 15px rgba(5, 125, 129, 0.25);
 }

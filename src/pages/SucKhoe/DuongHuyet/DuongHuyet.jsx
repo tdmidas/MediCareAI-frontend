@@ -73,7 +73,7 @@ const DuongHuyet = () => {
                 <Form className="calculator" onReset={handleReset}>
                     <Form.Item label="Glucose (mg/dl)" name="sugar-blood" style={{ justifyContent: "center" }}>
                         <Input type="number" min={18} max={630} step={0.1} value={glucose} onChange={(e) => setGlucose(parseFloat(e.target.value))}
-                            style={{ borderRadius: 30 }} />
+                            style={{ borderRadius: 30, width: 200 }} />
                     </Form.Item>
 
                     <Form.Item style={{ justifyContent: "center" }}>

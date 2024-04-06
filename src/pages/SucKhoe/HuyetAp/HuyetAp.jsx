@@ -56,8 +56,8 @@ const HuyetAp = () => {
         setBloodPressureColor(color);
         const userId = localStorage.getItem("userId");
         await axios.post(`http://localhost:5000/api/health/bloodPressure/${userId}`, {
-            sysBloodPressure: parseFloat(tamTruong),
-            diaBloodPressure: parseFloat(tamThu),
+            sysBP: parseFloat(tamTruong),
+            diaBP: parseFloat(tamThu),
             heartRate: parseFloat(nhipTim),
             status: bloodPressureClassification,
         });
@@ -74,20 +74,21 @@ const HuyetAp = () => {
 
     return (
         <DefaultLayout>
-            <Flex vertical gap="large" align="center">
+            <Flex vertical gap="large" align="center" wrap="wrap">
                 <Card className="bp-card" style={{ width: "100%", maxWidth: 700 }}>
                     <Title level={1} style={{ textAlign: "center" }}>Nhập bản ghi huyết áp
                     </Title>
 
                     <Form className="calculator" onFinish={handleSubmit} style={{ justifyItems: "center" }}>
                         <Form.Item label="Tâm trương (mmHg)" name="tamTruong">
-                            <Input type="number" min={20} max={300} value={tamTruong} onChange={(e) => setTamTruong(parseFloat(e.target.value))} style={{ borderRadius: 30, width: "100%" }} />
+                            <Input type="number" min={20} max={300} value={tamTruong}
+                                onChange={(e) => setTamTruong(parseFloat(e.target.value))} style={{ borderRadius: 30, width: "200px" }} />
                         </Form.Item>
                         <Form.Item label="Tâm thu (mmHg)" name="tamThu">
-                            <Input type="number" min={20} max={300} value={tamThu} onChange={(e) => setTamThu(parseFloat(e.target.value))} style={{ borderRadius: 30, width: "100%" }} />
+                            <Input type="number" min={20} max={300} value={tamThu} onChange={(e) => setTamThu(parseFloat(e.target.value))} style={{ borderRadius: 30, width: "200px" }} />
                         </Form.Item>
                         <Form.Item label="Nhịp tim (BPM)" name="bpm">
-                            <Input type="number" min={0} max={300} value={nhipTim} onChange={(e) => setNhipTim(parseFloat(e.target.value))} style={{ borderRadius: 30, width: "100%" }} />
+                            <Input type="number" min={0} max={300} value={nhipTim} onChange={(e) => setNhipTim(parseFloat(e.target.value))} style={{ borderRadius: 30, width: "200px" }} />
                         </Form.Item>
 
                     </Form>

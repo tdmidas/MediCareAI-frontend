@@ -1,19 +1,66 @@
-import React from "react";
-import HealthTrackData from "../../HealthTrackData";
-import "./HealthTrack.css";
+import React, { useState, useEffect } from "react";
 import { Button, Card, Flex, Typography, Image } from "antd";
 import { useNavigate } from 'react-router-dom';
 import { useMediaQuery } from 'react-responsive';
 import { Link } from "react-router-dom";
 import slug from "slug";
+import axios from "axios";
+
 const { Text } = Typography;
+
 const HealthTrackList = () => {
     const navigate = useNavigate();
     const isMobile = useMediaQuery({ maxWidth: 768 });
+    const [healthTrackData, setHealthTrackData] = useState([]);
+
+    useEffect(() => {
+        const fetchAndUpdateHealthData = async () => {
+            try {
+                const userId = localStorage.getItem("userId");
+                await axios.post(`http://localhost:5000/api/health/overall/${userId}`);
+                const response = await axios.get(`http://localhost:5000/api/health/overall/${userId}`);
+                const { BMI, diaBP, glucose, sysBP } = response.data;
+
+                const updatedHealthData = [
+                    {
+                        id: 1,
+                        name: "Huyết áp",
+                        picture: require("../../assets/blood-pressure.png"),
+                        measure: "mmHg",
+                        value: `${diaBP}/${sysBP}`,
+                        color: "#c0f1ef",
+                    },
+                    {
+                        id: 2,
+                        name: "Đường huyết",
+                        picture: require("../../assets/blood-sugar.png"),
+                        measure: "mmol/L",
+                        value: glucose,
+                        color: "#f5dec4",
+                    },
+                    {
+                        id: 3,
+                        name: "Chỉ số BMI",
+                        picture: require("../../assets/bmi.png"),
+                        measure: "BMI",
+                        value: BMI,
+                        color: "#caffe0",
+                    },
+                ];
+
+                setHealthTrackData(updatedHealthData);
+                console.log("Health data updated successfully:", updatedHealthData);
+            } catch (error) {
+                console.error("Error fetching health data:", error);
+            }
+        };
+
+        fetchAndUpdateHealthData();
+    }, []);
+
     const handleClick = () => {
         navigate('/suckhoe');
     };
-
 
     return (
         <Flex gap="large" vertical>
@@ -26,8 +73,7 @@ const HealthTrackList = () => {
                 </Button>
             </Flex>
             <Flex wrap="wrap" align="center" gap="large">
-
-                {HealthTrackData.slice(0, 2).map((item, index) => (
+                {healthTrackData.slice(0, 2).map((item, index) => (
                     <Link to={`/suckhoe/${slug(item.name)}`} key={index}>
                         <Card
                             key={index}
@@ -42,7 +88,7 @@ const HealthTrackList = () => {
                             }
                             style={{ height: "180px", width: isMobile ? "300px" : "400px", padding: "20px", marginBottom: "20px", background: item.color }}
                         >
-                            <Flex >
+                            <Flex>
                                 <Flex vertical align="flex-start">
                                     <Typography.Title level={2} strong>
                                         {item.name}
@@ -55,15 +101,11 @@ const HealthTrackList = () => {
                                     </Typography.Text>
                                 </Flex>
                             </Flex>
-
                         </Card>
                     </Link>
-
-                ))
-                }
-
+                ))}
             </Flex>
-        </Flex >
+        </Flex>
     );
 }
 

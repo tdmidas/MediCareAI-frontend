@@ -3,10 +3,10 @@ import { Flex, Badge, Typography, Image } from 'antd';
 import { Button } from 'antd';
 import { Input } from 'antd';
 import './CustomHeader.css';
-import { useNavigate } from 'react-router-dom';
+import { useNavigate, useLocation } from 'react-router-dom'; // Import useLocation
 import { auth, db } from '../../firebaseConfig';
 import { Menu, Dropdown } from 'antd';
-import { BellOutlined, SearchOutlined } from '@ant-design/icons';
+import { BellOutlined, SearchOutlined, ArrowLeftOutlined } from '@ant-design/icons'; // Import ArrowLeftOutlined
 import { MenuFoldOutlined } from "@ant-design/icons";
 import { useMediaQuery } from "react-responsive";
 import { doc, setDoc, collection, getDoc } from "firebase/firestore";
@@ -14,6 +14,7 @@ const fallbackAvatar = require("../../assets/fallback-avatar.jpg")
 
 const CustomHeader = ({ toggleDrawer }) => {
     const navigate = useNavigate();
+    const location = useLocation(); // Get location
     const [user, setUser] = useState(null);
     const isMobile = useMediaQuery({ maxWidth: 768 });
     const isSmallScreen = useMediaQuery({ maxWidth: 1024 });
@@ -38,8 +39,6 @@ const CustomHeader = ({ toggleDrawer }) => {
         return () => unsubscribe();
     }, []);
 
-
-
     const handleLoginClick = () => {
         navigate('/login');
     };
@@ -52,13 +51,15 @@ const CustomHeader = ({ toggleDrawer }) => {
             console.error("Logout Error:", error.message);
         }
     };
+
     const handleMenuClick = (event) => {
         if (event.key === 'profile') {
-            navigate('/profile'); // Navigate to "/profile" route
+            navigate('/profile');
         } else if (event.key === 'logout') {
             handleLogout();
         }
     };
+
     const menu = (
         <Menu onClick={handleMenuClick}>
             <Menu.Item key="profile" >
@@ -93,9 +94,13 @@ const CustomHeader = ({ toggleDrawer }) => {
         </Menu>
     );
 
+    const handleGoBack = () => {
+        navigate(-1); // Go back to previous page
+    };
+
     return (
         <Flex align="center" >
-            <Flex align="center" gap={isSmallScreen ? "1rem" : "38rem"}>
+            <Flex align="center" gap={isSmallScreen ? "1rem" : "14rem"}>
                 {isMobile && (
                     <Button
                         type="text"
@@ -103,28 +108,40 @@ const CustomHeader = ({ toggleDrawer }) => {
                         onClick={toggleDrawer}
                         className="drawer-toggle-btn"
                     />
-
                 )}
+
+                {!isMobile && ( // Check if not home page
+                    <Button
+                        type="text"
+                        icon={<ArrowLeftOutlined />}
+                        onClick={handleGoBack}
+
+                    >
+                        Quay lại
+                    </Button>
+                )}
+
                 <Input placeholder="Tìm kiếm bác sĩ, blog,..." prefix={<SearchOutlined />} style={{ borderRadius: 30, minWidth: 150, marginLeft: isSmallScreen ? 0 : 300 }} />
 
-                <Flex align="center" gap="10px">
-                    {user ? (
-                        <>
-                            <Dropdown overlay={notificationMenu} trigger={['click']}>
-                                <Badge count={notifications.length} dot>
-                                    <BellOutlined style={{ fontSize: '20px' }} />
-                                </Badge>
-                            </Dropdown>
-                            <Dropdown overlay={menu}>
-                                <img src={user.photoURL ? user.photoURL : fallbackAvatar} alt="Profile" className="profile-photo" style={{ borderRadius: 30, width: 90, height: 35, marginRight: 10 }} />
-                            </Dropdown>
-                        </>
-                    ) : (
-                        <Button type="primary" className='login-btn' onClick={handleLoginClick}>Đăng nhập</Button>
-                    )}
+                <Flex align="center" gap="10px" style={{ marginLeft: 'auto' }} >
+                    {
+                        user ? (
+                            <>
+                                <Dropdown overlay={notificationMenu} trigger={['click']}>
+                                    <Badge count={notifications.length} dot>
+                                        <BellOutlined style={{ fontSize: '20px' }} />
+                                    </Badge>
+                                </Dropdown>
+                                <Dropdown overlay={menu}>
+                                    <img src={user.photoURL ? user.photoURL : fallbackAvatar} alt="Profile" className="profile-photo" style={{ borderRadius: 30, width: 90, height: 35, marginRight: 10 }} />
+                                </Dropdown>
+                            </>
+                        ) : (
+                            <Button type="primary" className='login-btn' onClick={handleLoginClick}>Đăng nhập</Button>
+                        )}
                 </Flex>
-            </Flex>
-        </Flex>
+            </Flex >
+        </Flex >
     );
 };
 
