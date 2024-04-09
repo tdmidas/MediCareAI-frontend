@@ -2,12 +2,28 @@ import React from "react";
 import { Link } from "react-router-dom";
 import "./Doctor.css";
 import { Flex, Typography, Image, Card, Tag, Pagination } from "antd";
-import doctors from "../../data/doctors";
 import DefaultLayout from '../../layout/DefaultLayout';
 import MainContentLayout from "../../layout/MainContentLayout";
+import axios from "axios";
 const starIcon = require("../../assets/Star.png");
 
 const Doctor = () => {
+    const [doctors, setDoctors] = React.useState([]);
+    React.useEffect(() => {
+        const token = localStorage.getItem('accessToken');
+
+        axios.get("http://localhost:5000/api/doctors", {
+            headers: {
+                Authorization: `Bearer ${token}`
+            }
+        })
+            .then(response => {
+                setDoctors(response.data);
+            })
+            .catch(error => {
+                console.log("Error fetching data", error);
+            });
+    }, []);
     return (
         <DefaultLayout>
             <Flex gap="large" >
@@ -21,7 +37,7 @@ const Doctor = () => {
                     <Flex wrap="wrap" align="center" gap="large">
 
                         {doctors.map((doctor, index) => (
-                            <Link to={`/doctors/${doctor.name}`} key={index}>
+                            <Link to={`/doctors/${doctor.doctorId}`} key={index}>
                                 <Card
                                     key={index}
                                     className="doctor-card"

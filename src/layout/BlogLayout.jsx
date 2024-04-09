@@ -2,7 +2,7 @@ import React, { useState } from "react";
 import { Layout, Typography, Image, Col, Modal, Form, Input, Button, Flex } from 'antd';
 import './BlogLayout.css';
 import { AiOutlineHeart, AiOutlineComment } from 'react-icons/ai';
-
+import CustomHeader from "../components/Header/CustomHeader";
 const { Content } = Layout;
 const { Title, Text } = Typography;
 
@@ -31,10 +31,13 @@ const BlogLayout = ({ title, content, imageUrl, date }) => {
 
     return (
         <Layout className="blog-layout" style={{ height: "100vh", overflowY: "scroll", overflowX: "hidden" }}>
-            <Content className="blog-content">
+            <div style={{ backgroundColor: "white", padding: 15 }}>
+                <CustomHeader />
+            </div>
+            <Content className="blog-content" style={{ backgroundColor: "white" }}>
                 <Col xs={600} md={800} lg={1200}>
                     <div className="blog-card">
-                        <Flex vertical align="center" justify="center">
+                        <Flex vertical align="center" justify="center" gap="large">
                             <Title level={2}>{title}</Title>
                             <Image preview={false} src={imageUrl} alt={title} className="blog-image" />
                         </Flex>

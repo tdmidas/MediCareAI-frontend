@@ -1,4 +1,4 @@
-import { Flex, Menu, Image, Typography } from 'antd';
+import { Flex, Menu, Image, Typography, Dropdown } from 'antd';
 import { React, useState, useEffect } from 'react';
 import { FaRegHeart } from "react-icons/fa6";
 import { LuNewspaper } from "react-icons/lu";
@@ -6,6 +6,8 @@ import { FaRegCalendarAlt } from "react-icons/fa";
 import { RiHome6Line, RiNurseLine } from "react-icons/ri";
 import { IoChatbubbleOutline } from "react-icons/io5";
 import { NavLink, useLocation } from 'react-router-dom';
+import { FaRegPenToSquare } from "react-icons/fa6";
+
 import './Sidebar.css';
 const logo = require("../../assets/logo-final.png")
 const Sidebar = () => {
@@ -26,24 +28,25 @@ const Sidebar = () => {
                 return '4';
             case '/chat':
                 return '5';
-            case '/blog':
+            case '/blog/write':
                 return '6';
-
+            case '/blog':
+                return '7';
             default:
                 return '1';
         }
     }
+
     return (
+
         <>
             <Flex justify="center">
                 <div className="logo">
-                    <Image src={logo} style={{
+                    <Image preview={false} src={logo} style={{
                         width: "30px", height: "25px"
                     }} />
 
-                    <Typography.Title level={4} strong style={{ color: "#036e6c", textAlign: "center", marginLeft: 10, display: isCollapsed ? "none" : "none" }}>MediCareAI</Typography.Title>
                 </div>
-
             </Flex >
             <Menu mode="inline" defaultSelectedKeys={[getActiveTabKey()]} className="menu-bar" inlineCollapsed={isCollapsed} >
                 <Menu.Item key="1">
@@ -77,6 +80,12 @@ const Sidebar = () => {
                     </NavLink>
                 </Menu.Item>
                 <Menu.Item key="6">
+                    <FaRegPenToSquare />
+                    <NavLink to="/blog/write" className="nav-text">
+                        Viết Blog
+                    </NavLink>
+                </Menu.Item>
+                <Menu.Item key="7">
                     <LuNewspaper />
                     <NavLink to="/blog" className="nav-text">
                         Blog

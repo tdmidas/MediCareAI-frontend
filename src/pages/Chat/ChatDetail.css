@@ -20,12 +20,15 @@
 }
 
 input[type="text"] {
+    font-size: 20px;
     flex: 1;
     padding: 8px;
     margin-right: 10px;
 }
 
-
+.input-chat::placeholder{
+  font-size: 20pt !important;
+}
 
 .message.user {
     align-self: flex-end;

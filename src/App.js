@@ -12,6 +12,7 @@ import Blog from "./pages/Blog/Blog";
 import Doctor from "./pages/Doctor/Doctor";
 import DoctorDetail from "./pages/Doctor/DoctorDetail";
 import BlogLayout from "./layout/BlogLayout";
+import WriteBlog from "./pages/WriteBlog/WriteBlog";
 import blogData from "./BlogData";
 import slug from "slug";
 import ChatDetail from "./pages/Chat/ChatDetail";
@@ -32,6 +33,7 @@ function App() {
 				<Route path="/suckhoe/:slug" element={<SucKhoeDetail />} />
 				<Route path="/profile" element={<Profile />} />
 				<Route path="/blog" element={<Blog />} />
+				<Route path="/blog/write" element={<WriteBlog />} />
 				{blogData.map((blog) => (
 					<Route
 						key={blog.id}

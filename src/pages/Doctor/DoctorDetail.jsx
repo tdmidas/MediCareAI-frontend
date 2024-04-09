@@ -1,18 +1,30 @@
 import React from 'react';
 import { useParams } from 'react-router-dom';
 import { Card, Tabs, Rate, Image, Flex, Typography } from 'antd';
-import doctors from "../../data/doctors";
 import reviews from '../../data/reviews';
 import DefaultLayout from '../../layout/DefaultLayout';
 import MainContentLayout from "../../layout/MainContentLayout";
 import SideContentLayout from '../../layout/SideContentLayout';
 import BookAppointment from '../../components/SideBookAppointment/BookAppointment';
+import axios from 'axios';
 import "./DoctorDetail.css";
 const { TabPane } = Tabs;
 const { Text } = Typography;
 const DoctorDetail = () => {
+
+    const [doctors, setDoctors] = React.useState([]);
+    React.useEffect(() => {
+        axios.get("http://localhost:5000/api/doctors")
+            .then(response => {
+                setDoctors(response.data);
+            })
+            .catch(error => {
+                console.log("Error fetching data", error);
+            });
+    }, []);
+
     const { slug } = useParams();
-    const doctor = doctors.find(doc => doc.name === slug);
+    const doctor = doctors.find(doc => doc.doctorId === slug);
 
     if (!doctor) {
         return <div>Doctor not found</div>;
@@ -53,7 +65,7 @@ const DoctorDetail = () => {
                     </Flex>
                     <Tabs defaultActiveKey="1" style={{ marginBottom: 16 }} >
                         <TabPane tab="About" key="1">
-                            <Text>{doctor.short}</Text>
+                            <Text>{doctor.full}</Text>
                         </TabPane>
                         <TabPane tab="Feedback" key="2">
                             {renderFeedback()}

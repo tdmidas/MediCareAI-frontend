@@ -7,6 +7,9 @@ import { ToastContainer } from "react-toastify";
 import { notify } from "../../config/toast";
 import { Link } from "react-router-dom";
 import axios from "axios";
+import { createUserWithEmailAndPassword } from "firebase/auth";
+import { db } from "../../firebaseConfig";
+import { doc, setDoc, collection } from "firebase/firestore";
 import { auth, googleAuthProvider, signInWithPopup, getEmail } from "../../firebaseConfig";
 const googleLogo = require('../../assets/google-18px.svg').default;
 
@@ -16,7 +19,6 @@ const Register = () => {
 		name: "",
 		email: "",
 		password: "",
-		confirmPassword: "",
 		IsAccepted: false,
 	});
 
@@ -43,6 +45,7 @@ const Register = () => {
 		event.preventDefault();
 		if (!Object.keys(errors).length) {
 			try {
+				await createUserWithEmailAndPassword(auth, data.email, data.password);
 				const response = await axios.post("http://localhost:5000/api/auth/signup", data);
 				if (response.status === 201) {
 					notify("Đăng ký tài khoản thành công", "success");
@@ -73,6 +76,12 @@ const Register = () => {
 				return;
 			}
 			const user = result.user;
+			const userId = user.uid;
+			const accessToken = user.accessToken;
+			localStorage.setItem('userId', userId);
+			localStorage.setItem('accessToken', accessToken);
+			const userDocRef = doc(collection(db, 'users'), userId);
+			await setDoc(userDocRef, { name: user.displayName, email: user.email, isAdmin: false, userId: user.uid, photoURL: user.photoURL, lastLogin: new Date() }, { merge: true });
 			navigate("/");
 			console.log("Google Sign-in Successful:", user);
 		} catch (error) {

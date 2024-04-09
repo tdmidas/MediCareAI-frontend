@@ -37,20 +37,19 @@ const Login = () => {
 	};
 	const signInWithEmail = async () => {
 		try {
-			await signInWithEmailAndPassword(auth, data.email, data.password);
 			notify("You logged in to your account successfully", "success");
 			//store accessToken
 			const response = await axios.post("http://localhost:5000/api/auth/login", {
 				email: data.email,
 				password: data.password,
 			});
-			const { userId, token } = response.data
+			const { userId, accessToken } = response.data
 			localStorage.setItem("userId", userId);
 
-			localStorage.setItem("accessToken", token);
+			localStorage.setItem("accessToken", accessToken);
 			//Update lastLogin
 			const usersCollection = collection(db, "users");
-			const userDoc = doc(usersCollection, data.email);
+			const userDoc = doc(usersCollection, userId);
 			await setDoc(userDoc, { userLastlogin: new Date() }, { merge: true });
 			navigate("/");
 		} catch (error) {
@@ -63,6 +62,10 @@ const Login = () => {
 		try {
 			const result = await signInWithPopup(auth, googleAuthProvider);
 			const user = result.user;
+			const userId = user.uid;
+			const accessToken = user.accessToken;
+			localStorage.setItem('userId', userId);
+			localStorage.setItem('accessToken', accessToken);
 			navigate("/");
 			console.log("Google Sign-in Successful:", user);
 		} catch (error) {

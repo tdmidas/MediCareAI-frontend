@@ -1,0 +1,14 @@
+.rc-md-navigation {
+    border:none !important;
+    background: none !important;
+}
+.write-blog-input::placeholder{
+ font-size: 25pt !important;
+ font-weight: 600;
+}
+.write-blog-input:hover{
+    border-color: none !important;
+}
+ input[type="text"] {
+     font-size: 30px;
+ }

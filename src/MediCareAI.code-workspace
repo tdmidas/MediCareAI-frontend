@@ -1,0 +1,19 @@
+{
+	"folders": [
+		{
+			"path": "../.."
+		},
+		{
+			"path": "../../../Doctor-Appointment"
+		},
+		{
+			"path": "../../../MediCareAI-backend"
+		},
+		{
+			"path": "../../../MediCareAI-nestjs"
+		}
+	],
+	"settings": {
+		"liveServer.settings.multiRootWorkspaceName": "MediCareAI"
+	}
+}

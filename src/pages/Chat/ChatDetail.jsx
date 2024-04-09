@@ -30,7 +30,7 @@ const ChatDetail = () => {
             case "bac-si-dinh-duong":
                 return "Bác sĩ dinh dưỡng";
             default:
-                return slug; // Return slug as is if no match found
+                return slug;
         }
     };
     useEffect(() => {
@@ -46,7 +46,7 @@ const ChatDetail = () => {
         setMessages(updatedMessages);
         setUserInput("");
 
-        setLoading(true); // Set loading to true when sending message
+        setLoading(true);
 
         try {
             const botResponse = await getBotResponse(userInput);
@@ -59,7 +59,7 @@ const ChatDetail = () => {
             setMessages(updatedMessagesWithError);
         }
 
-        setLoading(false); // Set loading to false after receiving response
+        setLoading(false);
     };
 
     const getBotResponse = async (userInput) => {
@@ -85,15 +85,15 @@ const ChatDetail = () => {
     };
 
     if (!chatbot) {
-        return null; // Render nothing until chatbot data is loaded
+        return null;
     }
 
     return (
         <DefaultLayout>
             <MainContentLayout>
-                <Flex vertical align="center" gap="large" wrap="wrap" justify="center">
+                <Flex vertical align="center" gap="large" wrap="wrap" justify="center" style={{ minHeight: "100vh" }}>
                     <Card id="chat-container" className="chat-container" style={{ width: isMobile ? 300 : 800, height: 600 }}>
-                        {loading ? ( // Conditionally render loading indicator
+                        {loading ? (
                             <div style={{ textAlign: "center", marginTop: 20 }}>
                                 <Spin size="large"
                                     indicator={
@@ -127,6 +127,7 @@ const ChatDetail = () => {
                     </Card>
                     <Flex className="input-container" justify="center" gap={10} wrap="wrap">
                         <TextArea
+                            classNames="input-chat"
                             rows={3}
                             value={userInput}
                             onChange={(e) => setUserInput(e.target.value)}

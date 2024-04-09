@@ -27,6 +27,7 @@ const doctors = [
 		education: "PHD in Surgeon",
 		hospital: "Kangaroo Hospital.",
 		short: "Lorem ipsum dolor sit amet consectetur adipisicing elit. Dicta, alias!",
+		full: "Lorem ipsum dolor sit amet consectetur adipisicing elit. Dicta, alias! Lorem ipsum dolor sit amet consectetur adipisicing elit. Dicta, alias! Lorem ipsum dolor sit amet consectetur adipisicing elit. Dicta, alias! Lorem ipsum dolor sit amet consectetur adipisicing elit. Dicta, alias!",
 		availableTimes: [
 			{ time: "Morning", startHour: 8, endHour: 12 },
 			{ time: "Afternoon", startHour: 13, endHour: 17 },

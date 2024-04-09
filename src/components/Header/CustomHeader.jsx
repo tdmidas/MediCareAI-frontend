@@ -3,32 +3,33 @@ import { Flex, Badge, Typography, Image } from 'antd';
 import { Button } from 'antd';
 import { Input } from 'antd';
 import './CustomHeader.css';
-import { useNavigate, useLocation } from 'react-router-dom'; // Import useLocation
+import { useNavigate, useLocation } from 'react-router-dom';
 import { auth, db } from '../../firebaseConfig';
 import { Menu, Dropdown } from 'antd';
-import { BellOutlined, SearchOutlined, ArrowLeftOutlined } from '@ant-design/icons'; // Import ArrowLeftOutlined
+import { BellOutlined, SearchOutlined, ArrowLeftOutlined } from '@ant-design/icons';
 import { MenuFoldOutlined } from "@ant-design/icons";
 import { useMediaQuery } from "react-responsive";
 import { doc, setDoc, collection, getDoc } from "firebase/firestore";
 const fallbackAvatar = require("../../assets/fallback-avatar.jpg")
 
-const CustomHeader = ({ toggleDrawer }) => {
+const CustomHeader = ({ toggleDrawer, submitHandler }) => {
     const navigate = useNavigate();
-    const location = useLocation(); // Get location
+    const location = useLocation();
     const [user, setUser] = useState(null);
     const isMobile = useMediaQuery({ maxWidth: 768 });
     const isSmallScreen = useMediaQuery({ maxWidth: 1024 });
-
     useEffect(() => {
         const unsubscribe = auth.onAuthStateChanged(async (user) => {
-            if (user) {
-                setUser(user);
+            const userId = localStorage.getItem('userId');
 
-                const userDocRef = doc(collection(db, 'users'), user.email);
+            if (user || userId) {
+                setUser(user);
+                const userDocRef = doc(collection(db, 'users'), userId);
                 const userDocSnapshot = await getDoc(userDocRef);
                 if (userDocSnapshot.exists()) {
                     await setDoc(userDocRef, { lastLogin: new Date() }, { merge: true });
-                    setUser(user);
+                    setUser(userDocSnapshot.data());
+                    console.log("user", user);
 
                 }
 
@@ -45,7 +46,9 @@ const CustomHeader = ({ toggleDrawer }) => {
 
     const handleLogout = async () => {
         try {
+            setUser(null);
             await auth.signOut();
+            localStorage.clear();
             navigate('/');
         } catch (error) {
             console.error("Logout Error:", error.message);
@@ -55,6 +58,10 @@ const CustomHeader = ({ toggleDrawer }) => {
     const handleMenuClick = (event) => {
         if (event.key === 'profile') {
             navigate('/profile');
+        }
+        else if (event.key === 'my-post') {
+            navigate('/blog/my-post');
+
         } else if (event.key === 'logout') {
             handleLogout();
         }
@@ -64,6 +71,9 @@ const CustomHeader = ({ toggleDrawer }) => {
         <Menu onClick={handleMenuClick}>
             <Menu.Item key="profile" >
                 Cài đặt tài khoản
+            </Menu.Item>
+            <Menu.Item key="my-post" >
+                Bài viết của tôi
             </Menu.Item>
             <Menu.Item key="logout" >
                 Đăng xuất
@@ -120,26 +130,31 @@ const CustomHeader = ({ toggleDrawer }) => {
                         Quay lại
                     </Button>
                 )}
-
                 <Input placeholder="Tìm kiếm bác sĩ, blog,..." prefix={<SearchOutlined />} style={{ borderRadius: 30, minWidth: 150, marginLeft: isSmallScreen ? 0 : 300 }} />
+                <Flex align="center" gap="10px" style={{ marginLeft: 'auto' }}>
+                    {user ? (
+                        <>
+                            {location.pathname === '/blog/write' ? (
+                                <Button type="primary" onClick={submitHandler}>Xuất bản</Button>
+                            ) : (
+                                <>
+                                    <Dropdown overlay={notificationMenu} trigger={['click']}>
+                                        <Badge count={notifications.length} dot>
+                                            <BellOutlined style={{ fontSize: '20px' }} />
+                                        </Badge>
+                                    </Dropdown>
 
-                <Flex align="center" gap="10px" style={{ marginLeft: 'auto' }} >
-                    {
-                        user ? (
-                            <>
-                                <Dropdown overlay={notificationMenu} trigger={['click']}>
-                                    <Badge count={notifications.length} dot>
-                                        <BellOutlined style={{ fontSize: '20px' }} />
-                                    </Badge>
-                                </Dropdown>
-                                <Dropdown overlay={menu}>
-                                    <img src={user.photoURL ? user.photoURL : fallbackAvatar} alt="Profile" className="profile-photo" style={{ borderRadius: 30, width: 90, height: 35, marginRight: 10 }} />
-                                </Dropdown>
-                            </>
-                        ) : (
-                            <Button type="primary" className='login-btn' onClick={handleLoginClick}>Đăng nhập</Button>
-                        )}
+                                    <Dropdown overlay={menu}>
+                                        <img src={user.photoURL ? user.photoURL : fallbackAvatar} alt="Profile" className="profile-photo" style={{ borderRadius: 30, width: 90, height: 35, marginRight: 10 }} />
+                                    </Dropdown>
+                                </>
+                            )}
+                        </>
+                    ) : (
+                        <Button type="primary" className='login-btn' onClick={handleLoginClick}>Đăng nhập</Button>
+                    )}
                 </Flex>
+
             </Flex >
         </Flex >
     );
