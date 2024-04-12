@@ -1,23 +1,27 @@
 import React, { useState, useEffect } from "react";
 import { useParams } from "react-router-dom";
-import { Input, Button, Typography, Avatar, Flex, Card, Spin } from "antd";
+import { Input, Button, Typography, Avatar, Flex, Card, Spin, message } from "antd";
 import chatbotData from "../../data/chat";
 import "./ChatDetail.css";
 import defaultAvatar from "../../assets/patient-avatar.png";
 import DefaultLayout from "../../layout/DefaultLayout";
 import MainContentLayout from "../../layout/MainContentLayout";
 import { useMediaQuery } from 'react-responsive';
-import { SendOutlined } from '@ant-design/icons';
-import { LoadingOutlined } from '@ant-design/icons';
+import { LoadingOutlined, UploadOutlined, AudioOutlined, SendOutlined } from '@ant-design/icons';
+import SpeechRecognition, { useSpeechRecognition } from 'react-speech-recognition';
+import axios from 'axios';
+
 const { TextArea } = Input;
 const { Text } = Typography;
 
 const ChatDetail = () => {
     const { slug } = useParams();
+    const { transcript, resetTranscript, listening, browserSupportsSpeechRecognition } = useSpeechRecognition();
     const [messages, setMessages] = useState([]);
     const [userInput, setUserInput] = useState("");
     const [loading, setLoading] = useState(false);
     const [chatbot, setChatbot] = useState(null);
+    const [file, setFile] = useState(null);
     const isMobile = useMediaQuery({ maxWidth: 768 });
     const getFormattedName = (slug) => {
         switch (slug) {
@@ -88,6 +92,56 @@ const ChatDetail = () => {
         return null;
     }
 
+
+    const handleVoice = () => {
+        if (SpeechRecognition.browserSupportsSpeechRecognition()) {
+            if (listening) {
+                SpeechRecognition.stopListening();
+            } else {
+                SpeechRecognition.startListening({ continuous: true });
+            }
+        } else {
+            alert("Browser doesn't support speech recognition");
+        }
+    };
+    const handleTranscript = () => {
+        setUserInput(userInput + transcript + ' ');
+        resetTranscript();
+    };
+
+    if (transcript !== '') {
+        handleTranscript();
+    }
+    const handleUpload = () => {
+        const fileInput = document.createElement('input');
+        fileInput.type = 'file';
+        fileInput.accept = 'image/*'; // Accept only image files
+        fileInput.onchange = async (e) => {
+            const selectedFile = e.target.files[0];
+            if (!selectedFile) {
+                return;
+            }
+
+            const formData = new FormData();
+            formData.append('image', selectedFile);
+
+            try {
+                const response = await axios.post('http://localhost:5000/api/upload', formData, {
+                    headers: {
+                        'Content-Type': 'multipart/form-data'
+                    }
+                });
+                message.success(response.data);
+            } catch (error) {
+                console.error('Error uploading file:', error);
+                message.error('Error uploading file.');
+            }
+        };
+
+        fileInput.click();
+    };
+
+
     return (
         <DefaultLayout>
             <MainContentLayout>
@@ -132,14 +186,19 @@ const ChatDetail = () => {
                             value={userInput}
                             onChange={(e) => setUserInput(e.target.value)}
                             wrap="wrap"
-                            style={{ width: isMobile ? 300 : 750, borderRadius: 50, marginBottom: 20, height: 50, overflow: "hidden" }}
+                            style={{ width: isMobile ? 300 : 650, borderRadius: 50, marginBottom: 20, overflow: "hidden" }}
                             placeholder="Nhập tin nhắn của bạn..."
                             onPressEnter={sendMessage}
                             className="textarea-container"
+                            autoSize={{ minRows: 2, maxRows: 10 }}
+
                         >
 
                         </TextArea>
-                        <Button className="send-btn" type="primary" icon={<SendOutlined />} onClick={sendMessage} />
+                        <Button type="default" className="upload-btn" icon={<UploadOutlined />} onClick={handleUpload} />
+                        <Button type="default" className="voice-btn" icon={<AudioOutlined />} onClick={handleVoice} />
+                        <Button className="send-btn" type="default" icon={<SendOutlined />} onClick={sendMessage} />
+
 
                     </Flex>
                 </Flex>

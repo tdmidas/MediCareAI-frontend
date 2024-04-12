@@ -3,6 +3,7 @@
     
     background-color: #fff;
     overflow-y: auto;
+    box-shadow: 0 0 10px rgba(4, 125, 109, 0.2);
     
 }
 
@@ -26,8 +27,9 @@ input[type="text"] {
     margin-right: 10px;
 }
 
-.input-chat::placeholder{
-  font-size: 20pt !important;
+.ant-input:placeholder-shown {
+    font-size: 13pt !important;
+    justify-items: center;
 }
 
 .message.user {
@@ -42,6 +44,6 @@ input[type="text"] {
 }
 
 
-.send-btn {
+.send-btn, .upload-btn, .voice-btn {
     margin-bottom: 10px;
 }

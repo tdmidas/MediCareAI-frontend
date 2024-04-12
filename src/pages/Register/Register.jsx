@@ -10,9 +10,9 @@ import axios from "axios";
 import { createUserWithEmailAndPassword } from "firebase/auth";
 import { db } from "../../firebaseConfig";
 import { doc, setDoc, collection } from "firebase/firestore";
-import { auth, googleAuthProvider, signInWithPopup, getEmail } from "../../firebaseConfig";
+import { auth, googleAuthProvider, signInWithPopup, getEmail, facebookAuthProvider } from "../../firebaseConfig";
 const googleLogo = require('../../assets/google-18px.svg').default;
-
+const facebookLogo = require('../../assets/facebook-18px.svg').default;
 const Register = () => {
 	const navigate = useNavigate();
 	const [data, setData] = useState({
@@ -67,7 +67,29 @@ const Register = () => {
 	};
 
 
+	const signUpWithFacebook = async () => {
+		try {
+			const result = await signInWithPopup(auth, facebookAuthProvider);
+			if (getEmail) {
+				notify("Email đã tồn tại, vui lòng đăng nhập");
+				return;
+			}
+			const user = result.user;
+			const userId = user.uid;
+			const accessToken = user.accessToken;
+			localStorage.setItem('userId', userId);
+			localStorage.setItem('accessToken', accessToken);
+			const userDocRef = doc(collection(db, 'users'), userId);
+			await setDoc(userDocRef, { name: user.displayName, email: user.email, isAdmin: false, userId: user.uid, photoURL: user.photoURL, lastLogin: new Date() }, { merge: true });
+			navigate("/");
+			console.log("Facebook Sign-in Successful:", user);
+		} catch (error) {
+			console.error("Facebook Sign-in Error:", error.message);
+		}
 
+
+
+	}
 	const signUpWithGoogle = async () => {
 		try {
 			const result = await signInWithPopup(auth, googleAuthProvider);
@@ -213,6 +235,10 @@ const Register = () => {
 						<img src={googleLogo} style={{ paddingRight: 10 }} /> Đăng ký với Google
 					</button>
 
+					<button className={styles['facebook-btn']}
+						onClick={signUpWithFacebook}>
+						<img src={facebookLogo} style={{ paddingRight: 10 }} /> Đăng ký với Facebook
+					</button>
 
 					<span style={{ color: "#a29494", textAlign: "center", display: "inline-block", width: "100%" }}>
 						Bạn đã có tài khoản? <Link to="/login">Đăng nhập</Link>

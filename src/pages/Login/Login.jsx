@@ -7,13 +7,13 @@ import "react-toastify/dist/ReactToastify.css";
 import { notify } from "../../config/toast";
 import { Link } from "react-router-dom";
 import "./Login.css";
-import { auth, googleAuthProvider, signInWithPopup, db } from "../../firebaseConfig";
+import { auth, googleAuthProvider, signInWithPopup, db, facebookAuthProvider } from "../../firebaseConfig";
 import { signInWithEmailAndPassword } from "firebase/auth";
 import { setDoc, doc, collection } from "firebase/firestore";
 import axios from "axios";
 
 const googleLogo = require('../../assets/google-18px.svg').default;
-
+const facebookLogo = require('../../assets/facebook-18px.svg').default;
 const Login = () => {
 	const [data, setData] = useState({
 		email: "",
@@ -72,6 +72,21 @@ const Login = () => {
 			console.error("Google Sign-in Error:", error.message);
 		}
 	};
+	const signInWithFacebook = async () => {
+		try {
+			const result = await signInWithPopup(auth, facebookAuthProvider);
+			const user = result.user;
+			const userId = user.uid;
+			const accessToken = user.accessToken;
+			localStorage.setItem('userId', userId);
+			localStorage.setItem('accessToken', accessToken);
+			navigate("/");
+			console.log("Facebook Sign-in Successful:", user);
+		} catch (error) {
+			console.error("Facebook Sign-in Error:", error.message);
+		}
+
+	}
 	const submitHandler = async (event) => {
 		event.preventDefault();
 		signInWithEmail();
@@ -117,7 +132,10 @@ const Login = () => {
 						onClick={signInWithGoogle}>
 						<img src={googleLogo} style={{ paddingRight: 10 }} /> Đăng nhập với Google
 					</button>
-
+					<button className={styles['facebook-btn']}
+						onClick={signInWithFacebook}>
+						<img src={facebookLogo} style={{ paddingRight: 10 }} /> Đăng nhập với Facebook
+					</button>
 					<span style={{ color: "#a29494", textAlign: "center", display: "inline-block", width: "100%" }}>
 						Bạn chưa có tài khoản? <Link to="/register">Tạo tài khoản</Link>
 					</span>
