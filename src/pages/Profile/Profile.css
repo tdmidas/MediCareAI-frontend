@@ -1,0 +1,10 @@
+.form-input{
+    border-radius: 30px;
+    margin-top: 10px;
+    padding: 10px;
+}
+.form-btn{
+    border-color: #04675f;
+    background-color: #ffffff;
+    color: rgb(8, 147, 142);
+}

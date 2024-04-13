@@ -128,13 +128,14 @@ const Login = () => {
 					<button type="submit">Đăng nhập</button>
 					<ToastContainer />
 
-					<button className={styles['google-btn']}
-						onClick={signInWithGoogle}>
-						<img src={googleLogo} style={{ paddingRight: 10 }} /> Đăng nhập với Google
-					</button>
+
 					<button className={styles['facebook-btn']}
 						onClick={signInWithFacebook}>
 						<img src={facebookLogo} style={{ paddingRight: 10 }} /> Đăng nhập với Facebook
+					</button>
+					<button className={styles['google-btn']}
+						onClick={signInWithGoogle}>
+						<img src={googleLogo} style={{ paddingRight: 10 }} /> Đăng nhập với Google
 					</button>
 					<span style={{ color: "#a29494", textAlign: "center", display: "inline-block", width: "100%" }}>
 						Bạn chưa có tài khoản? <Link to="/register">Tạo tài khoản</Link>

@@ -5,6 +5,7 @@ import { Flex, Typography, Image, Card, Tag, Pagination } from "antd";
 import DefaultLayout from '../../layout/DefaultLayout';
 import MainContentLayout from "../../layout/MainContentLayout";
 import axios from "axios";
+import doctorss from "../../data/doctors";
 const starIcon = require("../../assets/Star.png");
 
 const Doctor = () => {
@@ -36,7 +37,7 @@ const Doctor = () => {
                     </Flex>
                     <Flex wrap="wrap" align="center" gap="large">
 
-                        {doctors.map((doctor, index) => (
+                        {doctorss.map((doctor, index) => (
                             <Link to={`/doctors/${doctor.doctorId}`} key={index}>
                                 <Card
                                     key={index}

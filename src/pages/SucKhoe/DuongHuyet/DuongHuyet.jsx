@@ -61,7 +61,7 @@ const DuongHuyet = () => {
         const userId = localStorage.getItem("userId");
         await axios.post(`http://${process.env.REACT_APP_API_PORT}/api/health/glucose/${userId}`, {
             glucose: parseFloat(glucose),
-            status: bloodSugarClassification,
+            status: classification,
         });
     };
     return (

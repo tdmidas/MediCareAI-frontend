@@ -59,7 +59,7 @@ const HuyetAp = () => {
             sysBP: parseFloat(tamTruong),
             diaBP: parseFloat(tamThu),
             heartRate: parseFloat(nhipTim),
-            status: bloodPressureClassification,
+            status: classification,
         });
     };
 

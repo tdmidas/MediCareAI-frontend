@@ -2,11 +2,24 @@ import React, { useState, useEffect } from 'react';
 import { Card, Flex, Progress, Typography, Col, Row } from 'antd';
 import './HealthEvaluate.css';
 import axios from 'axios';
+import { ExclamationCircleOutlined } from '@ant-design/icons';
 
 const { Title, Text } = Typography;
 
 const HealthEvaluate = () => {
     const [healthData, setHealthData] = useState(null);
+    const [dataComplete, setDataComplete] = useState(false);
+    useEffect(() => {
+        fetchData();
+    }, []);
+
+    useEffect(() => {
+        if (healthData && healthData.bloodStatus && healthData.glucoseStatus && healthData.bmiStatus) {
+            setDataComplete(true);
+        } else {
+            setDataComplete(false);
+        }
+    }, [healthData]);
 
     useEffect(() => {
         fetchData();
@@ -24,7 +37,8 @@ const HealthEvaluate = () => {
     };
 
     return (
-        <Card style={{ maxWidth: 500, height: 400, borderRadius: 20, marginBottom: 30 }}>
+        <Card style={{ maxWidth: 500, height: 440, borderRadius: 20, marginBottom: 30 }} className={dataComplete ? "complete-card" : "incomplete-card"}>
+
             <Flex align="center" justify="center">
                 <Progress type="circle" percent={100} format={() => healthData ? healthData.predict : '0'}
                     className={healthData ? (healthData.predict === 'Great' ? 'green-progress' : 'red-progress') : ''} />
@@ -34,17 +48,25 @@ const HealthEvaluate = () => {
             </Title>
             <Flex wrap='wrap' gap="large" justify='center' >
                 <Col>
-                    <Row style={{ backgroundColor: "#fc9375", borderRadius: 20, height: 40, width: "250px", alignContent: "center", marginBottom: "20px" }}>
-                        <Text type="secondary" style={{ fontWeight: 600, color: "white", marginLeft: 30 }}> {healthData ? healthData.bloodStatus : 'Đang tải...'}</Text>
+                    <Row className="health-info" style={{ backgroundColor: "#fc9375" }}>
+                        <Text className="health-info-text"> {healthData ? healthData.bloodStatus : 'Đang tải...'}</Text>
                     </Row>
-                    <Row style={{ backgroundColor: "#f4b152", borderRadius: 20, height: 40, width: "250px", alignContent: "center", marginBottom: "20px" }}>
-                        <Text type="secondary" style={{ fontWeight: 600, color: "white", marginLeft: 30 }}>  {healthData ? healthData.glucoseStatus : 'Đang tải...'}</Text>
+                    <Row className="health-info" style={{ backgroundColor: "#f4b152" }}>
+                        <Text className="health-info-text">  {healthData ? healthData.glucoseStatus : 'Đang tải...'}</Text>
                     </Row>
-                    <Row style={{ backgroundColor: "#1ddadd", borderRadius: 20, height: 40, width: "250px", alignContent: "center", marginBottom: "20px" }}>
-                        <Text type="secondary" style={{ fontWeight: 600, color: "white", marginLeft: 30 }}>  {healthData ? healthData.bmiStatus : 'Đang tải...'}</Text>
+                    <Row className="health-info" style={{ backgroundColor: "#1ddadd" }}>
+                        <Text className="health-info-text">  {healthData ? healthData.bmiStatus : 'Đang tải...'}</Text>
                     </Row>
+
                 </Col>
+
             </Flex>
+            {!dataComplete && (
+                <Flex align="center" justify="center" style={{ marginTop: 20 }}>
+                    <ExclamationCircleOutlined style={{ fontSize: 24, marginRight: 10 }} />
+                    <Text style={{ fontWeight: 'bold' }}>Cập nhật đủ thông tin sức khỏe bạn nhé !</Text>
+                </Flex>
+            )}
         </Card>
     );
 }

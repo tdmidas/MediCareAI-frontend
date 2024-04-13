@@ -43,7 +43,7 @@ const LichKham = () => {
         <DefaultLayout>
             {isLoggedIn ? (
                 <>
-                    <Flex vertical gap="large" wrap='wrap'>
+                    <Flex vertical gap="large" wrap='wrap' style={{ minHeight: "100vh" }}>
                         <Steps current={currentStep}>
                             <Step title="Select Appointment Date & Time" />
                             <Step title="Patient Information" />

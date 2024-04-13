@@ -230,14 +230,14 @@ const Register = () => {
 				<div>
 					<button type="submit">Tạo tài khoản</button>
 
-					<button className={styles['google-btn']}
-						onClick={signUpWithGoogle}>
-						<img src={googleLogo} style={{ paddingRight: 10 }} /> Đăng ký với Google
-					</button>
 
 					<button className={styles['facebook-btn']}
 						onClick={signUpWithFacebook}>
 						<img src={facebookLogo} style={{ paddingRight: 10 }} /> Đăng ký với Facebook
+					</button>
+					<button className={styles['google-btn']}
+						onClick={signUpWithGoogle}>
+						<img src={googleLogo} style={{ paddingRight: 10 }} /> Đăng ký với Google
 					</button>
 
 					<span style={{ color: "#a29494", textAlign: "center", display: "inline-block", width: "100%" }}>

@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import { Layout, Button, Drawer, Menu } from "antd";
+import { Layout, Button, Drawer } from "antd";
 import { MenuFoldOutlined } from "@ant-design/icons";
 import { useMediaQuery } from "react-responsive";
 import Sidebar from "../components/Sidebar/Sidebar";
@@ -51,6 +51,8 @@ const DefaultLayout = ({ children }) => {
                     <CustomHeader toggleDrawer={toggleDrawer} />
                 </Header>
                 <Content className="content">{children}</Content>
+
+
             </Layout>
         </Layout>
     );
