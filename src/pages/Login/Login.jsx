@@ -37,6 +37,8 @@ const Login = () => {
 	};
 	const signInWithEmail = async () => {
 		try {
+			await signInWithEmailAndPassword(auth, data.email, data.password);
+
 			notify("You logged in to your account successfully", "success");
 			//store accessToken
 			const response = await axios.post("http://localhost:5000/api/auth/login", {

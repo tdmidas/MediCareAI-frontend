@@ -17,10 +17,10 @@ const HealthTrackList = () => {
         const fetchAndUpdateHealthData = async () => {
             try {
                 const userId = localStorage.getItem("userId");
+
                 const bpResponse = await axios.get(`http://localhost:5000/api/health/bloodPressure/${userId}`);
                 const { diaBP, sysBP } = bpResponse.data;
 
-                // Fetch glucose data
                 const glucoseResponse = await axios.get(`http://localhost:5000/api/health/glucose/${userId}`);
                 const { glucose } = glucoseResponse.data;
 
@@ -30,7 +30,7 @@ const HealthTrackList = () => {
                         name: "Huyết áp",
                         picture: require("../../assets/blood-pressure.png"),
                         measure: "mmHg",
-                        value: `${diaBP}/${sysBP}` || "--/--",
+                        value: `${diaBP}/${sysBP}`,
                         color: "#c0f1ef",
                     },
                     {
@@ -38,7 +38,7 @@ const HealthTrackList = () => {
                         name: "Đường huyết",
                         picture: require("../../assets/blood-sugar.png"),
                         measure: "mmol/L",
-                        value: glucose || "--",
+                        value: glucose,
                         color: "#f5dec4",
                     }
                 ];
@@ -46,7 +46,34 @@ const HealthTrackList = () => {
                 setHealthTrackData(updatedHealthData);
                 console.log("Health data updated successfully:", updatedHealthData);
             } catch (error) {
-                console.error("Error fetching health data:", error);
+                if (error.response && error.response.status === 404) {
+                    console.log("No health data found for the user.");
+                    const defaultBP = { diaBP: "--", sysBP: "--" };
+                    const defaultGlucose = "--";
+
+                    const defaultHealthData = [
+                        {
+                            id: 1,
+                            name: "Huyết áp",
+                            picture: require("../../assets/blood-pressure.png"),
+                            measure: "mmHg",
+                            value: `${defaultBP.diaBP}/${defaultBP.sysBP}`,
+                            color: "#c0f1ef",
+                        },
+                        {
+                            id: 2,
+                            name: "Đường huyết",
+                            picture: require("../../assets/blood-sugar.png"),
+                            measure: "mmol/L",
+                            value: defaultGlucose,
+                            color: "#f5dec4",
+                        }
+                    ];
+
+                    setHealthTrackData(defaultHealthData);
+                } else {
+                    console.error("Error fetching health data:", error);
+                }
             }
         };
 
