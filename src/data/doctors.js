@@ -18,7 +18,7 @@ const doctors = [
 	{
 		id: "01",
 		name: "Dr. Thruptis",
-		specialty: "Surgeon",
+		speciality: "Surgeon",
 		avgRating: 4.8,
 		totalRating: 272,
 		photo: doctorImg01,
@@ -37,7 +37,7 @@ const doctors = [
 	{
 		id: "02",
 		name: "Dr. D K Gupta",
-		specialty: "Neurologist",
+		speciality: "Neurologist",
 		avgRating: 4.8,
 		totalRating: 272,
 		photo: doctorImg02,
@@ -55,7 +55,7 @@ const doctors = [
 	{
 		id: "03",
 		name: "Dr. Jennie Nguyen",
-		specialty: "Gynaecology",
+		speciality: "Gynaecology",
 		avgRating: 4.8,
 		totalRating: 272,
 		photo: doctorImg03,
@@ -70,7 +70,7 @@ const doctors = [
 	{
 		id: "04",
 		name: "Dr. Thiago",
-		specialty: "Surgeon",
+		speciality: "Surgeon",
 		avgRating: 4.8,
 		totalRating: 272,
 		photo: doctorImg04,
@@ -83,7 +83,7 @@ const doctors = [
 	{
 		id: "05",
 		name: "Dr. Wendy Hill",
-		specialty: "Neurologist",
+		speciality: "Neurologist",
 		avgRating: 4.8,
 		totalRating: 272,
 		photo: doctorImg05,
@@ -98,7 +98,7 @@ const doctors = [
 	{
 		id: "06",
 		name: "Dr. Justin ",
-		specialty: "Gynaecology",
+		speciality: "Gynaecology",
 		avgRating: 4.8,
 		totalRating: 272,
 		photo: doctorImg06,

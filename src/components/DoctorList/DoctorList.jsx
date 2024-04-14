@@ -23,7 +23,7 @@ const DoctorList = () => {
             </Flex>
             <Flex align="center" gap="large" wrap="wrap">
                 {doctors.slice(0, 2).map((doctor, index) => (
-                    <Link to={`/doctors/${doctor.name}`} key={index}>
+                    <Link to={`/doctors/${doctor.id}`} key={index}>
 
                         <Card
                             key={index}
@@ -41,7 +41,7 @@ const DoctorList = () => {
                             <Flex >
                                 <Flex vertical aligh="center" gap="10px">
                                     <Flex gap="10px">
-                                        <Tag color="#069390" style={{ fontSize: 15 }}>{doctor.specialty}</Tag>
+                                        <Tag color="#069390" style={{ fontSize: 15 }}>{doctor.speciality}</Tag>
                                         <Typography.Text level={3} strong >
                                             <Image src={starIcon} />  {doctor.avgRating}  ({doctor.totalRating})
                                         </Typography.Text>

@@ -17,9 +17,12 @@ const HealthTrackList = () => {
         const fetchAndUpdateHealthData = async () => {
             try {
                 const userId = localStorage.getItem("userId");
-                await axios.post(`http://localhost:5000/api/health/overall/${userId}`);
-                const response = await axios.get(`http://localhost:5000/api/health/overall/${userId}`);
-                const { BMI, diaBP, glucose, sysBP } = response.data;
+                const bpResponse = await axios.get(`http://localhost:5000/api/health/bloodPressure/${userId}`);
+                const { diaBP, sysBP } = bpResponse.data;
+
+                // Fetch glucose data
+                const glucoseResponse = await axios.get(`http://localhost:5000/api/health/glucose/${userId}`);
+                const { glucose } = glucoseResponse.data;
 
                 const updatedHealthData = [
                     {
@@ -27,7 +30,7 @@ const HealthTrackList = () => {
                         name: "Huyết áp",
                         picture: require("../../assets/blood-pressure.png"),
                         measure: "mmHg",
-                        value: `${diaBP}/${sysBP}`,
+                        value: `${diaBP}/${sysBP}` || "--/--",
                         color: "#c0f1ef",
                     },
                     {
@@ -35,17 +38,9 @@ const HealthTrackList = () => {
                         name: "Đường huyết",
                         picture: require("../../assets/blood-sugar.png"),
                         measure: "mmol/L",
-                        value: glucose,
+                        value: glucose || "--",
                         color: "#f5dec4",
-                    },
-                    {
-                        id: 3,
-                        name: "Chỉ số BMI",
-                        picture: require("../../assets/bmi.png"),
-                        measure: "BMI",
-                        value: BMI,
-                        color: "#caffe0",
-                    },
+                    }
                 ];
 
                 setHealthTrackData(updatedHealthData);

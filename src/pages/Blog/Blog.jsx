@@ -20,7 +20,7 @@ const Blog = () => {
             <Flex gap="large" wrap="wrap">
 
                 <MainContentLayout>
-                    <Flex vertical align="center" gap="large">
+                    <Flex vertical align="center" gap="large" justify="center">
                         {BlogData.slice(0, 4).map((item, index) => (
                             <Link key={index} to={`/blog/${slug(item.title)}`}>
                                 <Card

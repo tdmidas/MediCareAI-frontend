@@ -11,7 +11,7 @@ import SideContentLayout from '../../layout/SideContentLayout';
 import BasicDateCalendar from '../../components/Calendar/Calendar';
 import { useNavigate } from 'react-router-dom';
 const doctor = require("../../assets/doctor-1.png")
-
+const doctor3 = require("../../assets/doctor-3.png")
 const Home = () => {
     const navigate = useNavigate();
 
@@ -58,6 +58,15 @@ const Home = () => {
                                 Đặt lịch khám
                             </Button>
                         </Card>
+                        <Image
+                            preview={false}
+                            alt="example"
+                            src={doctor3}
+                            style={{ maxHeight: "480px", width: "400px", boxShadow: "0 0 10px 0 rgba(0,0,0,0.2)", borderRadius: "10px", marginTop: "20px" }}
+                        />
+
+
+
                     </Flex>
 
 

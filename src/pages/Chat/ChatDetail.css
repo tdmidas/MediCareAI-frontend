@@ -27,10 +27,7 @@ input[type="text"] {
     margin-right: 10px;
 }
 
-.ant-input:placeholder-shown {
-    font-size: 13pt !important;
-    justify-items: center;
-}
+
 
 .message.user {
     align-self: flex-end;

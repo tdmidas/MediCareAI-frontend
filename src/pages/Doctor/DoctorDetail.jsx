@@ -51,7 +51,7 @@ const DoctorDetail = () => {
 
                                 <Flex gap="5px" wrap='wrap' style={{ flex: 1, flexDirection: "column" }}>
                                     <Typography.Text style={{ background: "#c0f1ef", borderRadius: 10, width: 130, height: 40, textAlign: "center", padding: 10, fontWeight: 550, color: "#069390" }}>
-                                        {doctor.specialty}
+                                        {doctor.speciality}
                                     </Typography.Text>
                                     <Typography.Title level={3}>{doctor.name}</Typography.Title>
 
