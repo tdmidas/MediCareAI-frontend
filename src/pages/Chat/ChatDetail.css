@@ -44,3 +44,13 @@ input[type="text"] {
 .send-btn, .upload-btn, .voice-btn {
     margin-bottom: 10px;
 }
+.markdown-image {
+    max-width: 100%;
+    height: auto;
+    margin-bottom: 10px;
+}
+.promo-prompt{
+    box-shadow: 0 0 10px rgba(4, 125, 109, 0.5);
+    font-size: 15px;
+    height: auto;
+}

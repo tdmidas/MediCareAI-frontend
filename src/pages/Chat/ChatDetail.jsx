@@ -10,6 +10,9 @@ import { useMediaQuery } from 'react-responsive';
 import { LoadingOutlined, UploadOutlined, AudioOutlined, SendOutlined } from '@ant-design/icons';
 import SpeechRecognition, { useSpeechRecognition } from 'react-speech-recognition';
 import axios from 'axios';
+import ReactMarkdown from 'react-markdown';
+
+const { GoogleGenerativeAI } = require("@google/generative-ai");
 
 const { TextArea } = Input;
 const { Text } = Typography;
@@ -22,6 +25,7 @@ const ChatDetail = () => {
     const [loading, setLoading] = useState(false);
     const [chatbot, setChatbot] = useState(null);
     const [file, setFile] = useState(null);
+    const genAI = new GoogleGenerativeAI('AIzaSyDoTho7YlZYCCmAqCzHmzp8YTAgUknI6zY');
     const isMobile = useMediaQuery({ maxWidth: 768 });
     const getFormattedName = (slug) => {
         switch (slug) {
@@ -42,7 +46,16 @@ const ChatDetail = () => {
         setChatbot(bot);
         setMessages([{ sender: bot.name, content: "Xin chào, bạn cần hỗ trợ gì về sức khỏe ạ? Hãy chia sẻ thêm thông tin để mình có thể hỗ trợ bạn tốt hơn nhé." }]);
     }, [slug]);
+    const getGoogleGenerativeAIResponse = async (userInput) => {
+        const model = genAI.getGenerativeModel({ model: "gemini-pro" });
+        const prompt = userInput;
 
+        const result = await model.generateContent(prompt);
+        const response = await result.response;
+        const text = await response.text();
+
+        return text;
+    };
     const sendMessage = async () => {
         if (!userInput.trim()) return;
 
@@ -53,7 +66,7 @@ const ChatDetail = () => {
         setLoading(true);
 
         try {
-            const botResponse = await getBotResponse(userInput);
+            const botResponse = await getGoogleGenerativeAIResponse(userInput);
             const updatedMessagesWithBot = [...updatedMessages, { sender: chatbot.name, content: botResponse }];
             setMessages(updatedMessagesWithBot);
         } catch (error) {
@@ -66,31 +79,7 @@ const ChatDetail = () => {
         setLoading(false);
     };
 
-    const getBotResponse = async (userInput) => {
-        const endpoint = "https://api.openai.com/v1/chat/completions";
-        const apiKey = process.env.REACT_APP_OPENAI_API_KEY;
-        const requestData = {
-            model: "gpt-3.5-turbo",
-            messages: [{ role: "user", content: userInput }],
-            temperature: 0.7,
-        };
 
-        const response = await fetch(endpoint, {
-            method: "POST",
-            headers: {
-                "Content-Type": "application/json",
-                Authorization: `Bearer ${apiKey}`,
-            },
-            body: JSON.stringify(requestData),
-        });
-
-        const data = await response.json();
-        return data.choices[0].message.content;
-    };
-
-    if (!chatbot) {
-        return null;
-    }
 
 
     const handleVoice = () => {
@@ -140,13 +129,30 @@ const ChatDetail = () => {
 
         fileInput.click();
     };
+    const sendPromoMessage = async (buttonName) => {
+        const updatedMessages = [...messages, { sender: "User", content: buttonName }];
+        setMessages(updatedMessages);
+        setLoading(true);
+        try {
+            const botResponse = await getGoogleGenerativeAIResponse(buttonName);
+            const updatedMessagesWithBot = [...messages, { sender: chatbot.name, content: botResponse }];
+            setMessages(updatedMessagesWithBot);
+        }
+        catch (error) {
+            console.error("Error fetching bot response:", error);
+            const errorMessage = "Xin lỗi bạn, tôi đang gặp chút sự cố.";
+            const updatedMessagesWithError = [...updatedMessages, { sender: chatbot.name, content: errorMessage }];
+            setMessages(updatedMessagesWithError);
+        }
+        setLoading(false);
 
+    };
 
     return (
         <DefaultLayout>
             <MainContentLayout>
                 <Flex vertical align="center" gap="large" wrap="wrap" justify="center" style={{ minHeight: "100vh" }}>
-                    <Card id="chat-container" className="chat-container" style={{ width: isMobile ? 300 : 800, height: 600 }}>
+                    <Card id="chat-container" className="chat-container" style={{ width: isMobile ? 300 : 800, height: 600, borderRadius: 20 }}>
                         {loading ? (
                             <div style={{ textAlign: "center", marginTop: 20 }}>
                                 <Spin size="large"
@@ -169,24 +175,41 @@ const ChatDetail = () => {
                                         <Flex vertical gap="small">
                                             <Text strong>{message.sender}:</Text>
                                             <div className="message-bubble" style={{
-                                                backgroundColor: message.sender === chatbot.name ? "#069390" : "white", borderRadius: 30, padding: 20,
+                                                backgroundColor: message.sender === chatbot.name ? "#069390" : "white", borderRadius: 30, padding: 20, color: "white"
                                             }}>
-                                                <Text color="white" style={{ color: message.sender === chatbot.name ? "white" : "black" }}>{message.content}</Text>
+                                                <ReactMarkdown>{message.content}</ReactMarkdown>
                                             </div>
                                         </Flex>
                                     </div>
                                 </div>
                             ))
                         )}
+
                     </Card>
+                    <Flex gap="large" align="center" wrap="wrap">
+                        <Button className="promo-prompt" type="primary" onClick={() => sendPromoMessage("Tôi muốn hỏi về bệnh tim mạch?")}>
+                            Tôi muốn hỏi về bệnh tim mạch?
+                        </Button>
+                        <Button className="promo-prompt" type="primary" onClick={() => sendPromoMessage("Triệu chứng bệnh tim mạch")}>
+                            Triệu chứng bệnh tim mạch
+                        </Button>
+                        <Button className="promo-prompt" type="primary" onClick={() => sendPromoMessage("Tôi muốn tìm bác sĩ tim mạch")}>
+                            Tôi muốn tìm bác sĩ tim mạch
+                        </Button>
+                    </Flex>
                     <Flex className="input-container" justify="center" gap={10} wrap="wrap">
+
                         <TextArea
                             classNames="input-chat"
                             rows={3}
                             value={userInput}
                             onChange={(e) => setUserInput(e.target.value)}
                             wrap="wrap"
-                            style={{ width: isMobile ? 300 : 650, borderRadius: 50, marginBottom: 20, overflow: "hidden" }}
+                            style={{
+                                width: isMobile ? 300 : 650, borderRadius: 50, marginBottom: 20, overflow: "hidden", lineHeight: "normal",  // Reset line-height
+                                paddingTop: "15px",
+                                paddingBottom: "10px"
+                            }}
                             placeholder="Nhập tin nhắn của bạn..."
                             onPressEnter={sendMessage}
                             className="textarea-container"
