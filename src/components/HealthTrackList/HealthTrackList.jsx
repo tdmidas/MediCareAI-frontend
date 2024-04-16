@@ -17,6 +17,33 @@ const HealthTrackList = () => {
         const fetchAndUpdateHealthData = async () => {
             try {
                 const userId = localStorage.getItem("userId");
+                if (!userId) {
+                    // User is not logged in, set default values
+                    const defaultBP = { diaBP: "--", sysBP: "--" };
+                    const defaultGlucose = "--";
+
+                    const defaultHealthData = [
+                        {
+                            id: 1,
+                            name: "Huyết áp",
+                            picture: require("../../assets/blood-pressure.png"),
+                            measure: "mmHg",
+                            value: `${defaultBP.diaBP}/${defaultBP.sysBP}`,
+                            color: "#c0f1ef",
+                        },
+                        {
+                            id: 2,
+                            name: "Đường huyết",
+                            picture: require("../../assets/blood-sugar.png"),
+                            measure: "mmol/L",
+                            value: defaultGlucose,
+                            color: "#f5dec4",
+                        }
+                    ];
+
+                    setHealthTrackData(defaultHealthData);
+                    return; // Exit the function early
+                }
 
                 const bpResponse = await axios.get(`http://localhost:5000/api/health/bloodPressure/${userId}`);
                 const { diaBP, sysBP } = bpResponse.data;
