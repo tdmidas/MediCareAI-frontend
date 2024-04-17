@@ -1,8 +1,8 @@
-import React, { useState } from 'react';
-import { Row, Col, Card, Form, Input, Button } from 'antd';
+import React, { useState, useEffect } from 'react';
+import { Row, Col, Card, Form, Input, Button, Typography, Divider } from 'antd';
 import { useMediaQuery } from 'react-responsive';
 
-
+const { Title } = Typography;
 
 const PatientInfo = ({ user, onNext, onPrev, doctorInfo }) => {
     const isMobile = useMediaQuery({ maxWidth: 768 });
@@ -13,8 +13,24 @@ const PatientInfo = ({ user, onNext, onPrev, doctorInfo }) => {
     const [phone, setPhone] = useState('');
     const [reasonForVisit, setReasonForVisit] = useState('');
     const [address, setAddress] = useState('');
+    const [isFormValid, setIsFormValid] = useState(false);
+
+    useEffect(() => {
+        const validateForm = () => {
+            setIsFormValid(
+                firstName.trim() !== '' &&
+                lastName.trim() !== '' &&
+                diseaseDescription.trim() !== '' &&
+                phone.trim() !== '' &&
+                reasonForVisit.trim() !== '' &&
+                address.trim() !== ''
+            );
+        };
+
+        validateForm();
+    }, [firstName, lastName, diseaseDescription, phone, reasonForVisit, address]);
+
     const handleNext = () => {
-        // You can perform validation here before proceeding to the next step
         const patientInfo = {
             firstName,
             lastName,
@@ -23,22 +39,24 @@ const PatientInfo = ({ user, onNext, onPrev, doctorInfo }) => {
             reasonForVisit,
             address
         };
-        onNext(patientInfo, doctorInfo); // Pass patientInfo and doctorInfo to onNext
+        onNext(patientInfo, doctorInfo);
     };
 
     return (
-        <Row gutter={[16, 16]}>
+        <Row gutter={[16, 16]} justify="center">
             {user ? (
-                <Col span={24}>
-                    <Card title="Patient Information">
+                <Col xs={24} sm={20} md={16}>
+                    <Card title={<Title level={3}>Patient Information</Title>}>
                         <p><strong>Name:</strong> {user.name}</p>
                         <p><strong>Email:</strong> {user.email}</p>
+                        <Divider />
+                        <Button type="primary" onClick={handleNext} disabled={!isFormValid}>Next</Button>
                     </Card>
                 </Col>
             ) : (
                 <>
-                    <Col xs={24} sm={24} md={12}>
-                        <Card title="Patient Information">
+                    <Col xs={24} sm={20} md={10}>
+                        <Card title={<Title level={3}>Patient Information</Title>}>
                             <Form layout="vertical">
                                 <Form.Item label="First Name" required>
                                     <Input value={firstName} onChange={(e) => setFirstName(e.target.value)} />
@@ -55,8 +73,8 @@ const PatientInfo = ({ user, onNext, onPrev, doctorInfo }) => {
                             </Form>
                         </Card>
                     </Col>
-                    <Col xs={24} sm={24} md={isMobile ? 24 : 12}>
-                        <Card title="Additional Information">
+                    <Col xs={24} sm={20} md={10}>
+                        <Card title={<Title level={3}>Additional Information</Title>}>
                             <Form layout="vertical">
                                 <Form.Item label="Reason for Visit" required>
                                     <Input.TextArea rows={4} value={reasonForVisit} onChange={(e) => setReasonForVisit(e.target.value)} />
@@ -67,15 +85,14 @@ const PatientInfo = ({ user, onNext, onPrev, doctorInfo }) => {
                             </Form>
                         </Card>
                     </Col>
+                    <Col xs={24} style={{ marginTop: '24px' }}>
+                        <Row justify="end">
+                            <Button style={{ marginRight: 8 }} onClick={onPrev}>Back</Button>
+                            <Button type="primary" onClick={handleNext} disabled={!isFormValid}>Next</Button>
+                        </Row>
+                    </Col>
                 </>
             )}
-            <Col span={24}>
-                <Row justify="end">
-
-                    <Button style={{ marginRight: 8 }} onClick={onPrev}>Back</Button>
-                    <Button type="primary" onClick={handleNext}>Next</Button>
-                </Row>
-            </Col>
         </Row>
     );
 };

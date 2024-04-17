@@ -1,98 +1,72 @@
-import React from 'react';
-import { Row, Col, Card, Typography, Button, Form, Input, Checkbox } from 'antd';
+import React, { useState } from 'react';
+import { Row, Col, Card, Typography, Button, Form, Checkbox } from 'antd';
+import { CreditCardOutlined, DollarOutlined } from '@ant-design/icons';
+import CreditCard from '../../components/CreditCard/CrediCard';
+import 'react-credit-cards-2/dist/es/styles-compiled.css';
 
-const { Title, Paragraph } = Typography;
+const { Title } = Typography;
 
-const Payment = ({ onNext, onPrev, onSubmit, doctorInfo }) => {
-    const handleNext = () => {
-        onNext();
+const Payment = ({ onNext, onPrev }) => {
+    const [paymentMethod, setPaymentMethod] = useState(null);
+    const [isPaymentConfirmed, setIsPaymentConfirmed] = useState(false);
+
+    const handleConfirmPayment = () => {
+        setIsPaymentConfirmed(true);
+
+        // Prepare payment info
+        const paymentInfo = {
+            paymentMethod,
+        };
+
+        // Pass paymentInfo to the next step
+        onNext(paymentInfo);
     };
 
-    const handleSubmit = (values) => {
-        // You can handle the form submission here
-        onSubmit(values);
-    };
-
-    const handlePrev = () => {
-        onPrev();
+    const handlePaymentMethodChange = (method) => {
+        setPaymentMethod(method);
     };
 
     return (
         <Row gutter={[16, 16]}>
-            {doctorInfo && (
-                <>
-                    <Col span={16}>
-                        <Card title="Payment" className="payment-card">
-                            <Title level={4}>Total Amount: $XX.XX</Title>
-                            <Paragraph>Please proceed with your payment to confirm the appointment.</Paragraph>
-                            <Button type="primary" size="large" onClick={handleNext}>Pay Now</Button>
-                        </Card>
-                    </Col>
-                    <Col span={8}>
-                        <Card title="Booking Summary" className="booking-summary-card">
-                            <Paragraph>
-                                <strong>{doctorInfo.name}</strong><br />
-                                {doctorInfo.education}<br />
-                                {doctorInfo.hospital}<br />
-                                Date: {doctorInfo.date}<br />
-                                Time: {doctorInfo.time}<br />
-                                Booking Fee: ${doctorInfo.bookingFee}<br />
-                                VAT (Including 15%): ${doctorInfo.vat}<br />
-                                <strong>Total: ${doctorInfo.total}</strong><br />
-                            </Paragraph>
-                        </Card>
-                    </Col>
-                </>
-            )}
             <Col span={24}>
                 <Card title="Payment Details">
-                    <Form layout="vertical" onFinish={handleSubmit}>
-                        <Form.Item name="paymentMethod" label="Payment Method">
-                            <Checkbox.Group>
-                                <Checkbox value="creditCard">Credit Card</Checkbox>
-                                <Checkbox value="cash">Cash</Checkbox>
-                                <Checkbox value="paypal">Paypal</Checkbox>
-                                <Checkbox value="payoneer">Payoneer</Checkbox>
-                            </Checkbox.Group>
-                        </Form.Item>
-                        <Form.Item name="nameOnCard" label="Name on Card">
-                            <Input />
-                        </Form.Item>
-                        <Form.Item name="cardNumber" label="Card Number">
-                            <Input />
-                        </Form.Item>
-                        <Row gutter={16}>
-                            <Col span={8}>
-                                <Form.Item name="expiryMonth" label="Expiry Month">
-                                    <Input />
+                    {!isPaymentConfirmed ? (
+                        <>
+                            <Form layout="vertical">
+                                <Form.Item name="paymentMethod" label="Payment Method">
+                                    <Button
+                                        icon={<CreditCardOutlined />}
+                                        onClick={() => handlePaymentMethodChange('creditCard')}
+                                        style={{ marginRight: '10px' }}
+                                    >
+                                        Credit Card
+                                    </Button>
+                                    <Button
+                                        icon={<DollarOutlined />}
+                                        onClick={() => handlePaymentMethodChange('cash')}
+                                    >
+                                        Cash
+                                    </Button>
                                 </Form.Item>
-                            </Col>
-                            <Col span={8}>
-                                <Form.Item name="expiryYear" label="Expiry Year">
-                                    <Input />
+                                {paymentMethod === 'creditCard' && <CreditCard />}
+                                <Form.Item name="termsAndConditions" valuePropName="checked">
+                                    <Checkbox>
+                                        I have read and accept Terms & Conditions
+                                    </Checkbox>
                                 </Form.Item>
-                            </Col>
-                            <Col span={8}>
-                                <Form.Item name="cvv" label="CVV">
-                                    <Input />
+                                <Form.Item>
+                                    <Row justify="space-between">
+                                        <Button onClick={onPrev}>Back</Button>
+                                        <Button type="primary" onClick={handleConfirmPayment}>
+                                            Confirm Payment
+                                        </Button>
+                                    </Row>
                                 </Form.Item>
-                            </Col>
-                        </Row>
-                        <Form.Item name="termsAndConditions" valuePropName="checked">
-                            <Checkbox>
-                                I have read and accept Terms & Conditions
-                            </Checkbox>
-                        </Form.Item>
-                        <Form.Item>
-                            <Row justify="space-between">
-                                <Button onClick={handlePrev}>Back</Button>
-                                <Button type="primary" htmlType="submit">Submit</Button>
-                            </Row>
-                        </Form.Item>
-                    </Form>
+                            </Form>
+                        </>
+                    ) : null}
                 </Card>
             </Col>
-
         </Row>
     );
 };

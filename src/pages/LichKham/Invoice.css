@@ -1,0 +1,23 @@
+.invoice-container {
+    margin-top: 50px;
+}
+
+.invoice-card {
+    width: 100%;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+}
+
+.invoice-title {
+    margin-bottom: 20px;
+}
+
+.invoice-divider {
+    margin: 20px 0;
+}
+
+.invoice-button {
+    margin-top: 20px;
+}
+.anticon svg {
+    color: #069390 !important;
+}

@@ -5,9 +5,25 @@ font-family: "Roboto", sans-serif !important;
     box-sizing: border-box;
     
 }
-body {
-    
+body {    
     background: #ffffff;
-    
-    
+}
+
+::-webkit-scrollbar {
+    width: 5px;
+   
+}
+
+::-webkit-scrollbar-thumb {
+    background-color: #888;
+   
+}
+
+* {
+    scrollbar-width: 5px;
+   
+}
+
+*::-webkit-scrollbar {
+    width: 5px;
 }
