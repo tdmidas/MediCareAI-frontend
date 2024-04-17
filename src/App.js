@@ -16,6 +16,8 @@ import WriteBlog from "./pages/WriteBlog/WriteBlog";
 import blogData from "./BlogData";
 import slug from "slug";
 import ChatDetail from "./pages/Chat/ChatDetail";
+import MyAppointment from "./pages/LichKham/MyAppointment";
+import MyBlog from "./pages/Blog/MyBlog";
 function App() {
 	return (
 		<Router>
@@ -24,6 +26,8 @@ function App() {
 				<Route path="/login" element={<Login />} />
 				<Route path="/register" element={<Register />} />
 				<Route path="/lichkham" element={<LichKham />} />
+				<Route path="/me/appointment" element={<MyAppointment />} />
+
 				<Route path="/doctors" element={<Doctor />} />
 				<Route path="/doctors/:slug" element={<DoctorDetail />} />
 				<Route path="/chat" element={<Chat />} />
@@ -33,6 +37,7 @@ function App() {
 				<Route path="/suckhoe/:slug" element={<SucKhoeDetail />} />
 				<Route path="/profile" element={<Profile />} />
 				<Route path="/blog" element={<Blog />} />
+				<Route path="/me/blog" element={<MyBlog />} />
 				<Route path="/blog/write" element={<WriteBlog />} />
 				{blogData.map((blog) => (
 					<Route

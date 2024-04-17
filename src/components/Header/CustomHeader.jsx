@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import { Flex, Badge, Typography, Image } from 'antd';
+import { Flex, Badge, Avatar, Typography } from 'antd';
 import { Button } from 'antd';
 import { Input } from 'antd';
 import './CustomHeader.css';
@@ -11,7 +11,7 @@ import { MenuFoldOutlined } from "@ant-design/icons";
 import { useMediaQuery } from "react-responsive";
 import { doc, setDoc, collection, getDoc } from "firebase/firestore";
 const fallbackAvatar = require("../../assets/fallback-avatar.jpg")
-
+const { Text } = Typography;
 const CustomHeader = ({ toggleDrawer, submitHandler }) => {
     const navigate = useNavigate();
     const location = useLocation();
@@ -60,7 +60,10 @@ const CustomHeader = ({ toggleDrawer, submitHandler }) => {
             navigate('/profile');
         }
         else if (event.key === 'my-post') {
-            navigate('/blog/my-post');
+            navigate('/me/blog');
+        }
+        else if (event.key === 'my-appointment') {
+            navigate('/me/appointment');
 
         } else if (event.key === 'logout') {
             handleLogout();
@@ -69,11 +72,27 @@ const CustomHeader = ({ toggleDrawer, submitHandler }) => {
 
     const menu = (
         <Menu onClick={handleMenuClick}>
-            <Menu.Item key="profile" >
-                Cài đặt tài khoản
+            <Menu.Item key="userProfile" disabled>
+                <Flex>
+                    <Avatar src={user?.photoURL || fallbackAvatar} size={50} />
+                    <Flex vertical>
+                        <Text style={{ marginLeft: '10px', fontWeight: 500 }}>{user?.displayName || "user"}</Text>
+                        <Text style={{ marginLeft: '10px' }}>{user?.email || "email"}</Text>
+                    </Flex>
+                </Flex>
+            </Menu.Item>
+            <Menu.Divider />
+
+            <Menu.Item key="my-appointment" >
+                Lịch khám của tôi
             </Menu.Item>
             <Menu.Item key="my-post" >
                 Bài viết của tôi
+            </Menu.Item>
+            <Menu.Divider />
+
+            <Menu.Item key="profile" >
+                Cài đặt tài khoản
             </Menu.Item>
             <Menu.Item key="logout" >
                 Đăng xuất

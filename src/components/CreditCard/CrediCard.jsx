@@ -29,6 +29,7 @@ const CreditCard = () => {
                 cvc={state.cvc}
                 name={state.name}
                 focused={state.focus}
+
             />
             <Form layout="vertical">
                 <Form.Item label="Name on Card">

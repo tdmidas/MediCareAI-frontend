@@ -3,7 +3,7 @@ import { Steps, Flex } from 'antd';
 import SelectDate from './SelectDate';
 import PatientInfo from './PatientInfo';
 import Payment from './Payment';
-import Invoice from './Invoice';  // Import Invoice component
+import Invoice from './Invoice';
 import './LichKham.css';
 import DefaultLayout from '../../layout/DefaultLayout';
 import LoginRequired from '../LoginRequired/LoginRequired';

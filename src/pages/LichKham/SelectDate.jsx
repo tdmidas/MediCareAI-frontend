@@ -1,15 +1,18 @@
 import React, { useState, useEffect } from 'react';
-import { Row, Col, Card, Button, DatePicker, Select } from 'antd';
+import { Row, Col, Card, Button, Typography } from 'antd';
 import axios from 'axios';
 import "./SelectDate.css";
 import { StaticDatePicker } from '@mui/x-date-pickers';
 import { LocalizationProvider } from '@mui/x-date-pickers/LocalizationProvider';
 import { AdapterDayjs } from '@mui/x-date-pickers/AdapterDayjs';
+import { useMediaQuery } from 'react-responsive';
+const { Title, Text } = Typography;
 const SelectDate = ({ onNext }) => {
     const [selectedDate, setSelectedDate] = useState(null);
     const [selectedDoctor, setSelectedDoctor] = useState(null);
     const [selectedTime, setSelectedTime] = useState(null);
     const [availableDoctors, setAvailableDoctors] = useState([]);
+    const isMobile = useMediaQuery({ maxWidth: 768 });
 
     useEffect(() => {
         // Fetch doctors data from API
@@ -63,7 +66,7 @@ const SelectDate = ({ onNext }) => {
     return (
         <Row gutter={[16, 16]}>
             <Col xs={24} sm={24} md={12} lg={8}>
-                <Card title="With Doctor" >
+                <Card title="With Doctor" style={{ width: isMobile ? "90%" : "100%" }}>
                     <Row gutter={[16, 16]}>
                         <div
                             style={{
@@ -72,13 +75,12 @@ const SelectDate = ({ onNext }) => {
                                 display: 'flex',
                                 flexWrap: 'wrap',
                                 justifyContent: 'flex-start',
-
-
                             }}
                         >
                             {availableDoctors.map((doctor, index) => (
                                 <Col key={doctor.id} xs={24} sm={12} md={12} lg={12}>
                                     <Card
+                                        key={index}
                                         hoverable
                                         onClick={() => handleDoctorClick(doctor.name)}
                                         style={{
@@ -89,7 +91,8 @@ const SelectDate = ({ onNext }) => {
                                             boxShadow: selectedDoctor === doctor.name ? '0 0px 4px rgb(3, 230, 169)' : 'none'
                                         }} cover={<img alt={doctor.name} src={doctor.photo} />}
                                     >
-                                        <Card.Meta title={doctor.name} />
+                                        <Title level={5}>{doctor.name}</Title>
+                                        <Text>Giá: {doctor.price} đ</Text>
                                     </Card>
                                 </Col>
                             ))}
@@ -98,19 +101,18 @@ const SelectDate = ({ onNext }) => {
                 </Card>
             </Col>
             <Col xs={24} sm={24} md={12} lg={8}>
-                <Card >
-                    <LocalizationProvider dateAdapter={AdapterDayjs}>
-                        <StaticDatePicker
-                            label="Select Date"
-                            value={selectedDate}
-                            onChange={(newValue) => handleDateChange(newValue)}
-                            shouldDisableDate={(day) => { return day.isBefore(new Date(), 'day'); }}
-                            renderInput={(params) => <input {...params} />}
-                        />
-                    </LocalizationProvider>                </Card>
+                <LocalizationProvider dateAdapter={AdapterDayjs} >
+                    <StaticDatePicker
+                        label="Select Date"
+                        value={selectedDate}
+                        onChange={(newValue) => handleDateChange(newValue)}
+                        shouldDisableDate={(day) => { return day.isBefore(new Date(), 'day'); }}
+                        renderInput={(params) => <input {...params} />}
+                    />
+                </LocalizationProvider>
             </Col>
             <Col xs={24} sm={24} md={12} lg={8}>
-                <Card title="Select Time">
+                <Card title="Select Time" style={{ width: isMobile ? "90%" : "100%" }}>
 
                     {selectedDoctor && selectedDate && availableDoctors.find(doctor => doctor.name === selectedDoctor).availableTimes.map((timeSlot, index) => (
                         <Card

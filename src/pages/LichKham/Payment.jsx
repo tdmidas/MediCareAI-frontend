@@ -28,7 +28,7 @@ const Payment = ({ onNext, onPrev }) => {
 
     return (
         <Row gutter={[16, 16]}>
-            <Col span={24}>
+            <Col span={23}>
                 <Card title="Payment Details">
                     {!isPaymentConfirmed ? (
                         <>
@@ -37,23 +37,20 @@ const Payment = ({ onNext, onPrev }) => {
                                     <Button
                                         icon={<CreditCardOutlined />}
                                         onClick={() => handlePaymentMethodChange('creditCard')}
-                                        style={{ marginRight: '10px' }}
+                                        style={{ marginRight: '10px', backgroundColor: paymentMethod === 'creditCard' ? '#47c6c4' : '' }}
                                     >
                                         Credit Card
                                     </Button>
                                     <Button
                                         icon={<DollarOutlined />}
                                         onClick={() => handlePaymentMethodChange('cash')}
+                                        style={{ backgroundColor: paymentMethod === 'cash' ? '#47c6c4' : '' }}
                                     >
-                                        Cash
+                                        Tiền mặt
                                     </Button>
                                 </Form.Item>
                                 {paymentMethod === 'creditCard' && <CreditCard />}
-                                <Form.Item name="termsAndConditions" valuePropName="checked">
-                                    <Checkbox>
-                                        I have read and accept Terms & Conditions
-                                    </Checkbox>
-                                </Form.Item>
+
                                 <Form.Item>
                                     <Row justify="space-between">
                                         <Button onClick={onPrev}>Back</Button>
