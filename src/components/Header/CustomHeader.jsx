@@ -215,7 +215,7 @@ const CustomHeader = ({ toggleDrawer, submitHandler }) => {
                             ) : (
                                 <>
                                     <Dropdown overlay={notificationMenu} trigger={['click']}>
-                                        <Badge count={notifications.length} dot>
+                                        <Badge count={healthNotifications.length} dot>
                                             <BellOutlined style={{ fontSize: '20px' }} />
                                         </Badge>
                                     </Dropdown>
