@@ -4,13 +4,13 @@
 			"path": "../.."
 		},
 		{
-			"path": "../../../Doctor-Appointment"
-		},
-		{
 			"path": "../../../MediCareAI-backend"
 		},
 		{
 			"path": "../../../MediCareAI-nestjs"
+		},
+		{
+			"path": "../../../MediCareAI-model"
 		}
 	],
 	"settings": {

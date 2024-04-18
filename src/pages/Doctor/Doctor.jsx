@@ -30,7 +30,7 @@ const Doctor = () => {
     React.useEffect(() => {
         const token = localStorage.getItem('accessToken');
 
-        axios.get("http://localhost:5000/api/doctors",)
+        axios.get(`https://${process.env.REACT_APP_API_PORT}/api/doctors`,)
             .then(response => {
                 setDoctors(response.data);
                 setLoading(false);

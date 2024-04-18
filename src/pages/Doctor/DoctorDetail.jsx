@@ -14,7 +14,7 @@ const DoctorDetail = () => {
 
     const [doctors, setDoctors] = React.useState([]);
     React.useEffect(() => {
-        axios.get("http://localhost:5000/api/doctors")
+        axios.get(`https://${process.env.REACT_APP_API_PORT}/api/doctors`)
             .then(response => {
                 setDoctors(response.data);
             })

@@ -1,13 +1,24 @@
 import { Flex, Card, Typography, Button, Image, Tag } from "antd";
-import doctors from "../../data/doctors";
-import React from "react";
+import React, { useEffect } from "react";
 import "./DoctorList.css";
 import { useNavigate } from "react-router-dom";
 import { Link } from "react-router-dom";
+import axios from "axios";
 const starIcon = require("../../assets/Star.png");
 const DoctorList = () => {
     const navigate = useNavigate();
-
+    const [doctors, setDoctors] = React.useState([]);
+    useEffect(() => {
+        const fetchDoctors = async () => {
+            try {
+                const response = await axios.get(`https://${process.env.REACT_APP_API_PORT}/api/doctors`);
+                setDoctors(response.data);
+            } catch (error) {
+                console.error(error);
+            }
+        };
+        fetchDoctors();
+    }, []);
     const handleClick = () => {
         navigate('/doctors');
     };

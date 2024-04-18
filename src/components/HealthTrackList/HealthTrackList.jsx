@@ -45,10 +45,10 @@ const HealthTrackList = () => {
                     return; // Exit the function early
                 }
 
-                const bpResponse = await axios.get(`http://localhost:5000/api/health/bloodPressure/${userId}`);
+                const bpResponse = await axios.get(`https://${process.env.REACT_APP_API_PORT}/api/health/bloodPressure/${userId}`);
                 const { diaBP, sysBP } = bpResponse.data;
 
-                const glucoseResponse = await axios.get(`http://localhost:5000/api/health/glucose/${userId}`);
+                const glucoseResponse = await axios.get(`https://${process.env.REACT_APP_API_PORT}/api/health/glucose/${userId}`);
                 const { glucose } = glucoseResponse.data;
 
                 const updatedHealthData = [
