@@ -49,7 +49,7 @@ const Register = () => {
 		if (!Object.keys(errors).length) {
 			try {
 				await createUserWithEmailAndPassword(auth, data.email, data.password);
-				const response = await axios.post(`https://${process.env.REACT_APP_API_PORT}/api/auth/signup`, data);
+				const response = await axios.post(`https://medicareai-backend.onrender.com/api/auth/signup`, data);
 				if (response.status === 201) {
 					notify("Đăng ký tài khoản thành công", "success");
 					navigate("/login");

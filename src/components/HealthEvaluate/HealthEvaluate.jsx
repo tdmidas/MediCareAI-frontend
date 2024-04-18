@@ -28,8 +28,8 @@ const HealthEvaluate = () => {
     const fetchData = async () => {
         try {
             const userId = localStorage.getItem("userId");
-            await axios.post(`https://${process.env.REACT_APP_API_PORT}/api/health/overall/${userId}`);
-            const response = await axios.get(`https://${process.env.REACT_APP_API_PORT}/api/health/overall/${userId}`);
+            await axios.post(`https://medicareai-backend.onrender.com/api/health/overall/${userId}`);
+            const response = await axios.get(`https://medicareai-backend.onrender.com/api/health/overall/${userId}`);
             setHealthData(response.data);
         } catch (error) {
             console.error("Error fetching health data:", error);

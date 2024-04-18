@@ -49,9 +49,9 @@ const CustomHeader = ({ toggleDrawer, submitHandler }) => {
             try {
                 const userId = localStorage.getItem('userId');
                 const responses = await Promise.all([
-                    fetch(`https://${process.env.REACT_APP_API_PORT}/api/health/bmi/${userId}`),
-                    fetch(`https://${process.env.REACT_APP_API_PORT}/api/health/glucose/${userId}`),
-                    fetch(`https://${process.env.REACT_APP_API_PORT}/api/health/bloodPressure/${userId}`),
+                    fetch(`https://medicareai-backend.onrender.com/api/health/bmi/${userId}`),
+                    fetch(`https://medicareai-backend.onrender.com/api/health/glucose/${userId}`),
+                    fetch(`https://medicareai-backend.onrender.com/api/health/bloodPressure/${userId}`),
                 ]);
 
                 const notifications = [];

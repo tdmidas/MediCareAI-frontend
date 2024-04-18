@@ -18,7 +18,7 @@ const SelectDate = ({ onNext }) => {
         // Fetch doctors data from API
         const fetchDoctors = async () => {
             try {
-                const response = await axios.get(`https://${process.env.REACT_APP_API_PORT}/api/doctors`);
+                const response = await axios.get(`https://medicareai-backend.onrender.com/api/doctors`);
                 setAvailableDoctors(response.data);
             } catch (error) {
                 console.error('Error fetching doctors:', error);

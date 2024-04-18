@@ -45,7 +45,7 @@ const Login = () => {
 
 			notify("You logged in to your account successfully", "success");
 			//store accessToken
-			const response = await axios.post(`https://${process.env.REACT_APP_API_PORT}/api/auth/login`, {
+			const response = await axios.post(`https://medicareai-backend.onrender.com/api/auth/login`, {
 				email: data.email,
 				password: data.password,
 			});

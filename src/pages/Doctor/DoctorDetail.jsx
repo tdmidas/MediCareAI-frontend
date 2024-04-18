@@ -14,7 +14,7 @@ const DoctorDetail = () => {
 
     const [doctors, setDoctors] = React.useState([]);
     React.useEffect(() => {
-        axios.get(`https://${process.env.REACT_APP_API_PORT}/api/doctors`)
+        axios.get(`https://medicareai-backend.onrender.com/api/doctors`)
             .then(response => {
                 setDoctors(response.data);
             })
