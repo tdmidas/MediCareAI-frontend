@@ -10,6 +10,7 @@
 
 .ant-input-outlined:hover {
     border-color: #069390 !important;
+    
 }
 .ant-input-outlined:focus {	
     border-color: #069390 !important;
@@ -20,4 +21,9 @@
 .welcome-title{
     color: #069390 !important;
     font-size: 15pt !important;
+}
+.mark-read:hover{
+    color: #fff !important;
+  
+
 }

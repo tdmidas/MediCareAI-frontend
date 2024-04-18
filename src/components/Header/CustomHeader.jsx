@@ -11,13 +11,18 @@ import { MenuFoldOutlined } from "@ant-design/icons";
 import { useMediaQuery } from "react-responsive";
 import { doc, setDoc, collection, getDoc } from "firebase/firestore";
 const fallbackAvatar = require("../../assets/fallback-avatar.jpg")
-const { Text } = Typography;
+const { Text, Title } = Typography;
+const logo = require('../../assets/logo.png');
 const CustomHeader = ({ toggleDrawer, submitHandler }) => {
     const navigate = useNavigate();
     const location = useLocation();
     const [user, setUser] = useState(null);
     const isMobile = useMediaQuery({ maxWidth: 768 });
     const isSmallScreen = useMediaQuery({ maxWidth: 1024 });
+    const [healthNotifications, setHealthNotifications] = useState([]);
+
+
+
     useEffect(() => {
         const unsubscribe = auth.onAuthStateChanged(async (user) => {
             const userId = localStorage.getItem('userId');
@@ -39,11 +44,68 @@ const CustomHeader = ({ toggleDrawer, submitHandler }) => {
         });
         return () => unsubscribe();
     }, []);
+    useEffect(() => {
+        const fetchHealthData = async () => {
+            try {
+                const userId = localStorage.getItem('userId');
+                const responses = await Promise.all([
+                    fetch(`http://localhost:5000/api/health/bmi/${userId}`),
+                    fetch(`http://localhost:5000/api/health/glucose/${userId}`),
+                    fetch(`http://localhost:5000/api/health/bloodPressure/${userId}`),
+                ]);
+
+                const notifications = [];
+
+                for (let i = 0; i < responses.length; i++) {
+                    if (responses[i].status === 200) {
+                        // If successful response, do nothing
+                    } else if (responses[i].status === 404) {
+                        let text = '';
+                        switch (i) {
+                            case 0:
+                                text = "Bạn có chỉ số BMI chưa kiểm tra";
+                                break;
+                            case 1:
+                                text = "Bạn có chỉ số đường huyết chưa kiểm tra";
+                                break;
+                            case 2:
+                                text = "Bạn có chỉ số huyết áp chưa kiểm tra";
+                                break;
+                            default:
+                                text = `Bạn cần kiểm tra chỉ số sức khỏe ${i + 1}`;
+                                break;
+                        }
+                        notifications.push({
+                            id: `health-${i + 1}`,
+                            text: text,
+                            link: `/suckhoe/${i === 0 ? 'chi-so-bmi' : i === 1 ? 'duong-huyet' : 'huyet-ap'}`,
+                        });
+                    } else {
+                        console.error(`Error fetching health data: ${responses[i].status}`);
+                    }
+                }
+
+                setHealthNotifications(notifications);
+            } catch (error) {
+                console.error("Error fetching health data:", error);
+            }
+        };
+
+        fetchHealthData();
+    }, []);
+
+    const notifications = [
+
+    ];
+    const combinedNotifications = [...notifications, ...healthNotifications];
 
     const handleLoginClick = () => {
         navigate('/login');
     };
 
+    const markAllAsRead = () => {
+        setHealthNotifications([]);
+    };
     const handleLogout = async () => {
         try {
             setUser(null);
@@ -100,31 +162,26 @@ const CustomHeader = ({ toggleDrawer, submitHandler }) => {
         </Menu>
     );
 
-    const notifications = [
-        {
-            id: 1,
-            text: 'Notification 1',
-            link: '/notification-1',
-        },
-        {
-            id: 2,
-            text: 'Notification 2',
-            link: '/notification-2',
-        },
-    ];
 
     const notificationMenu = (
-        <Menu>
-            {notifications.map(notification => (
-                <Menu.Item key={notification.id}>
-                    <a href={notification.link}>{notification.text}</a>
+        <Menu style={{ overflowY: "scroll" }}>
+            <Flex justify='left'>
+                <Title level={5} strong style={{ padding: '10px' }}>Thông báo sức khỏe</Title>
+                <Button type="link" className='mark-read' style={{ color: "#069390", padding: '10px', marginLeft: 40 }} onClick={markAllAsRead}>Đánh dấu đã đọc</Button>
+            </Flex>
+            {combinedNotifications.map(notification => (
+                <Menu.Item key={notification.id} style={{ backgroundColor: "#d9f2f2", borderRadius: 20, marginBottom: 10 }} >
+                    <Flex justify='left'>
+                        <Avatar src={logo} size={50} />
+                        <a href={notification.link} style={{ padding: 10, color: "black" }}>{notification.text}</a>
+                    </Flex>
                 </Menu.Item>
             ))}
         </Menu>
     );
 
     const handleGoBack = () => {
-        navigate(-1); // Go back to previous page
+        navigate(-1);
     };
 
     return (
@@ -139,7 +196,7 @@ const CustomHeader = ({ toggleDrawer, submitHandler }) => {
                     />
                 )}
 
-                {!isMobile && ( // Check if not home page
+                {!isMobile && (
                     <Button
                         type="text"
                         icon={<ArrowLeftOutlined />}

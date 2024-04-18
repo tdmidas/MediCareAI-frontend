@@ -9,7 +9,7 @@ import { NavLink, useLocation } from 'react-router-dom';
 import { FaRegPenToSquare } from "react-icons/fa6";
 
 import './Sidebar.css';
-const logo = require("../../assets/logo-final.png")
+const logo = require("../../assets/logo-3.png")
 const Sidebar = () => {
     const location = useLocation();
     const [isCollapsed, setIsCollapsed] = useState(false);
@@ -43,9 +43,8 @@ const Sidebar = () => {
             <Flex justify="center">
                 <div className="logo">
                     <Image preview={false} src={logo} style={{
-                        width: "30px", height: "25px"
+                        width: "60px", height: "60px"
                     }} />
-
                 </div>
             </Flex >
             <Menu mode="inline" defaultSelectedKeys={[getActiveTabKey()]} className="menu-bar" inlineCollapsed={isCollapsed} >
