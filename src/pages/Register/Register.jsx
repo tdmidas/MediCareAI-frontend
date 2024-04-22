@@ -7,7 +7,7 @@ import { ToastContainer } from "react-toastify";
 import { notify } from "../../config/toast";
 import { Link } from "react-router-dom";
 import axios from "axios";
-import { createUserWithEmailAndPassword } from "firebase/auth";
+import { createUserWithEmailAndPassword, updateProfile } from "firebase/auth";
 import { db } from "../../firebaseConfig";
 import { doc, setDoc, collection } from "firebase/firestore";
 import { auth, googleAuthProvider, signInWithPopup, getEmail, facebookAuthProvider } from "../../firebaseConfig";
@@ -48,8 +48,12 @@ const Register = () => {
 		event.preventDefault();
 		if (!Object.keys(errors).length) {
 			try {
-				await createUserWithEmailAndPassword(auth, data.email, data.password);
-				const response = await axios.post(`https://medicareai-backend.onrender.com/api/auth/signup`, data);
+				const result = await createUserWithEmailAndPassword(auth, data.email, data.password);
+				updateProfile(result.user, {
+					displayName: data.name,
+					photoURL: "https://st3.depositphotos.com/9998432/13335/v/450/depositphotos_133352156-stock-illustration-default-placeholder-profile-icon.jpg"
+				});
+				const response = await axios.post(`http://localhost:5000/api/auth/signup`, data);
 				if (response.status === 201) {
 					notify("Đăng ký tài khoản thành công", "success");
 					navigate("/login");
@@ -81,9 +85,12 @@ const Register = () => {
 			const userId = user.uid;
 			const accessToken = user.accessToken;
 			localStorage.setItem('userId', userId);
+			localStorage.setItem('email', user.email);
 			localStorage.setItem('accessToken', accessToken);
+			localStorage.setItem('photoURL', user.photoURL);
+			localStorage.setItem('displayName', user.displayName);
 			const userDocRef = doc(collection(db, 'users'), userId);
-			await setDoc(userDocRef, { name: user.displayName, email: user.email, isAdmin: false, userId: user.uid, photoURL: user.photoURL, lastLogin: new Date() }, { merge: true });
+			await setDoc(userDocRef, { displayName: user.displayName, email: user.email, isAdmin: false, userId: user.uid, photoURL: user.photoURL, lastLogin: new Date() }, { merge: true });
 			navigate("/");
 			console.log("Facebook Sign-in Successful:", user);
 		} catch (error) {
@@ -105,8 +112,11 @@ const Register = () => {
 			const accessToken = user.accessToken;
 			localStorage.setItem('userId', userId);
 			localStorage.setItem('accessToken', accessToken);
+			localStorage.setItem('email', user.email);
+			localStorage.setItem('photoURL', user.photoURL);
+			localStorage.setItem('displayName', user.displayName);
 			const userDocRef = doc(collection(db, 'users'), userId);
-			await setDoc(userDocRef, { name: user.displayName, email: user.email, isAdmin: false, userId: user.uid, photoURL: user.photoURL, lastLogin: new Date() }, { merge: true });
+			await setDoc(userDocRef, { displayName: user.displayName, email: user.email, isAdmin: false, userId: user.uid, photoURL: user.photoURL, lastLogin: new Date() }, { merge: true });
 			navigate("/");
 			console.log("Google Sign-in Successful:", user);
 		} catch (error) {

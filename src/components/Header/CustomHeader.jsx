@@ -110,6 +110,7 @@ const CustomHeader = ({ toggleDrawer, submitHandler }) => {
         try {
             setUser(null);
             await auth.signOut();
+            
             localStorage.clear();
             navigate('/');
         } catch (error) {
@@ -131,14 +132,15 @@ const CustomHeader = ({ toggleDrawer, submitHandler }) => {
             handleLogout();
         }
     };
-
+    const photoURL = localStorage.getItem('photoURL');
+    const displayName = localStorage.getItem('displayName');
     const menu = (
         <Menu onClick={handleMenuClick}>
             <Menu.Item key="userProfile" disabled>
                 <Flex>
-                    <Avatar src={user?.photoURL || fallbackAvatar} size={50} />
+                    <Avatar src={photoURL || fallbackAvatar} size={50} />
                     <Flex vertical>
-                        <Text style={{ marginLeft: '10px', fontWeight: 500 }}>{user?.displayName || "user"}</Text>
+                        <Text style={{ marginLeft: '10px', fontWeight: 500 }}>{displayName || "user"}</Text>
                         <Text style={{ marginLeft: '10px' }}>{user?.email || "email"}</Text>
                     </Flex>
                 </Flex>
