@@ -1,5 +1,5 @@
-import "./App.css";
-import { BrowserRouter as Router, Route, Routes } from "react-router-dom";
+import React, { useEffect } from "react";
+import { BrowserRouter as Router, Route, Routes, useNavigate } from "react-router-dom";
 import Login from "./pages/Login/Login";
 import Register from "./pages/Register/Register";
 import Home from "./pages/Home/Home";
@@ -18,6 +18,8 @@ import slug from "slug";
 import ChatDetail from "./pages/Chat/ChatDetail";
 import MyAppointment from "./pages/LichKham/MyAppointment";
 import MyBlog from "./pages/Blog/MyBlog";
+import HealthEvaluate from "./components/HealthEvaluate/HealthEvaluate";
+
 function App() {
 	return (
 		<Router>
@@ -27,13 +29,12 @@ function App() {
 				<Route path="/register" element={<Register />} />
 				<Route path="/lichkham" element={<LichKham />} />
 				<Route path="/me/appointment" element={<MyAppointment />} />
-
 				<Route path="/doctors" element={<Doctor />} />
 				<Route path="/doctors/:slug" element={<DoctorDetail />} />
 				<Route path="/chat" element={<Chat />} />
 				<Route path="/chat/:slug" element={<ChatDetail />} />
-
 				<Route path="/suckhoe" element={<SucKhoe />} />
+				<Route path="/suckhoe/evaluate" element={<HealthEvaluate />} />
 				<Route path="/suckhoe/:slug" element={<SucKhoeDetail />} />
 				<Route path="/profile" element={<Profile />} />
 				<Route path="/blog" element={<Blog />} />
@@ -50,4 +51,5 @@ function App() {
 		</Router>
 	);
 }
+
 export default App;

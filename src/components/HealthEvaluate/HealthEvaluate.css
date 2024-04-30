@@ -24,31 +24,6 @@
     /* Viền cho thẻ card */
 }
 
-.incomplete-card {
-    background-color: #fff;
-    /* Màu nền mặc định cho dữ liệu chưa đủ */
-    border: 3px dashed #ff4d4f;
-    /* Viền đứt cho thẻ card */
-    animation: pulse 1.5s infinite alternate;
-    /* Hiệu ứng pulsing */
-    transition: border 0.5s ease-in-out;
-    /* Hiệu ứng chuyển đổi viền */
-}
-
-@keyframes pulse {
-    0% {
-        transform: scale(1);
-        border-color: #ff4d4f;
-        /* Màu viền khi bắt đầu hiệu ứng */
-    }
-
-    100% {
-        transform: scale(1.05);
-        border-color: #ff7875;
-        /* Màu viền khi kết thúc hiệu ứng */
-    }
-}
-
 /* Style cho các hàng chứa thông tin sức khỏe */
 .health-info {
     background-color: #fc9375;
@@ -63,4 +38,9 @@
     font-weight: 600;
     color: white;
     margin-left: 30px;
+}
+.health-card{
+    background-color: #ffffff;
+    width: 300px;
+    
 }

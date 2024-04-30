@@ -4,7 +4,6 @@ import "./DoctorList.css";
 import { useNavigate } from "react-router-dom";
 import { Link } from "react-router-dom";
 import axios from "axios";
-const starIcon = require("../../assets/Star.png");
 const DoctorList = () => {
     const navigate = useNavigate();
     const [doctors, setDoctors] = React.useState([]);
@@ -54,7 +53,7 @@ const DoctorList = () => {
                                     <Flex gap="10px">
                                         <Tag color="#069390" style={{ fontSize: 15 }}>{doctor.speciality}</Tag>
                                         <Typography.Text level={3} strong >
-                                            <Image src={starIcon} />  {doctor.avgRating}  ({doctor.totalRating})
+                                            <Image src="https://d1xjlj96to6zqh.cloudfront.net/Star.png" />  {doctor.avgRating}  ({doctor.totalRating})
                                         </Typography.Text>
                                     </Flex>
                                     <Typography.Title level={3} strong>

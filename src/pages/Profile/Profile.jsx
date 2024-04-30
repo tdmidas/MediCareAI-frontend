@@ -6,8 +6,6 @@ import { Form, Input, Button, Flex, Typography, Image, Tabs, message } from 'ant
 import { updatePassword } from 'firebase/auth';
 import axios from "axios";
 import "./Profile.css"
-const editProfile = require("../../assets/edit-profile.png")
-const fallbackAvatar = require("../../assets/fallback-avatar.jpg")
 const { Text } = Typography;
 const { TabPane } = Tabs;
 const Profile = () => {
@@ -149,7 +147,7 @@ const Profile = () => {
                                             <label htmlFor="photoURL">Avatar</label>
                                             <Flex gap="large" align='center' wrap='wrap' style={{ marginTop: 10 }}>
                                                 <Text type="secondary">Nên là ảnh vuông, chấp nhận các tệp: JPG, PNG hoặc GIF.</Text>
-                                                <img src={photoURL ? photoURL : fallbackAvatar} alt="Profile" className="profile-photo" style={{ borderRadius: 50, width: 100, height: 100, marginRight: 10 }} />
+                                                <img src={photoURL} alt="Profile" className="profile-photo" style={{ borderRadius: 50, width: 100, height: 100, marginRight: 10 }} />
 
                                                 <Button type="primary" onClick={() => toggleEditing("photoURL")} className='form-btn'>Chỉnh sửa</Button>
                                             </Flex>

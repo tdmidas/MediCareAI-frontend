@@ -13,8 +13,6 @@ import { setDoc, doc, collection } from "firebase/firestore";
 import axios from "axios";
 import { Flex, Image, Button } from "antd";
 import { ArrowLeftOutlined } from "@ant-design/icons";
-
-import loginBg from "../../assets/login-bg.png";
 const googleLogo = require('../../assets/google-18px.svg').default;
 const facebookLogo = require('../../assets/facebook-18px.svg').default;
 
@@ -164,7 +162,7 @@ const Login = () => {
 							</form>
 							<ToastContainer />
 
-							<Image preview={false} src={loginBg} alt="auth background" style={{ minWidth: 300, maxHeight: 650, borderRadius: 30, padding: 20 }} />
+							<Image preview={false} src="https://d1xjlj96to6zqh.cloudfront.net/login-bg.png" alt="auth background" style={{ minWidth: 300, maxHeight: 650, borderRadius: 30, padding: 20 }} />
 						</Flex>
 
 					</div>

@@ -1,7 +1,6 @@
 import React from "react";
 import { Button, Image, Card, Flex, Typography, } from "antd";
 import "./Banner.css";
-import promo from "../../assets/promo.png";
 import { useNavigate } from "react-router-dom";
 import { useMediaQuery } from 'react-responsive';
 
@@ -22,7 +21,7 @@ const Banner = () => {
                 <Image style={{
                     float: isMobile ? "none" : "right", backgroundSize: "cover", width: isMobile ? "100%" : "40%", height: "260px", marginTop: "-40px"
                 }}
-                    src={promo}>
+                    src="https://d1xjlj96to6zqh.cloudfront.net/promo.png">
 
                 </Image>
             }>

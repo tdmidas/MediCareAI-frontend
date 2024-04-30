@@ -1,9 +1,10 @@
 import React, { useState, useEffect } from 'react';
-import { Card, Flex, Progress, Typography, Col, Row } from 'antd';
+import { Card, Flex, Progress, Typography, Col, Row, Image, Button } from 'antd';
 import './HealthEvaluate.css';
 import axios from 'axios';
-import { ExclamationCircleOutlined } from '@ant-design/icons';
-
+import { Link } from 'react-router-dom';
+import DefaultLayout from '../../layout/DefaultLayout';
+import MainContentLayout from '../../layout/MainContentLayout';
 const { Title, Text } = Typography;
 
 const HealthEvaluate = () => {
@@ -37,37 +38,85 @@ const HealthEvaluate = () => {
     };
 
     return (
-        <Card style={{ maxWidth: 500, height: 440, borderRadius: 20, marginBottom: 30 }} className={dataComplete ? "complete-card" : "incomplete-card"}>
+        <DefaultLayout>
+            <MainContentLayout>
+                <div className="health-evaluate">
+                    <Title level={2}>Đánh giá sức khỏe</Title>
 
-            <Flex align="center" justify="center">
-                <Progress type="circle" percent={100} format={() => healthData ? healthData.predict : '0'}
-                    className={healthData ? (healthData.predict === 'Great' ? 'green-progress' : 'red-progress') : ''} />
-            </Flex>
-            <Title level={3} strong style={{ textAlign: "center" }}>
-                Sức khỏe tổng thể
-            </Title>
-            <Flex wrap='wrap' gap="large" justify='center' >
-                <Col>
-                    <Row className="health-info" style={{ backgroundColor: "#fc9375" }}>
-                        <Text className="health-info-text"> {healthData ? healthData.bloodStatus : 'Đang tải...'}</Text>
+                    <Flex align="center" justify="center">
+                        <Image preview={false} src="https://d1xjlj96to6zqh.cloudfront.net/profile-ava.png" style={{
+                            maxWidth: 230,
+                            maxHeight: 230,
+                        }} />
+                        <Progress type="circle" percent={100} format={() => healthData ? healthData.predict : '0'}
+                            className={healthData ? (healthData.predict === 'Great' ? 'green-progress' : 'red-progress') : ''} />
+                    </Flex>
+                    <Flex gap={0} wrap='wrap'>
+                        <Card title="Blood Pressure" className="health-card">
+                            <Flex justify="center">
+                                <Progress
+                                    type="circle"
+                                    percent={healthData ? healthData.bloodStatus : 0}
+                                    format={percent => `${percent}%`}
+                                    width={100}
+                                />
+                            </Flex>
+                        </Card>
+                        <Card title="Blood Glucose" className="health-card">
+                            <Flex justify="center">
+                                <Progress
+                                    type="circle"
+                                    percent={healthData ? healthData.glucoseStatus : 0}
+                                    format={percent => `${percent}%`}
+                                    width={100}
+                                />
+                            </Flex>
+                        </Card>
+                        <Card title="BMI" className="health-card" >
+                            <Flex justify="center">
+                                <Progress
+                                    type="circle"
+                                    percent={healthData ? healthData.bmiStatus : 0}
+                                    format={percent => `${percent}%`}
+                                    width={100}
+                                />
+                            </Flex>
+                        </Card>
+                    </Flex>
+                    <Row gutter={[16, 16]}>
+                        <Col span={24}>
+                            <Card title="Overall Health" className="health-card">
+                                <Flex justify="center">
+                                    <Progress
+                                        type="circle"
+                                        percent={healthData ? healthData.overallStatus : 0}
+                                        format={percent => `${percent}%`}
+                                        width={100}
+                                    />
+                                </Flex>
+                            </Card>
+                        </Col>
                     </Row>
-                    <Row className="health-info" style={{ backgroundColor: "#f4b152" }}>
-                        <Text className="health-info-text">  {healthData ? healthData.glucoseStatus : 'Đang tải...'}</Text>
+                    <Row gutter={[16, 16]}>
+                        <Col span={24}>
+                            <Card title="Health Recommendations" className="health-card">
+                                <Text>
+                                    {dataComplete ? healthData.recommendations : "Please complete all health data to get recommendations."}
+                                </Text>
+                            </Card>
+                        </Col>
                     </Row>
-                    <Row className="health-info" style={{ backgroundColor: "#1ddadd" }}>
-                        <Text className="health-info-text">  {healthData ? healthData.bmiStatus : 'Đang tải...'}</Text>
+                    <Row>
+                        <Col span={24}>
+                            <Link to="/health">
+                                <Button type="primary">Update Health Data</Button>
+                            </Link>
+                        </Col>
                     </Row>
+                </div>
 
-                </Col>
-
-            </Flex>
-            {!dataComplete && (
-                <Flex align="center" justify="center" style={{ marginTop: 20 }}>
-                    <ExclamationCircleOutlined style={{ fontSize: 24, marginRight: 10 }} />
-                    <Text style={{ fontWeight: 'bold' }}>Cập nhật đủ thông tin sức khỏe bạn nhé !</Text>
-                </Flex>
-            )}
-        </Card>
+            </MainContentLayout>
+        </DefaultLayout>
     );
 }
 

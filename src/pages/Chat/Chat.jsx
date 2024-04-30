@@ -57,10 +57,11 @@ const Chat = () => {
 
                                         </Flex>
                                         <Flex gap="large" wrap="wrap">
-
-                                            <Button className="banner-btn-sub" size="large" onClick={() => handleClick('support')}>
-                                                Cần hỗ trợ
-                                            </Button>
+                                            <Link to="/chat/bac-si-noi-khoa">
+                                                <Button className="banner-btn-sub" size="large" onClick={() => handleClick('support')}>
+                                                    Cần hỗ trợ
+                                                </Button>
+                                            </Link>
                                         </Flex>
 
 

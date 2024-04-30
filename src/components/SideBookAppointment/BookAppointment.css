@@ -1,5 +1,4 @@
 .book-appointment-card {
-    width: 300px;
     padding: 20px;
     box-shadow: 0 4px 16px rgb(7, 115, 95) !important;
 }
@@ -13,8 +12,6 @@
 }
 
 .time-slots li {
-    display: flex;
-    justify-content: space-between;
     margin-bottom: 6px;
 }
 

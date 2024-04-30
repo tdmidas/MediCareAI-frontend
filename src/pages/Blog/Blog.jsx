@@ -8,20 +8,23 @@ import { Link } from 'react-router-dom';
 import { useMediaQuery } from 'react-responsive';
 import "./Blog.css"
 import slug from "slug";
-const doctor = require("../../assets/doctor-1.png")
-const eat_food = require("../../assets/eat-food.png")
 
 const Blog = () => {
     const isMobile = useMediaQuery({ maxWidth: 768 });
     const isTablet = useMediaQuery({ minWidth: 769, maxWidth: 1024 });
-    const isDesktop = useMediaQuery({ minWidth: 1025 });
+    const [currentPage, setCurrentPage] = React.useState(1);
+    const postsPerPage = 2;
+    const currentPagePosts = BlogData.slice((currentPage - 1) * postsPerPage, currentPage * postsPerPage);
+    const handleChangePage = (page) => {
+        setCurrentPage(page);
+    };
     return (
         <DefaultLayout>
             <Flex gap="large" wrap="wrap">
 
                 <MainContentLayout>
                     <Flex vertical align="center" gap="large" justify="center">
-                        {BlogData.slice(0, 4).map((item, index) => (
+                        {currentPagePosts.slice(0, 4).map((item, index) => (
                             <Link key={index} to={`/blog/${slug(item.title)}`}>
                                 <Card
                                     className="blog-card"
@@ -56,7 +59,7 @@ const Blog = () => {
                                 </Card>
                             </Link>
                         ))}
-                        <Pagination className="blog-pagination" defaultCurrent={1} total={50} style={{ marginTop: "20px" }} />
+                        <Pagination className="blog-pagination" defaultCurrent={1} total={BlogData.length} pageSize={postsPerPage} onChange={handleChangePage} />
                     </Flex>
 
                 </MainContentLayout>
@@ -78,7 +81,7 @@ const Blog = () => {
                         <Card className="blog-side-card-1" cover={
                             <Image
                                 alt="example"
-                                src={doctor}
+                                src="https://d1xjlj96to6zqh.cloudfront.net/doctor-1.png"
                                 style={{ float: "right", position: "absolute", paddingBottom: "72px", paddingLeft: "90px", width: "auto", height: "300px" }}
                             />
                         }>
@@ -95,7 +98,7 @@ const Blog = () => {
                         <Card className="blog-side-card-2" cover={
                             <Image
                                 alt="example"
-                                src={eat_food}
+                                src="https://d1xjlj96to6zqh.cloudfront.net/eat-food.png"
                                 style={{ float: "right", position: "absolute", paddingBottom: "72px", paddingLeft: "90px", width: "auto", height: "300px" }}
                             />
                         }>

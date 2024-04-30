@@ -10,9 +10,8 @@ import { BellOutlined, SearchOutlined, ArrowLeftOutlined } from '@ant-design/ico
 import { MenuFoldOutlined } from "@ant-design/icons";
 import { useMediaQuery } from "react-responsive";
 import { doc, setDoc, collection, getDoc } from "firebase/firestore";
-const fallbackAvatar = require("../../assets/fallback-avatar.jpg")
+import axios from 'axios';
 const { Text, Title } = Typography;
-const logo = require('../../assets/logo.png');
 const CustomHeader = ({ toggleDrawer, submitHandler }) => {
     const navigate = useNavigate();
     const location = useLocation();
@@ -110,7 +109,7 @@ const CustomHeader = ({ toggleDrawer, submitHandler }) => {
         try {
             setUser(null);
             await auth.signOut();
-            
+            await axios.post('http://localhost:5000/api/auth/logout');
             localStorage.clear();
             navigate('/');
         } catch (error) {
@@ -138,7 +137,7 @@ const CustomHeader = ({ toggleDrawer, submitHandler }) => {
         <Menu onClick={handleMenuClick}>
             <Menu.Item key="userProfile" disabled>
                 <Flex>
-                    <Avatar src={photoURL || fallbackAvatar} size={50} />
+                    <Avatar src={photoURL} size={50} />
                     <Flex vertical>
                         <Text style={{ marginLeft: '10px', fontWeight: 500 }}>{displayName || "user"}</Text>
                         <Text style={{ marginLeft: '10px' }}>{user?.email || "email"}</Text>
@@ -174,7 +173,7 @@ const CustomHeader = ({ toggleDrawer, submitHandler }) => {
             {combinedNotifications.map(notification => (
                 <Menu.Item key={notification.id} style={{ backgroundColor: "#d9f2f2", borderRadius: 20, marginBottom: 10 }} >
                     <Flex justify='left'>
-                        <Avatar src={logo} size={50} />
+                        <Avatar src="https://d1xjlj96to6zqh.cloudfront.net/logo.png" size={50} />
                         <a href={notification.link} style={{ padding: 10, color: "black" }}>{notification.text}</a>
                     </Flex>
                 </Menu.Item>
@@ -223,7 +222,7 @@ const CustomHeader = ({ toggleDrawer, submitHandler }) => {
                                     </Dropdown>
 
                                     <Dropdown overlay={menu}>
-                                        <img src={user.photoURL ? user.photoURL : fallbackAvatar} alt="Profile" className="profile-photo" style={{ borderRadius: 30, width: 90, height: 35, marginRight: 10 }} />
+                                        <img src={user.photoURL} alt="Profile" className="profile-photo" style={{ borderRadius: 30, width: 90, height: 35, marginRight: 10 }} />
                                     </Dropdown>
                                 </>
                             )}

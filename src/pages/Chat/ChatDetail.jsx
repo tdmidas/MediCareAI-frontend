@@ -3,7 +3,6 @@ import { useParams } from "react-router-dom";
 import { Input, Button, Typography, Avatar, Flex, Card, Spin, message } from "antd";
 import chatbotData from "../../data/chat";
 import "./ChatDetail.css";
-import defaultAvatar from "../../assets/patient-avatar.png";
 import DefaultLayout from "../../layout/DefaultLayout";
 import MainContentLayout from "../../layout/MainContentLayout";
 import { useMediaQuery } from 'react-responsive';
@@ -12,21 +11,25 @@ import SpeechRecognition, { useSpeechRecognition } from 'react-speech-recognitio
 import axios from 'axios';
 import ReactMarkdown from 'react-markdown';
 
-const { GoogleGenerativeAI } = require("@google/generative-ai");
-
 const { TextArea } = Input;
 const { Text } = Typography;
 
 const ChatDetail = () => {
+    const { transcript, resetTranscript, listening } = useSpeechRecognition();
+
     const { slug } = useParams();
-    const { transcript, resetTranscript, listening, browserSupportsSpeechRecognition } = useSpeechRecognition();
     const [messages, setMessages] = useState([]);
     const [userInput, setUserInput] = useState("");
     const [loading, setLoading] = useState(false);
     const [chatbot, setChatbot] = useState(null);
-    const [file, setFile] = useState(null);
-    const genAI = new GoogleGenerativeAI('AIzaSyDoTho7YlZYCCmAqCzHmzp8YTAgUknI6zY');
     const isMobile = useMediaQuery({ maxWidth: 768 });
+
+    useEffect(() => {
+        const bot = chatbotData.find((chatbot) => chatbot.name === getFormattedName(slug));
+        setChatbot(bot);
+        setMessages([{ sender: bot.name, content: "Xin chào, bạn cần hỗ trợ gì về sức khỏe ạ? Hãy chia sẻ thêm thông tin để mình có thể hỗ trợ bạn tốt hơn nhé." }]);
+    }, [slug]);
+
     const getFormattedName = (slug) => {
         switch (slug) {
             case "bac-si-tim-mach":
@@ -41,32 +44,18 @@ const ChatDetail = () => {
                 return slug;
         }
     };
-    useEffect(() => {
-        const bot = chatbotData.find((chatbot) => chatbot.name === getFormattedName(slug));
-        setChatbot(bot);
-        setMessages([{ sender: bot.name, content: "Xin chào, bạn cần hỗ trợ gì về sức khỏe ạ? Hãy chia sẻ thêm thông tin để mình có thể hỗ trợ bạn tốt hơn nhé." }]);
-    }, [slug]);
-    const getGoogleGenerativeAIResponse = async (userInput) => {
-        const model = genAI.getGenerativeModel({ model: "gemini-pro" });
-        const prompt = userInput;
 
-        const result = await model.generateContent(prompt);
-        const response = await result.response;
-        const text = await response.text();
-
-        return text;
-    };
     const sendMessage = async () => {
         if (!userInput.trim()) return;
 
         const updatedMessages = [...messages, { sender: "User", content: userInput }];
         setMessages(updatedMessages);
         setUserInput("");
-
         setLoading(true);
 
         try {
-            const botResponse = await getGoogleGenerativeAIResponse(userInput);
+            const response = await axios.post('http://localhost:5000/api/chat/message', { userInput });
+            const { message: botResponse } = response.data;
             const updatedMessagesWithBot = [...updatedMessages, { sender: chatbot.name, content: botResponse }];
             setMessages(updatedMessagesWithBot);
         } catch (error) {
@@ -78,7 +67,6 @@ const ChatDetail = () => {
 
         setLoading(false);
     };
-
 
 
 
@@ -101,40 +89,13 @@ const ChatDetail = () => {
     if (transcript !== '') {
         handleTranscript();
     }
-    const handleUpload = () => {
-        const fileInput = document.createElement('input');
-        fileInput.type = 'file';
-        fileInput.accept = 'image/*'; // Accept only image files
-        fileInput.onchange = async (e) => {
-            const selectedFile = e.target.files[0];
-            if (!selectedFile) {
-                return;
-            }
-
-            const formData = new FormData();
-            formData.append('image', selectedFile);
-
-            try {
-                const response = await axios.post('http://localhost:5000/api/upload', formData, {
-                    headers: {
-                        'Content-Type': 'multipart/form-data'
-                    }
-                });
-                message.success(response.data);
-            } catch (error) {
-                console.error('Error uploading file:', error);
-                message.error('Error uploading file.');
-            }
-        };
-
-        fileInput.click();
-    };
     const sendPromoMessage = async (buttonName) => {
         const updatedMessages = [...messages, { sender: "User", content: buttonName }];
         setMessages(updatedMessages);
         setLoading(true);
         try {
-            const botResponse = await getGoogleGenerativeAIResponse(buttonName);
+            const response = await axios.post('http://localhost:5000/api/chat/message', { userInput: buttonName });
+            const { message: botResponse } = response.data;
             const updatedMessagesWithBot = [...messages, { sender: chatbot.name, content: botResponse }];
             setMessages(updatedMessagesWithBot);
         }
@@ -170,7 +131,7 @@ const ChatDetail = () => {
                         ) : (
                             messages.map((message, index) => (
                                 <div key={index} className={`message ${message.sender.toLowerCase()}`}>
-                                    <Avatar src={message.sender === chatbot.name ? chatbot.picture : defaultAvatar} style={{ marginBottom: 20 }} />
+                                    <Avatar src={message.sender === chatbot.name ? chatbot.picture : "https://d1xjlj96to6zqh.cloudfront.net/patient-avatar.png"} style={{ marginBottom: 20 }} />
                                     <div className="message-content">
                                         <Flex vertical gap="small">
                                             <Text strong>{message.sender}:</Text>
@@ -218,7 +179,7 @@ const ChatDetail = () => {
                         >
 
                         </TextArea>
-                        <Button type="default" className="upload-btn" icon={<UploadOutlined />} onClick={handleUpload} />
+                        <Button type="default" className="upload-btn" icon={<UploadOutlined />} />
                         <Button type="default" className="voice-btn" icon={<AudioOutlined />} onClick={handleVoice} />
                         <Button className="send-btn" type="default" icon={<SendOutlined />} onClick={sendMessage} />
 

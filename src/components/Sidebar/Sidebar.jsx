@@ -7,9 +7,7 @@ import { RiHome6Line, RiNurseLine } from "react-icons/ri";
 import { IoChatbubbleOutline } from "react-icons/io5";
 import { NavLink, useLocation } from 'react-router-dom';
 import { FaRegPenToSquare } from "react-icons/fa6";
-
 import './Sidebar.css';
-const logo = require("../../assets/logo-3.png")
 const Sidebar = () => {
     const location = useLocation();
     const [isCollapsed, setIsCollapsed] = useState(false);
@@ -42,7 +40,7 @@ const Sidebar = () => {
         <>
             <Flex justify="center">
                 <div className="logo">
-                    <Image preview={false} src={logo} style={{
+                    <Image preview={false} src="https://d1xjlj96to6zqh.cloudfront.net/logo-3.png" style={{
                         width: "60px", height: "60px"
                     }} />
                 </div>

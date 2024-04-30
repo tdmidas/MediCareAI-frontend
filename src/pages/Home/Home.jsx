@@ -10,8 +10,6 @@ import MainContentLayout from "../../layout/MainContentLayout";
 import SideContentLayout from '../../layout/SideContentLayout';
 import BasicDateCalendar from '../../components/Calendar/Calendar';
 import { useNavigate } from 'react-router-dom';
-const doctor = require("../../assets/doctor-1.png")
-const doctor3 = require("../../assets/doctor-3.png")
 const Home = () => {
     const navigate = useNavigate();
 
@@ -37,7 +35,7 @@ const Home = () => {
                             <Image
                                 preview={false}
                                 alt="example"
-                                src={doctor}
+                                src="https://d1xjlj96to6zqh.cloudfront.net/doctor-1.png"
                                 style={{ float: "right", position: "absolute", paddingBottom: "72px", paddingLeft: "90px", width: "auto", height: "300px" }}
                             />
                         } style={{ maxWidth: 400 }}>
@@ -61,7 +59,7 @@ const Home = () => {
                         <Image
                             preview={false}
                             alt="example"
-                            src={doctor3}
+                            src="https://d1xjlj96to6zqh.cloudfront.net/doctor-3.png"
                             style={{ maxHeight: "480px", width: "400px", boxShadow: "0 0 10px 0 rgba(0,0,0,0.2)", borderRadius: "10px", marginTop: "20px" }}
                         />
 

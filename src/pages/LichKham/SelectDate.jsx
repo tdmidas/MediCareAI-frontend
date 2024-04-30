@@ -85,11 +85,12 @@ const SelectDate = ({ onNext }) => {
                                         onClick={() => handleDoctorClick(doctor.name)}
                                         style={{
                                             width: '100%',
+                                            height: '300px',
                                             marginBottom: '16px',
                                             cursor: 'pointer',
                                             border: selectedDoctor === doctor.name ? '2px solid #1890ff' : '2px solid transparent',
                                             boxShadow: selectedDoctor === doctor.name ? '0 0px 4px rgb(3, 230, 169)' : 'none'
-                                        }} cover={<img alt={doctor.name} src={doctor.photo} />}
+                                        }} cover={<img alt={doctor.name} src={doctor.photo} style={{ height: 180 }} />}
                                     >
                                         <Title level={5}>{doctor.name}</Title>
                                         <Text>Giá: {doctor.price} đ</Text>

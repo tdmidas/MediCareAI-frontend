@@ -26,7 +26,7 @@ const HealthTrackList = () => {
                         {
                             id: 1,
                             name: "Huyết áp",
-                            picture: require("../../assets/blood-pressure.png"),
+                            picture: "https://d1xjlj96to6zqh.cloudfront.net/blood-pressure.png",
                             measure: "mmHg",
                             value: `${defaultBP.diaBP}/${defaultBP.sysBP}`,
                             color: "#c0f1ef",
@@ -34,7 +34,7 @@ const HealthTrackList = () => {
                         {
                             id: 2,
                             name: "Đường huyết",
-                            picture: require("../../assets/blood-sugar.png"),
+                            picture: "https://d1xjlj96to6zqh.cloudfront.net/blood-sugar.png",
                             measure: "mmol/L",
                             value: defaultGlucose,
                             color: "#f5dec4",
@@ -55,7 +55,7 @@ const HealthTrackList = () => {
                     {
                         id: 1,
                         name: "Huyết áp",
-                        picture: require("../../assets/blood-pressure.png"),
+                        picture: "https://d1xjlj96to6zqh.cloudfront.net/blood-pressure.png",
                         measure: "mmHg",
                         value: `${diaBP}/${sysBP}`,
                         color: "#c0f1ef",
@@ -63,7 +63,7 @@ const HealthTrackList = () => {
                     {
                         id: 2,
                         name: "Đường huyết",
-                        picture: require("../../assets/blood-sugar.png"),
+                        picture: "https://d1xjlj96to6zqh.cloudfront.net/blood-sugar.png",
                         measure: "mmol/L",
                         value: glucose,
                         color: "#f5dec4",
@@ -82,7 +82,7 @@ const HealthTrackList = () => {
                         {
                             id: 1,
                             name: "Huyết áp",
-                            picture: require("../../assets/blood-pressure.png"),
+                            picture: "https://d1xjlj96to6zqh.cloudfront.net/blood-pressure.png",
                             measure: "mmHg",
                             value: `${defaultBP.diaBP}/${defaultBP.sysBP}`,
                             color: "#c0f1ef",
@@ -90,7 +90,7 @@ const HealthTrackList = () => {
                         {
                             id: 2,
                             name: "Đường huyết",
-                            picture: require("../../assets/blood-sugar.png"),
+                            picture: "https://d1xjlj96to6zqh.cloudfront.net/blood-sugar.png",
                             measure: "mmol/L",
                             value: defaultGlucose,
                             color: "#f5dec4",

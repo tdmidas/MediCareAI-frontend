@@ -1,13 +1,12 @@
 import React from "react";
 import { Link } from "react-router-dom";
 import "./Doctor.css";
-import { Flex, Typography, Image, Card, Tag, Pagination } from "antd";
+import { Flex, Typography, Image, Card, Tag, Pagination, message } from "antd";
 import DefaultLayout from '../../layout/DefaultLayout';
 import MainContentLayout from "../../layout/MainContentLayout";
 import axios from "axios";
 import ContentLoader from "react-content-loader";
 
-const starIcon = require("../../assets/Star.png");
 const DoctorLoader = () => (
     <ContentLoader
         speed={2}
@@ -23,14 +22,15 @@ const DoctorLoader = () => (
         <rect x="20" y="330" rx="5" ry="5" width="260" height="20" />
     </ContentLoader>
 );
+
 const Doctor = () => {
     const [doctors, setDoctors] = React.useState([]);
     const [loading, setLoading] = React.useState(true);
+    const [currentPage, setCurrentPage] = React.useState(1);
+    const doctorsPerPage = 6;
 
     React.useEffect(() => {
-        const token = localStorage.getItem('accessToken');
-
-        axios.get(`https://medicareai-backend.onrender.com/api/doctors`,)
+        axios.get(`http://localhost:5000/api/doctors`)
             .then(response => {
                 setDoctors(response.data);
                 setLoading(false);
@@ -40,28 +40,30 @@ const Doctor = () => {
                 setLoading(false);
             });
     }, []);
+
+    const indexOfLastDoctor = currentPage * doctorsPerPage;
+    const indexOfFirstDoctor = indexOfLastDoctor - doctorsPerPage;
+    const currentDoctors = doctors.slice(indexOfFirstDoctor, indexOfLastDoctor);
+    const handleChangePage = (page) => {
+        setCurrentPage(page);
+    };
+
     return (
         <DefaultLayout>
-            <Flex gap="large" >
+            <Flex gap="large">
                 <MainContentLayout>
-
-                    <Flex align="center" justify="space-between" >
+                    <Flex align="center" justify="space-between">
                         <Typography.Title level={3} strong>
                             Bác sĩ nổi bật
                         </Typography.Title>
                     </Flex>
                     {loading ? (
-                        // Show loading animation if loading is true
                         <Flex wrap="wrap" align="center" gap="large">
                             <DoctorLoader />
-                            <DoctorLoader />
-                            <DoctorLoader />
-                            {/* Add more loaders as needed */}
                         </Flex>
                     ) : (
                         <Flex wrap="wrap" align="center" gap="large">
-
-                            {doctors.map((doctor, index) => (
+                            {currentDoctors.map((doctor, index) => (
                                 <Link to={`/doctors/${doctor.doctorId}`} key={index}>
                                     <Card
                                         key={index}
@@ -77,12 +79,12 @@ const Doctor = () => {
                                         }
                                         style={{ flex: "0 1 300px", height: "500px", width: "300px", padding: "20px", marginBottom: "20px" }}
                                     >
-                                        <Flex >
+                                        <Flex>
                                             <Flex vertical aligh="center" gap="10px">
                                                 <Flex gap="10px">
                                                     <Tag color="#069390" style={{ fontSize: 15 }}>{doctor.speciality}</Tag>
                                                     <Typography.Text level={3} strong >
-                                                        <Image src={starIcon} />  {doctor.avgRating}  ({doctor.totalRating})
+                                                        <Image src="https://d1xjlj96to6zqh.cloudfront.net/Star.png" />  {doctor.avgRating}  ({doctor.totalRating})
                                                     </Typography.Text>
                                                 </Flex>
                                                 <Typography.Title level={3} strong>
@@ -91,25 +93,19 @@ const Doctor = () => {
                                                 <Typography.Text type="secondary" >
                                                     {doctor.short}
                                                 </Typography.Text>
-
-
-
                                             </Flex>
                                         </Flex>
                                     </Card>
-                                </Link>))
-
-                            }
+                                </Link>
+                            ))}
                         </Flex>
                     )}
                     <Flex justify="center">
-                        <Pagination className="blog-pagination" defaultCurrent={1} total={50} />
+                        <Pagination className="blog-pagination" defaultCurrent={1} total={doctors.length} pageSize={doctorsPerPage} onChange={handleChangePage} />
                     </Flex>
-
                 </MainContentLayout>
             </Flex>
         </DefaultLayout>
-
     );
 }
 

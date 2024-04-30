@@ -12,7 +12,6 @@ import { db } from "../../firebaseConfig";
 import { doc, setDoc, collection } from "firebase/firestore";
 import { auth, googleAuthProvider, signInWithPopup, getEmail, facebookAuthProvider } from "../../firebaseConfig";
 import { Flex, Image, Button } from "antd";
-import loginBg from "../../assets/login-bg.png";
 import { ArrowLeftOutlined } from "@ant-design/icons";
 const googleLogo = require('../../assets/google-18px.svg').default;
 const facebookLogo = require('../../assets/facebook-18px.svg').default;
@@ -253,7 +252,7 @@ const Register = () => {
 							</form>
 							<ToastContainer />
 
-							<Image preview={false} src={loginBg} alt="auth background" style={{ minWidth: 300, maxHeight: 650, borderRadius: 30, padding: 20 }} />
+							<Image preview={false} src="https://d1xjlj96to6zqh.cloudfront.net/login-bg.png" alt="auth background" style={{ minWidth: 300, maxHeight: 650, borderRadius: 30, padding: 20 }} />
 						</Flex>
 					</div>
 
