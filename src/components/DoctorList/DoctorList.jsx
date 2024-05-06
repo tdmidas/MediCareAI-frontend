@@ -33,7 +33,7 @@ const DoctorList = () => {
             </Flex>
             <Flex align="center" gap="large" wrap="wrap">
                 {doctors.slice(0, 3).map((doctor, index) => (
-                    <Link to={`/doctors/${doctor.id}`} key={index}>
+                    <Link to={`/doctors/${doctor.doctorId}`} key={index}>
 
                         <Card
                             key={index}

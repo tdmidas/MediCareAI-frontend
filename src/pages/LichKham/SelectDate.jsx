@@ -15,7 +15,6 @@ const SelectDate = ({ onNext }) => {
     const isMobile = useMediaQuery({ maxWidth: 768 });
 
     useEffect(() => {
-        // Fetch doctors data from API
         const fetchDoctors = async () => {
             try {
                 const response = await axios.get(`https://medicareai-backend.onrender.com/api/doctors`);

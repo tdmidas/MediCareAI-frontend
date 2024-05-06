@@ -1,8 +1,8 @@
 import React, { useState } from 'react';
-import { Row, Col, Card, Typography, Button, Form, Checkbox } from 'antd';
+import { Row, Col, Card, Typography, Button, Form, message } from 'antd';
 import { CreditCardOutlined, DollarOutlined } from '@ant-design/icons';
 import CreditCard from '../../components/CreditCard/CrediCard';
-import 'react-credit-cards-2/dist/es/styles-compiled.css';
+import axios from 'axios';
 
 const { Title } = Typography;
 
@@ -10,16 +10,22 @@ const Payment = ({ onNext, onPrev }) => {
     const [paymentMethod, setPaymentMethod] = useState(null);
     const [isPaymentConfirmed, setIsPaymentConfirmed] = useState(false);
 
-    const handleConfirmPayment = () => {
+    const handleConfirmPayment = async () => {
         setIsPaymentConfirmed(true);
+        const userId = localStorage.getItem('userId');
+        const appointmentInfo = {
+            userId: userId,
 
-        // Prepare payment info
-        const paymentInfo = {
-            paymentMethod,
         };
 
-        // Pass paymentInfo to the next step
-        onNext(paymentInfo);
+        try {
+            await axios.post('YOUR_API_URL_HERE', appointmentInfo);
+            message.success('Appointment created successfully');
+            onNext(appointmentInfo);
+        } catch (error) {
+            console.error('Error creating appointment:', error);
+            message.error('Failed to create appointment');
+        }
     };
 
     const handlePaymentMethodChange = (method) => {
