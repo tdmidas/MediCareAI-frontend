@@ -1,15 +1,29 @@
 import React, { useState, useEffect } from 'react';
-import { Card, Flex, Progress, Typography, Col, Row, Image, Button } from 'antd';
+import { Card, Flex, Progress, Typography, Col, Row, Image, Button, Spin } from 'antd';
 import './HealthEvaluate.css';
 import axios from 'axios';
 import { Link } from 'react-router-dom';
 import DefaultLayout from '../../layout/DefaultLayout';
 import MainContentLayout from '../../layout/MainContentLayout';
+import SideContentLayout from '../../layout/SideContentLayout';
+import { LoadingOutlined } from '@ant-design/icons';
+import slug from 'slug';
+import ReactMarkdown from 'react-markdown';
+import { useMediaQuery } from 'react-responsive';
+
+const heartLine = require('../../assets/heart-line.png');
+
 const { Title, Text } = Typography;
 
 const HealthEvaluate = () => {
     const [healthData, setHealthData] = useState(null);
     const [dataComplete, setDataComplete] = useState(false);
+    const [loading, setLoading] = useState(true);
+    const [chatbotLoading, setChatbotLoading] = useState(false);
+    const [blogData, setBlogData] = useState(null);
+    const [chatbotResponse, setChatbotResponse] = useState("");
+    const isMobile = useMediaQuery({ maxWidth: 768 });
+
     useEffect(() => {
         fetchData();
     }, []);
@@ -22,101 +36,194 @@ const HealthEvaluate = () => {
         }
     }, [healthData]);
 
-    useEffect(() => {
-        fetchData();
-    }, []);
-
-    const fetchData = async () => {
+    const fetchChatbotResponse = async (userInput) => {
         try {
-            const userId = localStorage.getItem("userId");
-            await axios.post(`https://medicareai-backend.onrender.com/api/health/overall/${userId}`);
-            const response = await axios.get(`https://medicareai-backend.onrender.com/api/health/overall/${userId}`);
-            setHealthData(response.data);
+            setChatbotLoading(true);
+            const response = await axios.post('http://localhost:5000/api/chat/message', { userInput });
+            setChatbotResponse(response.data.message);
+            setChatbotLoading(false);
         } catch (error) {
-            console.error("Error fetching health data:", error);
+            console.error("Error fetching chatbot response:", error);
+            setChatbotLoading(false);
         }
     };
 
+    useEffect(() => {
+        if (healthData && healthData.bmiStatus && healthData.bloodStatus && healthData.glucoseStatus) {
+            const userInput = `Bạn có lời khuyên gì về sức khỏe hiện tại của tôi không:BMI ${healthData.bmiStatus}, Blood ${healthData.bloodStatus}, Glucose ${healthData.glucoseStatus}`;
+            fetchChatbotResponse(userInput);
+        }
+    }, [healthData]);
+    const fetchData = async () => {
+        try {
+            const userId = localStorage.getItem("userId");
+            setLoading(true);
+            await axios.post(`http://localhost:5000/api/health/overall/${userId}`);
+            const response = await axios.get(`http://localhost:5000/api/health/overall/${userId}`);
+            setHealthData(response.data);
+            setLoading(false);
+        } catch (error) {
+            console.error("Error fetching health data:", error);
+            setLoading(false);
+        }
+    };
+    const fetchBlogData = async (tag) => {
+        try {
+            const response = await axios.get(`http://localhost:5000/api/blogs?tag=${tag}`);
+            setBlogData(response.data);
+        } catch (error) {
+            console.error("Error fetching blog data:", error);
+        }
+    }
+
+    useEffect(() => {
+        fetchBlogData('Ăn uống');
+    }, []);
     return (
         <DefaultLayout>
             <MainContentLayout>
-                <div className="health-evaluate">
-                    <Title level={2}>Đánh giá sức khỏe</Title>
-
-                    <Flex align="center" justify="center">
-                        <Image preview={false} src="https://d1xjlj96to6zqh.cloudfront.net/profile-ava.png" style={{
-                            maxWidth: 230,
-                            maxHeight: 230,
-                        }} />
-                        <Progress type="circle" percent={100} format={() => healthData ? healthData.predict : '0'}
-                            className={healthData ? (healthData.predict === 'Great' ? 'green-progress' : 'red-progress') : ''} />
+                {loading ? ( // Conditionally render loading indicator
+                    <Flex justify="center" align="center" style={{ minHeight: '400px' }}>
+                        <Spin indicator={<LoadingOutlined />} size="large" tip="Loading..." />
                     </Flex>
-                    <Flex gap={0} wrap='wrap'>
-                        <Card title="Blood Pressure" className="health-card">
-                            <Flex justify="center">
-                                <Progress
-                                    type="circle"
-                                    percent={healthData ? healthData.bloodStatus : 0}
-                                    format={percent => `${percent}%`}
-                                    width={100}
-                                />
-                            </Flex>
-                        </Card>
-                        <Card title="Blood Glucose" className="health-card">
-                            <Flex justify="center">
-                                <Progress
-                                    type="circle"
-                                    percent={healthData ? healthData.glucoseStatus : 0}
-                                    format={percent => `${percent}%`}
-                                    width={100}
-                                />
-                            </Flex>
-                        </Card>
-                        <Card title="BMI" className="health-card" >
-                            <Flex justify="center">
-                                <Progress
-                                    type="circle"
-                                    percent={healthData ? healthData.bmiStatus : 0}
-                                    format={percent => `${percent}%`}
-                                    width={100}
-                                />
-                            </Flex>
-                        </Card>
-                    </Flex>
-                    <Row gutter={[16, 16]}>
-                        <Col span={24}>
-                            <Card title="Overall Health" className="health-card">
-                                <Flex justify="center">
-                                    <Progress
-                                        type="circle"
-                                        percent={healthData ? healthData.overallStatus : 0}
-                                        format={percent => `${percent}%`}
-                                        width={100}
-                                    />
+                ) : (
+                    <Flex vertical wrap='wrap' gap={30} style={{ padding: 20 }} >
+                        <Title level={2}>Đánh giá sức khỏe</Title>
+                        {healthData ? (
+                            <>
+                                <Flex gap={20}>
+                                    <Image preview={false} src={localStorage.getItem("photoURL")} style={{ borderRadius: 50 }} />
+                                    <Title level={3}>{localStorage.getItem("displayName")}</Title>
                                 </Flex>
-                            </Card>
-                        </Col>
-                    </Row>
-                    <Row gutter={[16, 16]}>
-                        <Col span={24}>
-                            <Card title="Health Recommendations" className="health-card">
-                                <Text>
-                                    {dataComplete ? healthData.recommendations : "Please complete all health data to get recommendations."}
-                                </Text>
-                            </Card>
-                        </Col>
-                    </Row>
-                    <Row>
-                        <Col span={24}>
-                            <Link to="/health">
-                                <Button type="primary">Update Health Data</Button>
-                            </Link>
-                        </Col>
-                    </Row>
-                </div>
+                                <Flex align="left" justify="left" gap={100} wrap='wrap'>
+                                    <Flex vertical>
+                                        <Title level={2}>30</Title>
+                                        <Text>Tuổi</Text>
+                                    </Flex>
+                                    <Flex vertical>
+                                        <Title level={2}>{healthData.height}</Title>
+                                        <Text>Cao, cm</Text>
+                                    </Flex>
+                                    <Flex vertical>
+                                        <Title level={2}>{healthData.weight}</Title>
+                                        <Text>Nặng, kg</Text>
+                                    </Flex>
+                                    <Flex vertical>
+                                        <Title level={2} >
+                                            {healthData.predict === "Great" ? "Tốt" : "Tệ"}
+                                        </Title>
+                                        <Text>Tổng thể</Text>
+                                    </Flex>
+                                </Flex>
+                            </>
+                        ) : (
+                            <Text style={{ fontSize: 18 }}>Chưa có dữ liệu về sức khỏe</Text>
+                        )}
 
+                        <Flex gap={30} wrap='wrap'>
+                            <Card hoverable className="blood-card" style={{ width: "250px", height: 230, borderRadius: 40 }}>
+                                <Title level={4} style={{ color: 'white' }}>Huyết áp</Title>
+                                {healthData ? (
+                                    <Flex vertical justify="left">
+                                        <Text type='secondary' style={{ fontWeight: 500, marginTop: 30, color: 'white' }}>mmhg</Text>
+                                        <Text style={{ fontWeight: 500, fontSize: 40, color: 'white' }}>{healthData.sysBP}/{healthData.diaBP}</Text>
+                                        <Text style={{ fontWeight: 500, fontSize: 15, color: 'white' }}>{healthData.bloodStatus}</Text>
+                                    </Flex>
+                                ) : (
+                                    <Text style={{ color: 'white' }}>Chưa có dữ liệu</Text>
+                                )}
+                            </Card>
+
+                            <Card hoverable className="bmi-card" style={{ width: "250px", height: 230, borderRadius: 40 }}>
+                                <Title level={4}>BMI</Title>
+                                {healthData ? (
+                                    <Flex vertical justify="left">
+                                        <Text type='secondary' style={{ fontWeight: 500, marginTop: 30 }}>cm/kg</Text>
+                                        <Text style={{ fontWeight: 500, fontSize: 40 }}>{healthData.BMI}</Text>
+                                        <Text style={{ fontWeight: 500, fontSize: 15 }}>{healthData.bmiStatus}</Text>
+                                    </Flex>
+                                ) : (
+                                    <Text>Chưa có dữ liệu</Text>
+                                )}
+                            </Card>
+
+                            <Card hoverable className="glucose-card" style={{ width: "250px", height: 230, borderRadius: 40 }}>
+                                <Title level={4} style={{ color: 'white' }}>Đường huyết</Title>
+                                {healthData ? (
+                                    <Flex vertical justify="left">
+                                        <Text type='secondary' style={{ fontWeight: 500, marginTop: 30, color: 'white' }}>mmol/l</Text>
+                                        <Text style={{ fontWeight: 500, fontSize: 40, color: 'white' }}>{healthData.glucose}</Text>
+                                        <Text style={{ fontWeight: 500, fontSize: 15, color: 'white' }}>{healthData.glucoseStatus}</Text>
+                                    </Flex>
+                                ) : (
+                                    <Text style={{ color: 'white' }}>Chưa có dữ liệu</Text>
+                                )}
+                            </Card>
+                        </Flex>
+                        <Card hoverable className="heart-card"
+                            cover={<Image src={heartLine} style={{ maxWidth: '300px', height: 200, float: 'right', objectFit: 'cover' }} />}
+                            style={{ maxWidth: "500px", height: isMobile ? 400 : 230, borderRadius: 40 }}>
+                            <Title level={2} style={{ color: 'white' }}>Nhịp tim</Title>
+                            {healthData ? (
+                                <Flex vertical justify="left">
+                                    <Text type='secondary' style={{ fontWeight: 500, marginTop: 30, fontSize: 25, color: 'white' }}>bpm</Text>
+                                    <Text style={{ fontWeight: 500, fontSize: 50, color: 'white' }}>{healthData.heartRate}</Text>
+                                </Flex>
+                            ) : (
+                                <Text style={{ color: 'white' }}>Chưa có dữ liệu</Text>
+                            )}
+                        </Card>
+
+                        <Title level={2}>Đề xuất đọc</Title>
+                        {healthData ? (
+                            <Flex wrap='wrap' gap={20}>
+                                {blogData.slice(0, 2).map((blog, index) => (
+                                    <Card
+                                        hoverable
+                                        cover={<img alt="example" src={blog.photo} style={{ objectFit: 'cover', maxWidth: '100%', height: 150 }} />}
+                                        style={{ borderRadius: 20, maxWidth: 300 }}
+                                    >
+                                        <Card.Meta title={blog.title} />
+                                        <Link to={`/blog/${slug(blog.title)}`}>
+                                            <Flex justify='center'>
+                                                <Button type="primary" style={{ marginTop: 10 }}>Đọc thêm</Button>
+                                            </Flex>
+                                        </Link>
+                                    </Card>
+                                ))}
+                            </Flex>
+                        ) : (
+                            <Text style={{ fontSize: 18 }}>Bạn vẫn chưa có dữ liệu sức khỏe nào</Text>
+                        )
+                        }
+                        <Title level={2}>Lời khuyên từ bác sĩ AI</Title>
+                        {healthData ? (
+                            <>
+                                {chatbotLoading ? (
+                                    <Flex justify="center">
+                                        <Spin indicator={<LoadingOutlined />} />
+                                        <Text style={{ marginLeft: 10 }}>Đang nhận lời khuyên...</Text>
+
+                                    </Flex>
+                                ) : (
+                                    <Card style={{ borderRadius: 20, padding: 10, maxWidth: 500 }}>
+                                        <Text>
+                                            <ReactMarkdown>
+                                                {chatbotResponse}
+                                            </ReactMarkdown>
+                                        </Text>
+                                    </Card>
+                                )}
+                            </>
+                        ) : (
+                            <Text style={{ fontSize: 18 }}>Bạn vẫn chưa có dữ liệu sức khỏe nào</Text>
+                        )}
+                    </Flex>
+                )}
             </MainContentLayout>
-        </DefaultLayout>
+            <SideContentLayout>
+            </SideContentLayout>
+        </DefaultLayout >
     );
 }
 

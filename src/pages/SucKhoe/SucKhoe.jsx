@@ -31,7 +31,7 @@ const SucKhoe = () => {
             picture: "https://d1xjlj96to6zqh.cloudfront.net/blood-sugar.png",
             measure: "mmol/L",
             value: "--",
-            color: "#f5dec4",
+            color: "#f8aa76",
         },
         {
             id: 3,
@@ -39,7 +39,7 @@ const SucKhoe = () => {
             picture: "https://d1xjlj96to6zqh.cloudfront.net/bmi.png",
             measure: "BMI",
             value: "--",
-            color: "#caffe0",
+            color: "#87edfb",
         },
     ]);
     const fetchData = async () => {
@@ -122,7 +122,6 @@ const SucKhoe = () => {
 
                                 <Card
                                     key={index}
-                                    className="health-card"
                                     hoverable
                                     cover={
                                         <Image

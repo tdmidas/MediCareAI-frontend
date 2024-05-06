@@ -40,10 +40,10 @@ const Home = () => {
                             />
                         } style={{ maxWidth: 400 }}>
                             <Flex vertical gap="large">
-                                <Typography.Title level={4} strong>
+                                <Typography.Title level={4} strong style={{ color: 'white' }}>
                                     The better<br />  health
                                 </Typography.Title>
-                                <Typography.Title level={4} strong>
+                                <Typography.Title level={4} strong style={{ color: 'white' }}>
                                     The better<br /> life
                                 </Typography.Title>
 

@@ -1,33 +1,113 @@
-import React from 'react';
+import React, { useState, useEffect } from 'react';
 import DefaultLayout from '../../layout/DefaultLayout';
 import MainContentLayout from '../../layout/MainContentLayout';
 import SideContentLayout from '../../layout/SideContentLayout';
-import { Flex, Typography, Image, Card, Tabs } from 'antd';
+import { Flex, Typography, Image, Card, Tabs, Spin, Tag } from 'antd';
 import { Link } from 'react-router-dom';
+import axios from 'axios';
+import { useMediaQuery } from 'react-responsive';
 const { Title, Text } = Typography;
+
 const MyBlog = () => {
+    const isMobile = useMediaQuery({ maxWidth: 768 });
+    const isTablet = useMediaQuery({ minWidth: 769, maxWidth: 1024 });
+    const [postData, setPostData] = useState([]);
+    const [loading, setLoading] = useState(true);
+
+    useEffect(() => {
+        fetchPostData();
+    }, []);
+
+    const fetchPostData = async () => {
+        try {
+            setLoading(true);
+            const userId = localStorage.getItem('userId');
+            const response = await axios.get(`http://localhost:5000/api/blogs/my/${userId}`);
+            setPostData(response.data);
+            setLoading(false);
+        } catch (error) {
+            console.error('Error fetching post data:', error);
+            setLoading(false);
+        }
+    };
+
+    const publishedPosts = postData.filter(post => post.state === 'published');
+    const draftPosts = postData.filter(post => post.state !== 'published');
+
     return (
         <DefaultLayout>
             <Flex gap="large" wrap="wrap">
-
                 <MainContentLayout>
                     <Flex vertical>
                         <Title level={2}>Bài viết của tôi</Title>
                         <Tabs defaultActiveKey="1">
-                            <Tabs.TabPane tab="Đã đăng" key="1">
-                                <Card>
-                                    <Flex>
-                                        <Image src="https://via.placeholder.com/150" />
-                                        <Flex vertical justify='center' gap='large' style={{ padding: 20 }}>
-                                            <Text strong>Post title</Text>
-                                            <Text type="secondary">Post description</Text>
-                                        </Flex>
+                            <Tabs.TabPane tab="Đã duyệt" key="1">
+                                {loading ? (
+                                    <Spin />
+                                ) : (
+                                    <Flex vertical gap="large">
+                                        {publishedPosts.map(post => (
+                                            <Card
+                                                hoverable
+                                                style={{
+                                                    padding: "20px",
+                                                    marginBottom: "20px",
+                                                    width: isMobile ? "100%" : isTablet ? "50%" : "750px",
+                                                    boxShadow: "0 4px 8px 0 rgba(0,0,0,0.2)",
+                                                    transition: "0.3s",
+                                                    borderRadius: 15
+                                                }}
+                                            >
+                                                <Flex gap={20} wrap="wrap-reverse">
+                                                    <Flex vertical gap="15px" style={{ flex: 1 }}>
+                                                        <Flex>
+                                                            <Image src={post.userPhoto} width={35} style={{ borderRadius: 20 }} />
+                                                            <Typography.Text strong style={{ fontWeight: 500, marginTop: 5, marginLeft: 10, fontSize: isMobile ? '14px' : '16px' }}>{post.userName}</Typography.Text>
+                                                        </Flex>
+                                                        <Flex vertical justify="left" align="left">
+                                                            <Typography.Title level={4} strong>{post.title}</Typography.Title>
+                                                            <Typography.Text type="secondary">{post.content.split(' ').slice(0, 30).join(' ').replace(/[#*`_<>]/g, '')}</Typography.Text>
+                                                        </Flex>
+                                                        <Flex gap="20px">
+                                                            <Tag color="#069390" style={{ borderRadius: 20, fontSize: isMobile ? '11px' : '13px' }}>{post.tag[0]}</Tag>
+
+                                                        </Flex>
+                                                    </Flex>
+                                                    <Image
+                                                        alt="example"
+                                                        preview={false}
+                                                        src={post.photo}
+                                                        style={{
+                                                            height: "170px",
+                                                            width: "220px",
+                                                            objectFit: "cover",
+                                                            borderRadius: 20
+                                                        }}
+                                                    />
+                                                </Flex>
+                                            </Card>
+                                        ))}
                                     </Flex>
-                                </Card>
+                                )}
                             </Tabs.TabPane>
-                            <Tabs.TabPane tab="Nháp" key="2">
-                                <Text type="secondary">Chưa có bài viết nào.</Text> <br />
-                                <Text type="secondary">Bạn có thể </Text><Link to={"/blog/write"}><Text type='link' style={{ color: "#069390" }}>tạo bài viết mới</Text></Link><Text type="secondary"> hoặc </Text><Link to={"/blog"}><Text type='link' style={{ color: "#069390" }}>dọc bài viết khác</Text> </Link><Text type="secondary">trên MediCareAI nhé</Text>
+                            <Tabs.TabPane tab="Chờ duyệt" key="2">
+                                {loading ? (
+                                    <Spin />
+                                ) : (
+                                    <Flex vertical gap="large">
+                                        {draftPosts.map(post => (
+                                            <Card key={post.blogId}>
+                                                <Flex>
+                                                    <Image src={post.photo} />
+                                                    <Flex vertical justify='center' gap='large' style={{ padding: 20 }}>
+                                                        <Text strong>{post.title}</Text>
+                                                        <Text type="secondary">{post.content}</Text>
+                                                    </Flex>
+                                                </Flex>
+                                            </Card>
+                                        ))}
+                                    </Flex>
+                                )}
                             </Tabs.TabPane>
                         </Tabs>
                     </Flex>

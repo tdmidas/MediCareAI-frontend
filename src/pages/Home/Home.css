@@ -1,7 +1,6 @@
 .side-card {
-    background: #c0f1ef !important;
-    background-image: linear-gradient(to bottom, #87e8de, #17d0cd) !important;
-
+    background-color: #fc924b !important;
+    filter: drop-shadow(0px 0px 10px rgb(255, 186, 186));
 }
 .calendar-btn {
     background-color: #069390;

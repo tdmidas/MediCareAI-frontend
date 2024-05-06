@@ -13,3 +13,24 @@
   
     box-shadow: 0 10px 15px rgba(5, 125, 129, 0.25);
 }
+/* Add this CSS to your existing stylesheet or create a new one */
+.bmi-scale {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: space-around;
+}
+
+.bmi-scale>div {
+    flex: 1;
+    max-width: 45%;
+    margin-bottom: 20px;
+    padding: 10px;
+    border-radius: 8px;
+    text-align: center;
+}
+
+@media screen and (max-width: 768px) {
+    .bmi-scale>div {
+        max-width: 100%;
+    }
+}

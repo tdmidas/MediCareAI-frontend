@@ -11,10 +11,8 @@ import SucKhoeDetail from "./pages/SucKhoe/SucKhoeDetail";
 import Blog from "./pages/Blog/Blog";
 import Doctor from "./pages/Doctor/Doctor";
 import DoctorDetail from "./pages/Doctor/DoctorDetail";
-import BlogLayout from "./layout/BlogLayout";
-import WriteBlog from "./pages/WriteBlog/WriteBlog";
-import blogData from "./BlogData";
-import slug from "slug";
+import BlogLayout from "./pages/Blog/BlogLayout";
+import WriteBlog from "./pages/Blog/WriteBlog";
 import ChatDetail from "./pages/Chat/ChatDetail";
 import MyAppointment from "./pages/LichKham/MyAppointment";
 import MyBlog from "./pages/Blog/MyBlog";
@@ -40,13 +38,7 @@ function App() {
 				<Route path="/blog" element={<Blog />} />
 				<Route path="/me/blog" element={<MyBlog />} />
 				<Route path="/blog/write" element={<WriteBlog />} />
-				{blogData.map((blog) => (
-					<Route
-						key={blog.id}
-						path={`/blog/${slug(blog.title)}`}
-						element={<BlogLayout title={blog.title} content={blog.description} imageUrl={blog.picture} />}
-					/>
-				))}
+				<Route path="/blog/:slugName" element={<BlogLayout />} />
 			</Routes>
 		</Router>
 	);

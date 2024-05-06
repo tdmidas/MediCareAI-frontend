@@ -15,9 +15,5 @@
 }
 .ant-btn:hover{
     background-color: #16acac !important;
-}
-.ant-btn-default:hover{
-            border-color: #069390 !important;
-        background-color: #c7f9f8 !important;
-        color: black !important;
+    color: white !important;
 }

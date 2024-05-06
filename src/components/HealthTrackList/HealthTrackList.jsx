@@ -66,7 +66,7 @@ const HealthTrackList = () => {
                         picture: "https://d1xjlj96to6zqh.cloudfront.net/blood-sugar.png",
                         measure: "mmol/L",
                         value: glucose,
-                        color: "#f5dec4",
+                        color: "#f8aa76",
                     }
                 ];
 
@@ -117,7 +117,7 @@ const HealthTrackList = () => {
                 <Typography.Title level={3} strong>
                     Nhật ký sức khỏe
                 </Typography.Title>
-                <Button type="link" className="primary--color" onClick={handleClick}>
+                <Button type="link" style={{ color: "#069390" }} onClick={handleClick}>
                     Xem thêm
                 </Button>
             </Flex>

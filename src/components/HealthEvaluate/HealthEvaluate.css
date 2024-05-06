@@ -13,34 +13,21 @@
 .red-progress .ant-progress-text {
     color: red !important;
 }
-/* HealthEvaluate.css */
 
-.complete-card {
-    background-color: #ffffff;
-    /* Màu nền cho dữ liệu đủ */
-    transition: background-color 0.5s ease-in-out;
-    /* Hiệu ứng chuyển đổi màu nền */
-    border: 1px solid #ddd;
-    /* Viền cho thẻ card */
-}
 
-/* Style cho các hàng chứa thông tin sức khỏe */
-.health-info {
-    background-color: #fc9375;
-    border-radius: 20px;
-    height: 40px;
-    width: 250px;
-    align-content: center;
-    margin-bottom: 20px;
+.blood-card{
+    background: linear-gradient(80deg, #6ad1f7, #65eed5);
+    color: white !important;
+    filter: drop-shadow(0px 0px 10px rgb(186, 255, 241));
 }
-
-.health-info-text {
-    font-weight: 600;
-    color: white;
-    margin-left: 30px;
+.bmi-card{
+    filter: drop-shadow(0px 0px 10px rgb(186, 255, 241));
 }
-.health-card{
-    background-color: #ffffff;
-    width: 300px;
-    
+.glucose-card{
+    background: linear-gradient(100deg, #f7a8a8, #f4b794);
+            filter: drop-shadow(0px 0px 10px rgb(255, 225, 186));
+}
+.heart-card{
+    background: linear-gradient(100deg, #fd6b6b, #f4b794);
+    filter: drop-shadow(0px 0px 10px rgb(255, 186, 186));
 }

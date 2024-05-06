@@ -27,12 +27,12 @@ const DoctorList = () => {
                 <Typography.Title level={3} strong>
                     Bác sĩ nổi bật
                 </Typography.Title>
-                <Button type="link" className="primary--color" onClick={handleClick}>
+                <Button type="link" style={{ color: "#069390" }} onClick={handleClick}>
                     Xem thêm
                 </Button>
             </Flex>
             <Flex align="center" gap="large" wrap="wrap">
-                {doctors.slice(0, 2).map((doctor, index) => (
+                {doctors.slice(0, 3).map((doctor, index) => (
                     <Link to={`/doctors/${doctor.id}`} key={index}>
 
                         <Card
@@ -43,20 +43,20 @@ const DoctorList = () => {
                                 <Image
                                     alt="example"
                                     src={doctor.photo}
-                                    style={{ display: "block", height: "250px", maxWidth: "100%", objectFit: "cover" }}
+                                    style={{ display: "block", height: "200px", maxWidth: "100%", objectFit: "cover" }}
                                 />
                             }
-                            style={{ flex: "0 1 300px", height: "500px", width: "300px", padding: "20px", marginBottom: "20px" }}
+                            style={{ flex: "0 1 300px", height: "450px", width: "260px", padding: "20px", marginBottom: "20px" }}
                         >
                             <Flex >
                                 <Flex vertical aligh="center" gap="10px">
                                     <Flex gap="10px">
-                                        <Tag color="#069390" style={{ fontSize: 15 }}>{doctor.speciality}</Tag>
-                                        <Typography.Text level={3} strong >
+                                        <Tag color="#069390" style={{ fontSize: 11 }}>{doctor.speciality}</Tag>
+                                        <Typography.Text level={4} strong >
                                             <Image src="https://d1xjlj96to6zqh.cloudfront.net/Star.png" />  {doctor.avgRating}  ({doctor.totalRating})
                                         </Typography.Text>
                                     </Flex>
-                                    <Typography.Title level={3} strong>
+                                    <Typography.Title level={4} strong>
                                         {doctor.name}
                                     </Typography.Title>
                                     <Typography.Text type="secondary" >

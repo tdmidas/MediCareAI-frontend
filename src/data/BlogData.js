@@ -1,5 +1,7 @@
 const BlogData = [
 	{
+		userName: "Nguyễn Văn A",
+		photoURL: "",
 		id: 1,
 		title: "Những thực phẩm giúp tiêu diệt tế bào ung thư mà bạn nên biết",
 		description:

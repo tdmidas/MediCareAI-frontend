@@ -1,23 +1,26 @@
 
 
 .banner-btn {
-    background-color: #069390;
+    background-color: #ffffff !important;
+    color: #069390;
     box-shadow: 0px 4px 8px rgba(0, 0, 0, 0.3);
     border-radius: 20px;
 }
 .banner-btn:hover {
-    background-color: #08aeac !important;
+    background-color: #e1fafa !important;
+    color: #069390 !important;
 }
 .banner-btn-sub{
-    color: #069390 !important;
+    background-color: transparent;
+    color: #ffffff !important;
     box-shadow: 0px 4px 8px rgba(0, 0, 0, 0.3);
     border-radius: 20px;
 
 }
 .banner-btn-sub:hover {
     border-color: #069390 !important;
-    background-color: #069390 !important;
-    color: #ffffff !important;
+    background-color: #ffffff !important;
+    color: #069390 !important;
 }
 
 .ant-btn-primary {

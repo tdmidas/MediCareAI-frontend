@@ -12,11 +12,17 @@ const Profile = () => {
     const [isLoggedIn, setIsLoggedIn] = useState(false);
     const [user, setUser] = useState(null);
     const [activeTab, setActiveTab] = useState('profile');
+    const [uploadedImageUrl, setUploadedImageUrl] = useState('');
+    const [editingFields, setEditingFields] = useState({});
     const accessToken = localStorage.getItem("accessToken");
     const photoURL = localStorage.getItem("photoURL");
     const userId = localStorage.getItem('userId');
     const displayName = localStorage.getItem('displayName');
     const email = localStorage.getItem('email');
+
+
+
+
     const handleTabChange = (key) => {
         setActiveTab(key);
     };
@@ -42,9 +48,41 @@ const Profile = () => {
     useEffect(() => {
         setUserData(user);
     }, [user]);
+    // Function to handle file upload
+    const handleImageUpload = async (e) => {
+        if (e.target.files && e.target.files.length > 0) {
+            const formData = new FormData();
+            formData.append('image', e.target.files[0]);
 
-    const [editingFields, setEditingFields] = useState({});
+            try {
+                const response = await axios.post('http://localhost:5000/api/upload', formData, {
+                    headers: {
+                        'Content-Type': 'multipart/form-data',
+                        Authorization: `Bearer ${accessToken}`
+                    }
+                });
+                setUploadedImageUrl(response.data.imageUrl);
+                message.success("Image uploaded successfully");
+            } catch (error) {
+                console.error('Error uploading image:', error);
+                message.error(error.response ? error.response.data.message : 'Error uploading image');
+            }
+        }
+    };
 
+    useEffect(() => {
+        const handleBeforeUnload = (e) => {
+            if (Object.values(editingFields).some(field => field === true)) {
+                e.preventDefault();
+                e.returnValue = 'Your profile changes are not saved. Are you sure you want to exit?';
+            }
+        };
+        window.addEventListener('beforeunload', handleBeforeUnload);
+
+        return () => {
+            window.removeEventListener('beforeunload', handleBeforeUnload);
+        };
+    }, [editingFields]);
     const toggleEditing = (fieldName) => {
         setEditingFields(prevEditingFields => ({
             ...prevEditingFields,
@@ -55,7 +93,7 @@ const Profile = () => {
     const onFinishProfile = async (values) => {
         const updatedValues = {
             displayName: values.name,
-            photoURL: values.photoURL,
+            photoURL: uploadedImageUrl || values.photoURL,
             bio: values.bio
         };
         try {
@@ -65,6 +103,13 @@ const Profile = () => {
                 }
             }
             );
+            if (updatedValues.displayName) {
+                localStorage.setItem('displayName', updatedValues.displayName);
+            }
+            if (updatedValues.photoURL) {
+                localStorage.setItem('photoURL', updatedValues.photoURL);
+            }
+            setUserData(updatedValues);
             message.success("Profile updated successfully");
         } catch (error) {
             console.error('Error updating profile:', error);
@@ -122,7 +167,7 @@ const Profile = () => {
                                             <Flex align='center' wrap='wrap'>
                                                 <Form.Item
                                                     name="name"
-                                                    rules={[{ required: true, message: 'Please enter your name!' }]}
+                                                    rules={[{ message: 'Please enter your name!' }]}
                                                 >
                                                     <Input id="name" style={{ width: '300px' }} disabled={!editingFields.name} placeholder={displayName} className='form-input' />
                                                 </Form.Item>
@@ -146,17 +191,23 @@ const Profile = () => {
                                         <div className="form-item">
                                             <label htmlFor="photoURL">Avatar</label>
                                             <Flex gap="large" align='center' wrap='wrap' style={{ marginTop: 10 }}>
-                                                <Text type="secondary">Nên là ảnh vuông, chấp nhận các tệp: JPG, PNG hoặc GIF.</Text>
+                                                <Flex vertical gap={15}>
+                                                    <input type="file" id="avatar" accept="image/*" style={{ display: 'none' }} onChange={handleImageUpload} />
+                                                    <Input id="photoURL" style={{ width: '300px' }} disabled={!editingFields.photoURL} placeholder={uploadedImageUrl || photoURL} className='form-input' />
+                                                    <Text type="secondary">Nên là ảnh vuông, chấp nhận các tệp: JPG, PNG hoặc GIF.</Text>
+                                                </Flex>
                                                 <img src={photoURL} alt="Profile" className="profile-photo" style={{ borderRadius: 50, width: 100, height: 100, marginRight: 10 }} />
-
-                                                <Button type="primary" onClick={() => toggleEditing("photoURL")} className='form-btn'>Chỉnh sửa</Button>
+                                                <Button type="primary" onClick={() => document.getElementById('avatar').click()} className='form-btn'>Upload</Button>
                                             </Flex>
+
                                         </div>
                                         <div className="form-item">
-                                            <label htmlFor="bio">Bio</label>
+                                            <label htmlFor="bio" style={{ marginTop: 20 }}>Bio</label>
                                             <Flex align='center' wrap='wrap'>
                                                 <Form.Item
                                                     name="bio"
+                                                    rules={[{ required: false }]}
+
                                                 >
                                                     <Input id="bio" style={{ width: '300px' }} disabled={!editingFields.bio} className='form-input' placeholder="Thêm giới thiệu" />
                                                 </Form.Item>
