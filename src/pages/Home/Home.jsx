@@ -37,6 +37,8 @@ const Home = () => {
                                 alt="example"
                                 src="https://d1xjlj96to6zqh.cloudfront.net/doctor-1.png"
                                 style={{ float: "right", position: "absolute", paddingBottom: "72px", paddingLeft: "90px", width: "auto", height: "300px" }}
+                                loading="lazy"
+                                decoding="async"
                             />
                         } style={{ maxWidth: 400 }}>
                             <Flex vertical gap="large">
@@ -61,6 +63,8 @@ const Home = () => {
                             alt="example"
                             src="https://d1xjlj96to6zqh.cloudfront.net/doctor-3.png"
                             style={{ maxHeight: "480px", maxWidth: "400px", boxShadow: "0 0 10px 0 rgba(0,0,0,0.2)", borderRadius: "10px", marginTop: "20px" }}
+                            loading="lazy"
+                            decoding="async"
                         />
 
 

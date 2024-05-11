@@ -133,6 +133,8 @@ const HealthTrackList = () => {
                                     alt="example"
                                     src={item.picture}
                                     style={{ float: "right", maxWidth: "120px", maxHeight: "120px" }}
+                                    loading="lazy"
+                                    decoding="async"
                                 />
                             }
                             style={{ height: "180px", width: isMobile ? "300px" : "400px", padding: "20px", marginBottom: "20px", background: item.color }}

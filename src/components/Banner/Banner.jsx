@@ -17,33 +17,23 @@ const Banner = () => {
     };
     return (
         <Flex gap="large" wrap="wrap">
-            <Card
-                className="banner-card"
-                style={{
-                    padding: "20px",
-                    width: isMobile ? "100%" : 800, // Adjusted width for mobile view
-                    height: isMobile ? "auto" : 270, // Adjusted height for mobile view
-                    borderRadius: 15,
-                    backgroundColor: "#21c3c0"
-                }}
-                cover={
-                    <div
-                        style={{
-                            float: isMobile ? "none" : "right",
-                            width: isMobile ? "100%" : "52%",
-                            objectFit: "cover",
-                            height: isMobile ? "auto" : 300, // Adjusted height for mobile view
-                            marginTop: isMobile ? 0 : "-20px" // Adjusted marginTop for mobile view
-                        }}
-                    >
-                        <img
-                            src={banner}
-                            alt="Banner Image"
-                            style={{ width: "100%", height: "100%" }}
-                        />
-                    </div>
-                }
-            >
+            <Card className="banner-card" style={{ padding: "20px", width: isMobile ? 300 : 800, height: isMobile ? 680 : 270, borderRadius: 15, backgroundColor: "#21c3c0" }} cover={
+                <Image
+                    style={{
+                        float: isMobile ? "none" : "right",
+                        width: isMobile ? "100%" : "52%",
+                        objectFit: "cover",
+                        height: 300,
+                        marginTop: "-20px",
+                        // Additional CSS styles can be applied here
+                    }}
+                    src={banner}
+                    loading="lazy" // Lazy loading attribute
+                    decoding="async" // Asynchronous decoding for faster rendering
+                    alt="banner image" // Add an appropriate alt attribute
+                />
+
+            }>
                 <Flex vertical gap="30px"   >
                     <Flex vertical aligh="flex-start">
                         <Typography.Title level={3} strong style={{ color: "white" }}>
