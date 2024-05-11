@@ -17,14 +17,33 @@ const Banner = () => {
     };
     return (
         <Flex gap="large" wrap="wrap">
-            <Card className="banner-card" style={{ padding: "20px", width: isMobile ? 300 : 800, height: isMobile ? 680 : 270, borderRadius: 15, backgroundColor: "#21c3c0" }} cover={
-                <Image style={{
-                    float: isMobile ? "none" : "right", width: isMobile ? "100%" : "52%", objectFit: "cover", height: 300, marginTop: "-20px"
+            <Card
+                className="banner-card"
+                style={{
+                    padding: "20px",
+                    width: isMobile ? "100%" : 800, // Adjusted width for mobile view
+                    height: isMobile ? "auto" : 270, // Adjusted height for mobile view
+                    borderRadius: 15,
+                    backgroundColor: "#21c3c0"
                 }}
-                    src={banner}>
-
-                </Image>
-            }>
+                cover={
+                    <div
+                        style={{
+                            float: isMobile ? "none" : "right",
+                            width: isMobile ? "100%" : "52%",
+                            objectFit: "cover",
+                            height: isMobile ? "auto" : 300, // Adjusted height for mobile view
+                            marginTop: isMobile ? 0 : "-20px" // Adjusted marginTop for mobile view
+                        }}
+                    >
+                        <img
+                            src={banner}
+                            alt="Banner Image"
+                            style={{ width: "100%", height: "100%" }}
+                        />
+                    </div>
+                }
+            >
                 <Flex vertical gap="30px"   >
                     <Flex vertical aligh="flex-start">
                         <Typography.Title level={3} strong style={{ color: "white" }}>

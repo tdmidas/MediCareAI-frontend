@@ -260,7 +260,7 @@ const CustomHeader = ({ toggleDrawer, submitHandler }) => {
                                     </Dropdown>
 
                                     <Dropdown overlay={menu}>
-                                        <img src={user.photoURL} alt="Profile" className="profile-photo" style={{ borderRadius: 30, width: 90, height: 35, marginRight: 10 }} />
+                                        <img src={user.photoURL} alt="Profile" className="profile-photo" style={{ borderRadius: 30, width: 35, height: 35, marginRight: 10 }} />
                                     </Dropdown>
                                 </>
                             )}

@@ -60,7 +60,7 @@ const Home = () => {
                             preview={false}
                             alt="example"
                             src="https://d1xjlj96to6zqh.cloudfront.net/doctor-3.png"
-                            style={{ maxHeight: "480px", width: "400px", boxShadow: "0 0 10px 0 rgba(0,0,0,0.2)", borderRadius: "10px", marginTop: "20px" }}
+                            style={{ maxHeight: "480px", maxWidth: "400px", boxShadow: "0 0 10px 0 rgba(0,0,0,0.2)", borderRadius: "10px", marginTop: "20px" }}
                         />
 
 
