@@ -25,7 +25,6 @@ const SelectDate = ({ onNext }) => {
         };
 
         fetchDoctors();
-
         const storedDoctor = JSON.parse(localStorage.getItem('selectedDoctor'));
         if (storedDoctor) {
             setSelectedDoctor(storedDoctor.name);

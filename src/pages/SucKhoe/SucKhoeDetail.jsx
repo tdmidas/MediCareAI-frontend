@@ -2,7 +2,7 @@ import { useParams } from 'react-router-dom';
 import BMI from './BMI/BMI';
 import DuongHuyet from './DuongHuyet/DuongHuyet';
 import HuyetAp from './HuyetAp/HuyetAp';
-
+import HeartRate from './HeartRate/HeartRate';
 const SucKhoeDetail = () => {
     const { slug } = useParams();
 
@@ -14,6 +14,9 @@ const SucKhoeDetail = () => {
                 return <HuyetAp />;
             case 'duong-huyet':
                 return <DuongHuyet />
+            case 'nhip-tim':
+                return <HeartRate />;
+
             default:
                 return <div>Invalid health metric</div>;
         }

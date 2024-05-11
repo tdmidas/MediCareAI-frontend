@@ -54,3 +54,37 @@ input[type="text"] {
     font-size: 15px;
     height: auto;
 }
+.loading-dots {
+    display: inline-block;
+    text-align: center;
+    margin-top: 20px;
+}
+
+.dot {
+    display: inline-block;
+    width: 10px;
+    height: 10px;
+    border-radius: 50%;
+    background-color: #1890ff;
+    /* Change color if needed */
+    margin: 0 5px;
+    animation: jump 1s infinite;
+    /* Adjust animation duration if needed */
+}
+
+@keyframes jump {
+
+    0%,
+    50%,
+    100% {
+        transform: translateY(0);
+    }
+
+    25% {
+        transform: translateY(-10px);
+    }
+
+    75% {
+        transform: translateY(10px);
+    }
+}

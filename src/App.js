@@ -16,6 +16,7 @@ import WriteBlog from "./pages/Blog/WriteBlog";
 import ChatDetail from "./pages/Chat/ChatDetail";
 import MyAppointment from "./pages/LichKham/MyAppointment";
 import MyBlog from "./pages/Blog/MyBlog";
+
 import HealthEvaluate from "./components/HealthEvaluate/HealthEvaluate";
 
 function App() {

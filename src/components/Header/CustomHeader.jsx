@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import { Flex, Badge, Avatar, Typography } from 'antd';
+import { Flex, Badge, Avatar, Typography, Popover, Card } from 'antd';
 import { Button } from 'antd';
 import { Input } from 'antd';
 import './CustomHeader.css';
@@ -19,6 +19,9 @@ const CustomHeader = ({ toggleDrawer, submitHandler }) => {
     const isMobile = useMediaQuery({ maxWidth: 768 });
     const isSmallScreen = useMediaQuery({ maxWidth: 1024 });
     const [healthNotifications, setHealthNotifications] = useState([]);
+    const [searchQuery, setSearchQuery] = useState('');
+    const [searchResults, setSearchResults] = useState([]);
+    const [popoverVisible, setPopoverVisible] = useState(false);
 
 
 
@@ -101,7 +104,19 @@ const CustomHeader = ({ toggleDrawer, submitHandler }) => {
     const handleLoginClick = () => {
         navigate('/login');
     };
-
+    const handleSearch = async () => {
+        try {
+            const response = await axios.get(`http://localhost:5000/api/search?query=${searchQuery}`);
+            setSearchResults(response.data);
+        } catch (error) {
+            console.error("Search Error:", error.message);
+        }
+    };
+    const handleInputChange = (e) => {
+        const query = e.target.value;
+        setSearchQuery(query);
+        handleSearch(query);
+    };
     const markAllAsRead = () => {
         setHealthNotifications([]);
     };
@@ -207,7 +222,30 @@ const CustomHeader = ({ toggleDrawer, submitHandler }) => {
                         Quay lại
                     </Button>
                 )}
-                <Input placeholder="Tìm kiếm bác sĩ, blog,..." prefix={<SearchOutlined />} style={{ borderRadius: 30, minWidth: 150, marginLeft: isSmallScreen ? 0 : 300 }} />
+                <Popover
+                    content={(
+                        <Flex direction="column">
+                            {searchResults.map((result) => (
+                                <Card key={result.id} style={{ width: 300, margin: '20px' }}>
+                                    <p>{result.title}</p>
+                                    {/* Additional content from search result */}
+                                </Card>
+                            ))}
+                        </Flex>
+                    )}
+                    trigger="click"
+                    visible={popoverVisible}
+                    onVisibleChange={setPopoverVisible}
+                >
+                    <Input
+                        placeholder="Tìm kiếm bác sĩ, blog,..."
+                        prefix={<SearchOutlined />}
+                        style={{ borderRadius: 30, minWidth: 150, marginLeft: isSmallScreen ? 0 : 300 }}
+                        value={searchQuery}
+                        onChange={handleInputChange}
+                    />
+                </Popover>
+
                 <Flex align="center" gap="10px" style={{ marginLeft: 'auto' }}>
                     {user ? (
                         <>

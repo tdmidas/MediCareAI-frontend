@@ -6,11 +6,11 @@ import "./ChatDetail.css";
 import DefaultLayout from "../../layout/DefaultLayout";
 import MainContentLayout from "../../layout/MainContentLayout";
 import { useMediaQuery } from 'react-responsive';
-import { LoadingOutlined, UploadOutlined, AudioOutlined, SendOutlined } from '@ant-design/icons';
+import { UploadOutlined, AudioOutlined, SendOutlined } from '@ant-design/icons';
 import SpeechRecognition, { useSpeechRecognition } from 'react-speech-recognition';
 import axios from 'axios';
 import ReactMarkdown from 'react-markdown';
-
+import BouncingDotsLoader from "../../components/BouncingDot/BouncingDot";
 const { TextArea } = Input;
 const { Text } = Typography;
 
@@ -68,8 +68,6 @@ const ChatDetail = () => {
         setLoading(false);
     };
 
-
-
     const handleVoice = () => {
         if (SpeechRecognition.browserSupportsSpeechRecognition()) {
             if (listening) {
@@ -114,37 +112,39 @@ const ChatDetail = () => {
             <MainContentLayout>
                 <Flex vertical align="center" gap="large" wrap="wrap" justify="center" style={{ minHeight: "100vh" }}>
                     <Card id="chat-container" className="chat-container" style={{ width: isMobile ? 300 : 800, height: 600, borderRadius: 20 }}>
-                        {loading ? (
-                            <div style={{ textAlign: "center", marginTop: 20 }}>
-                                <Spin size="large"
-                                    indicator={
-                                        <LoadingOutlined
-                                            style={{
-                                                fontSize: 24,
-                                            }}
-                                            spin
-                                        />
-                                    }
-                                />
-                                <Text type="secondary">Waiting for response...</Text>
-                            </div>
-                        ) : (
-                            messages.map((message, index) => (
-                                <div key={index} className={`message ${message.sender.toLowerCase()}`}>
-                                    <Avatar src={message.sender === chatbot.name ? chatbot.picture : "https://d1xjlj96to6zqh.cloudfront.net/patient-avatar.png"} style={{ marginBottom: 20 }} />
-                                    <div className="message-content">
-                                        <Flex vertical gap="small">
-                                            <Text strong>{message.sender}:</Text>
+
+
+                        {messages.map((message, index) => (
+                            <div key={index} className={`message ${message.sender.toLowerCase()}`}>
+                                <Avatar src={message.sender === chatbot.name ? chatbot.picture : "https://d1xjlj96to6zqh.cloudfront.net/patient-avatar.png"} style={{ marginBottom: 20 }} />
+                                <div className="message-content">
+                                    <Flex vertical gap="small">
+                                        <Text strong>{message.sender}:</Text>
+                                        {message.sender === chatbot.name ? (
+                                            loading ? (
+                                                <div style={{ textAlign: "center", marginTop: 20 }}>
+                                                    <BouncingDotsLoader />
+                                                </div>
+                                            ) : (
+                                                <div className="message-bubble" style={{
+                                                    backgroundColor: "#069390", borderRadius: 30, padding: 20, color: "white"
+                                                }}>
+                                                    <ReactMarkdown>{message.content}</ReactMarkdown>
+                                                </div>
+                                            )
+                                        ) : (
                                             <div className="message-bubble" style={{
-                                                backgroundColor: message.sender === chatbot.name ? "#069390" : "white", borderRadius: 30, padding: 20, color: "white"
+                                                backgroundColor: "white", borderRadius: 30, padding: 20, color: "black"
                                             }}>
                                                 <ReactMarkdown>{message.content}</ReactMarkdown>
                                             </div>
-                                        </Flex>
-                                    </div>
+                                        )}
+                                    </Flex>
                                 </div>
-                            ))
-                        )}
+                            </div>
+                        ))}
+
+
 
                     </Card>
                     <Flex gap="large" align="center" wrap="wrap">
@@ -182,6 +182,7 @@ const ChatDetail = () => {
                         <Button type="default" className="upload-btn" icon={<UploadOutlined />} />
                         <Button type="default" className="voice-btn" icon={<AudioOutlined />} onClick={handleVoice} />
                         <Button className="send-btn" type="default" icon={<SendOutlined />} onClick={sendMessage} />
+
 
 
                     </Flex>
