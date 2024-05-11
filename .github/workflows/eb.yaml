@@ -1,9 +1,9 @@
-name: Deploy React Book App from GitHub to AWS Elastic Beanstalk
+name: Deploy to AWS Elastic Beanstalk
 on:
   # activates the workflow when there is a push on the main branch
   push:
     branches:
-      - main
+      - master
 jobs:
   deploy:
     runs-on: ubuntu-latest # the OS your job should run on
