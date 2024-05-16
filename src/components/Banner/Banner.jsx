@@ -25,12 +25,12 @@ const Banner = () => {
                         objectFit: "cover",
                         height: 300,
                         marginTop: "-20px",
-                        // Additional CSS styles can be applied here
+
                     }}
                     src={banner}
-                    loading="lazy" // Lazy loading attribute
-                    decoding="async" // Asynchronous decoding for faster rendering
-                    alt="banner image" // Add an appropriate alt attribute
+                    loading="lazy"
+                    decoding="async"
+                    alt="banner image"
                 />
 
             }>

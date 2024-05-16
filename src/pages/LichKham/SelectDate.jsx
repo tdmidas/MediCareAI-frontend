@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import { Row, Col, Card, Button, Typography } from 'antd';
+import { Row, Col, Card, Button, Typography, Select, Tag } from 'antd'; // Import Select from antd
 import axios from 'axios';
 import "./SelectDate.css";
 import { StaticDatePicker } from '@mui/x-date-pickers';
@@ -7,17 +7,20 @@ import { LocalizationProvider } from '@mui/x-date-pickers/LocalizationProvider';
 import { AdapterDayjs } from '@mui/x-date-pickers/AdapterDayjs';
 import { useMediaQuery } from 'react-responsive';
 const { Title, Text } = Typography;
+const { Option } = Select; // Destructure Option from Select
+
 const SelectDate = ({ onNext }) => {
     const [selectedDate, setSelectedDate] = useState(null);
     const [selectedDoctor, setSelectedDoctor] = useState(null);
     const [selectedTime, setSelectedTime] = useState(null);
+    const [selectedSpecialty, setSelectedSpecialty] = useState(null); // State for selected specialty
     const [availableDoctors, setAvailableDoctors] = useState([]);
     const isMobile = useMediaQuery({ maxWidth: 768 });
 
     useEffect(() => {
         const fetchDoctors = async () => {
             try {
-                const response = await axios.get(`https://medicareai-backend.onrender.com/api/doctors`);
+                const response = await axios.get(`http://localhost:5000/api/doctors/`);
                 setAvailableDoctors(response.data);
             } catch (error) {
                 console.error('Error fetching doctors:', error);
@@ -25,14 +28,10 @@ const SelectDate = ({ onNext }) => {
         };
 
         fetchDoctors();
-        const storedDoctor = JSON.parse(localStorage.getItem('selectedDoctor'));
-        if (storedDoctor) {
-            setSelectedDoctor(storedDoctor.name);
-        }
+
     }, []);
 
     const handleDateChange = (date) => {
-        // Prevent selecting dates before today
         const today = new Date();
         if (date && date.isBefore(today, 'day')) {
             setSelectedDate(today);
@@ -50,56 +49,90 @@ const SelectDate = ({ onNext }) => {
         setSelectedTime(value);
     };
 
+    const handleSpecialtyChange = (value) => {
+        setSelectedSpecialty(value);
+        setSelectedDoctor(null);
+    };
+
     const handleNext = () => {
         if (selectedDoctor && selectedDate && selectedTime) {
             const selectedDoctorInfo = availableDoctors.find(doctor => doctor.name === selectedDoctor);
-            onNext({
-                selectedDoctor: selectedDoctorInfo,
-                selectedDate: selectedDate,
-                selectedTime: selectedTime
-            });
+            const selectedTimeSlot = selectedDoctorInfo.availableTimes.find(timeSlot => timeSlot.time === selectedTime);
+            localStorage.setItem('selectedDoctor', JSON.stringify({
+                doctorId: selectedDoctorInfo.doctorId,
+                doctorName: selectedDoctor,
+                photo: selectedDoctorInfo.photo,
+                bookDate: selectedDate.format('YYYY-MM-DD'),
+                dayTime: selectedTime,
+                totalPrice: selectedDoctorInfo.price,
+                startHour: selectedTimeSlot.startHour,
+                endHour: selectedTimeSlot.endHour
+            }));
+            onNext();
         }
     };
+
+    const filteredDoctors = selectedSpecialty ? availableDoctors.filter(doctor => doctor.speciality === selectedSpecialty) : availableDoctors;
 
     return (
         <Row gutter={[16, 16]}>
             <Col xs={24} sm={24} md={12} lg={8}>
-                <Card title="With Doctor" style={{ width: isMobile ? "90%" : "100%" }}>
+                <Card title="With Doctor" style={{ width: isMobile ? "90%" : "100%", marginTop: 20 }}>
+                    <Select
+                        placeholder="Choose Doctor's Specialty"
+                        onChange={handleSpecialtyChange}
+                        style={{ width: '100%', marginBottom: '20px' }}
+                    >
+                        <Option value={null}>All Specialties</Option>
+
+                        {Array.from(new Set(availableDoctors.map(doctor => doctor.speciality))).map((specialty, index) => (
+                            <Option key={index} value={specialty}>{specialty}</Option>
+                        ))}
+                    </Select>
                     <Row gutter={[16, 16]}>
                         <div
                             style={{
                                 maxHeight: '450px',
+                                width: '600px',
                                 overflowY: 'auto',
                                 display: 'flex',
                                 flexWrap: 'wrap',
                                 justifyContent: 'flex-start',
                             }}
                         >
-                            {availableDoctors.map((doctor, index) => (
-                                <Col key={doctor.id} xs={24} sm={12} md={12} lg={12}>
-                                    <Card
-                                        key={index}
-                                        hoverable
-                                        onClick={() => handleDoctorClick(doctor.name)}
-                                        style={{
-                                            width: '100%',
-                                            height: '300px',
-                                            marginBottom: '16px',
-                                            cursor: 'pointer',
-                                            border: selectedDoctor === doctor.name ? '2px solid #1890ff' : '2px solid transparent',
-                                            boxShadow: selectedDoctor === doctor.name ? '0 0px 4px rgb(3, 230, 169)' : 'none'
-                                        }} cover={<img alt={doctor.name} src={doctor.photo} style={{ height: 180 }} />}
-                                    >
-                                        <Title level={5}>{doctor.name}</Title>
-                                        <Text>Giá: {doctor.price} đ</Text>
-                                    </Card>
+                            {filteredDoctors.length > 0 ? ( // Check if there are doctors to display
+                                filteredDoctors.map((doctor, index) => (
+                                    <Col key={doctor.id} xs={24} sm={12} md={12} lg={12}>
+                                        <Card
+                                            key={index}
+                                            hoverable
+                                            onClick={() => handleDoctorClick(doctor.name)}
+                                            style={{
+                                                width: '100%',
+                                                height: '300px',
+                                                marginBottom: '16px',
+                                                cursor: 'pointer',
+                                                border: selectedDoctor === doctor.name ? '2px solid #1890ff' : '2px solid transparent',
+                                                boxShadow: selectedDoctor === doctor.name ? '0 0px 4px rgb(5, 143, 106)' : 'none'
+                                            }}
+                                            cover={<img alt={doctor.name} src={doctor.photo} style={{ height: '150px', objectFit: 'cover' }} />}
+                                        >
+                                            <Title level={5}>{doctor.name}</Title>
+                                            <Text>Giá: {doctor.price} đ</Text>
+                                            <Tag color="#069390" style={{ marginTop: 5 }}>{doctor.speciality}</Tag>
+                                        </Card>
+                                    </Col>
+                                ))
+                            ) : (
+                                <Col span={24}>
+                                    <Text>No doctors available for the selected specialty.</Text>
                                 </Col>
-                            ))}
+                            )}
                         </div>
                     </Row>
                 </Card>
             </Col>
-            <Col xs={24} sm={24} md={12} lg={8}>
+            <Col xs={24} sm={24} md={12} lg={8} style={{ marginTop: 20 }}>
                 <LocalizationProvider dateAdapter={AdapterDayjs} >
                     <StaticDatePicker
                         label="Select Date"
@@ -111,8 +144,7 @@ const SelectDate = ({ onNext }) => {
                 </LocalizationProvider>
             </Col>
             <Col xs={24} sm={24} md={12} lg={8}>
-                <Card title="Select Time" style={{ width: isMobile ? "90%" : "100%" }}>
-
+                <Card title="Select Time" style={{ width: isMobile ? "90%" : "100%", marginTop: 20 }}>
                     {selectedDoctor && selectedDate && availableDoctors.find(doctor => doctor.name === selectedDoctor).availableTimes.map((timeSlot, index) => (
                         <Card
                             key={index}
@@ -134,7 +166,7 @@ const SelectDate = ({ onNext }) => {
                 </Card>
             </Col>
 
-            <Col span={24}>
+            <Col span={24} style={{ marginBottom: 20 }}>
                 <Row justify="end">
                     <Button type="primary" onClick={handleNext} disabled={!selectedDate || !selectedDoctor || !selectedTime}>Next</Button>
                 </Row>

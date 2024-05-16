@@ -1,11 +1,13 @@
 import React, { useState } from 'react';
 import Cards from 'react-credit-cards-2';
+import 'react-credit-cards-2/dist/es/styles-compiled.css';
 import { Form, Input, Row, Col } from 'antd';
 
-const CreditCard = () => {
+const CreditCard = (props) => {
     const [state, setState] = useState({
         number: '',
-        expiry: '',
+        expiryMonth: '', // Separate expiry into month and year
+        expiryYear: '',
         cvc: '',
         name: '',
         focus: '',
@@ -20,16 +22,25 @@ const CreditCard = () => {
     const handleInputFocus = (evt) => {
         setState((prev) => ({ ...prev, focus: evt.target.name }));
     }
-
+    const handleSubmit = () => {
+        // Check if all required fields are filled
+        if (state.number && state.expiryMonth && state.expiryYear && state.cvc && state.name) {
+            // Pass credit card details to parent component
+            props.onCreditCardDetails(state);
+        } else {
+            // Handle error if any required field is missing
+            console.error("Please fill all required fields.");
+        }
+    }
     return (
         <div>
             <Cards
                 number={state.number}
-                expiry={state.expiry}
+                expiry={`${state.expiryMonth}/${state.expiryYear}`} // Combine expiryMonth and expiryYear
                 cvc={state.cvc}
                 name={state.name}
                 focused={state.focus}
-
+                onCardDetails={(details) => props.onCreditCardDetails(details)}
             />
             <Form layout="vertical">
                 <Form.Item label="Name on Card">
@@ -55,9 +66,9 @@ const CreditCard = () => {
                         <Form.Item label="Expiry Month">
                             <Input
                                 type="text"
-                                name="expiry"
+                                name="expiryMonth" // Update name to expiryMonth
                                 placeholder="MM"
-                                value={state.expiry}
+                                value={state.expiryMonth}
                                 onChange={handleInputChange}
                                 onFocus={handleInputFocus}
                             />
@@ -67,9 +78,9 @@ const CreditCard = () => {
                         <Form.Item label="Expiry Year">
                             <Input
                                 type="text"
-                                name="expiry"
+                                name="expiryYear" // Update name to expiryYear
                                 placeholder="YY"
-                                value={state.expiry}
+                                value={state.expiryYear}
                                 onChange={handleInputChange}
                                 onFocus={handleInputFocus}
                             />

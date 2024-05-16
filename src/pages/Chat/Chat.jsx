@@ -111,7 +111,7 @@ const Chat = () => {
                                 }
                             </Flex>
                             <Flex justify="center">
-                                <Pagination className="blog-pagination" defaultCurrent={1} total={50} />
+                                <Pagination className="blog-pagination" defaultCurrent={1} total={1} style={{ marginBottom: 30 }} />
                             </Flex>
 
                         </MainContentLayout>

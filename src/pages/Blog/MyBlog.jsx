@@ -6,6 +6,7 @@ import { Flex, Typography, Image, Card, Tabs, Spin, Tag } from 'antd';
 import { Link } from 'react-router-dom';
 import axios from 'axios';
 import { useMediaQuery } from 'react-responsive';
+import slug from 'slug';
 const { Title, Text } = Typography;
 
 const MyBlog = () => {
@@ -47,45 +48,47 @@ const MyBlog = () => {
                                 ) : (
                                     <Flex vertical gap="large">
                                         {publishedPosts.map(post => (
-                                            <Card
-                                                hoverable
-                                                style={{
-                                                    padding: "20px",
-                                                    marginBottom: "20px",
-                                                    width: isMobile ? "100%" : isTablet ? "50%" : "750px",
-                                                    boxShadow: "0 4px 8px 0 rgba(0,0,0,0.2)",
-                                                    transition: "0.3s",
-                                                    borderRadius: 15
-                                                }}
-                                            >
-                                                <Flex gap={20} wrap="wrap-reverse">
-                                                    <Flex vertical gap="15px" style={{ flex: 1 }}>
-                                                        <Flex>
-                                                            <Image src={post.userPhoto} width={35} style={{ borderRadius: 20 }} />
-                                                            <Typography.Text strong style={{ fontWeight: 500, marginTop: 5, marginLeft: 10, fontSize: isMobile ? '14px' : '16px' }}>{post.userName}</Typography.Text>
-                                                        </Flex>
-                                                        <Flex vertical justify="left" align="left">
-                                                            <Typography.Title level={4} strong>{post.title}</Typography.Title>
-                                                            <Typography.Text type="secondary">{post.content.split(' ').slice(0, 30).join(' ').replace(/[#*`_<>]/g, '')}</Typography.Text>
-                                                        </Flex>
-                                                        <Flex gap="20px">
-                                                            <Tag color="#069390" style={{ borderRadius: 20, fontSize: isMobile ? '11px' : '13px' }}>{post.tag[0]}</Tag>
+                                            <Link to={`/blog/${slug(post.title)}`} key={post.blogId}>
+                                                <Card
+                                                    hoverable
+                                                    style={{
+                                                        padding: "20px",
+                                                        marginBottom: "20px",
+                                                        width: isMobile ? "100%" : isTablet ? "50%" : "750px",
+                                                        boxShadow: "0 4px 8px 0 rgba(0,0,0,0.2)",
+                                                        transition: "0.3s",
+                                                        borderRadius: 15
+                                                    }}
+                                                >
+                                                    <Flex gap={20} wrap="wrap-reverse">
+                                                        <Flex vertical gap="15px" style={{ flex: 1 }}>
+                                                            <Flex>
+                                                                <Image src={post.userPhoto} width={35} style={{ borderRadius: 20 }} />
+                                                                <Typography.Text strong style={{ fontWeight: 500, marginTop: 5, marginLeft: 10, fontSize: isMobile ? '14px' : '16px' }}>{post.userName}</Typography.Text>
+                                                            </Flex>
+                                                            <Flex vertical justify="left" align="left">
+                                                                <Typography.Title level={4} strong>{post.title}</Typography.Title>
+                                                                <Typography.Text type="secondary">{post.content.split(' ').slice(0, 30).join(' ').replace(/[#*`_<>]/g, '')}</Typography.Text>
+                                                            </Flex>
+                                                            <Flex gap="20px">
+                                                                <Tag color="#069390" style={{ borderRadius: 20, fontSize: isMobile ? '11px' : '13px' }}>{post.tag[0]}</Tag>
 
+                                                            </Flex>
                                                         </Flex>
+                                                        <Image
+                                                            alt="example"
+                                                            preview={false}
+                                                            src={post.photo}
+                                                            style={{
+                                                                height: "170px",
+                                                                width: "220px",
+                                                                objectFit: "cover",
+                                                                borderRadius: 20
+                                                            }}
+                                                        />
                                                     </Flex>
-                                                    <Image
-                                                        alt="example"
-                                                        preview={false}
-                                                        src={post.photo}
-                                                        style={{
-                                                            height: "170px",
-                                                            width: "220px",
-                                                            objectFit: "cover",
-                                                            borderRadius: 20
-                                                        }}
-                                                    />
-                                                </Flex>
-                                            </Card>
+                                                </Card>
+                                            </Link>
                                         ))}
                                     </Flex>
                                 )}

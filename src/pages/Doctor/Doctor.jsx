@@ -30,6 +30,8 @@ const Doctor = () => {
     const doctorsPerPage = 6;
 
     React.useEffect(() => {
+
+        const apiUrl = process.env.REACT_APP_API_URL;
         axios.get(`http://localhost:5000/api/doctors`)
             .then(response => {
                 setDoctors(response.data);
@@ -101,7 +103,7 @@ const Doctor = () => {
                         </Flex>
                     )}
                     <Flex justify="center">
-                        <Pagination className="blog-pagination" defaultCurrent={1} total={doctors.length} pageSize={doctorsPerPage} onChange={handleChangePage} />
+                        <Pagination className="blog-pagination" defaultCurrent={1} total={doctors.length} pageSize={doctorsPerPage} onChange={handleChangePage} style={{ marginBottom: 30 }} />
                     </Flex>
                 </MainContentLayout>
             </Flex>

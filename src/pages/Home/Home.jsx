@@ -1,7 +1,7 @@
 import './Home.css';
 import DefaultLayout from '../../layout/DefaultLayout';
 import { Flex, Card, Image, Typography, Button } from "antd";
-import React from "react";
+import React, { useState, useEffect } from "react";
 import Banner from '../../components/Banner/Banner';
 import HealthTrackList from '../../components/HealthTrackList/HealthTrackList';
 import BLogList from '../../components/BlogList/BlogList';
@@ -10,9 +10,27 @@ import MainContentLayout from "../../layout/MainContentLayout";
 import SideContentLayout from '../../layout/SideContentLayout';
 import BasicDateCalendar from '../../components/Calendar/Calendar';
 import { useNavigate } from 'react-router-dom';
+import { useMediaQuery } from 'react-responsive';
+import axios from 'axios';
+const { Title, Text } = Typography;
 const Home = () => {
     const navigate = useNavigate();
-
+    const isMobile = useMediaQuery({ maxWidth: 768 });
+    const isTablet = useMediaQuery({ minWidth: 769, maxWidth: 1024 });
+    const [appointments, setAppointments] = useState([]);
+    const fetchAppointment = async () => {
+        try {
+            const userId = localStorage.getItem('userId');
+            const response = await axios.get(`http://localhost:5000/api/appointments/my/${userId}`);
+            setAppointments(response.data);
+        } catch (error) {
+            console.error('Error fetching appointments:', error);
+        }
+    };
+    useEffect(() => {
+        fetchAppointment();
+    }, []);
+    const doneAppointment = appointments.filter(appointment => appointment.state === 'done');
     const handleClick = () => {
         navigate('/lichkham');
     };
@@ -58,6 +76,32 @@ const Home = () => {
                                 Đặt lịch khám
                             </Button>
                         </Card>
+                        {doneAppointment.slice(0, 2).map((appointment, index) => (
+                            <Card key={appointment.appointmentId} style={{
+                                maxWidth: 500,
+                                width: isMobile ? "100%" : isTablet ? "50%" : "350px",
+                                boxShadow: "0 4px 8px 0 rgba(0,0,0,0.2)",
+                                transition: "0.3s",
+                                borderRadius: 20,
+                                backgroundColor: '#21c3c0',
+                                filter: 'drop-shadow(0px 0px 10px rgb(186, 255, 241))'
+                            }}>
+                                <Flex gap={10}>
+                                    <Image src={appointment.photo} preview={false} style={{ width: 80, height: 80, borderRadius: 50 }} />
+                                    <Flex vertical >
+                                        <Title level={5} style={{ color: "white" }}>{appointment.doctorName}</Title>
+                                        <Text style={{ color: "white" }}>{appointment.bookDate}</Text>
+                                        <Flex gap={10} >
+                                            <Text style={{ color: "white" }}>{appointment.dayTime}</Text>
+                                            <Text style={{ color: "white" }}>{appointment.startHour}h-{appointment.endHour}h {appointment.dayTime === 'morning' ? 'AM' : 'PM'} </Text>
+                                        </Flex>
+
+
+                                    </Flex>
+                                </Flex>
+                            </Card>
+                        ))}
+
                         <Image
                             preview={false}
                             alt="example"

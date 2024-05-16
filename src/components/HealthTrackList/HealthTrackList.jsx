@@ -137,7 +137,11 @@ const HealthTrackList = () => {
                                     decoding="async"
                                 />
                             }
-                            style={{ height: "180px", width: isMobile ? "300px" : "400px", padding: "20px", marginBottom: "20px", background: item.color }}
+                            style={{
+                                height: "180px", width: isMobile ? "300px" : "400px",
+                                padding: "20px", marginBottom: "20px", background: item.color,
+                                filter: 'drop-shadow(0px 0px 10px rgb(186, 255, 241))',
+                            }}
                         >
                             <Flex>
                                 <Flex vertical align="flex-start">

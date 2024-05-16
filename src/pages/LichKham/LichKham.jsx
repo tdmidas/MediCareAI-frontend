@@ -15,9 +15,6 @@ const { Step } = Steps;
 const LichKham = () => {
     const [isLoggedIn, setIsLoggedIn] = useState(false);
     const [currentStep, setCurrentStep] = useState(0);
-    const [selectedDoctorInfo, setSelectedDoctorInfo] = useState(null);
-    const [patientInfo, setPatientInfo] = useState(null);
-    const [paymentInfo, setPaymentInfo] = useState(null);
 
     useEffect(() => {
         const unsubscribe = auth.onAuthStateChanged(user => {
@@ -31,14 +28,7 @@ const LichKham = () => {
         return () => unsubscribe();
     }, []);
 
-    const handleNext = (info, doctorInfo) => {
-        if (currentStep === 0) {
-            setSelectedDoctorInfo(doctorInfo);
-        } else if (currentStep === 1) {
-            setPatientInfo(info);
-        } else if (currentStep === 2) {
-            setPaymentInfo(info);
-        }
+    const handleNext = () => {
 
         setCurrentStep(currentStep + 1);
     };
@@ -51,25 +41,19 @@ const LichKham = () => {
         <DefaultLayout>
             {isLoggedIn ? (
                 <>
-                    <Flex vertical gap="large" wrap='wrap' style={{ minHeight: "100vh" }}>
-                        <Steps current={currentStep}>
-                            <Step title="Select Appointment Date & Time" />
-                            <Step title="Patient Information" />
-                            <Step title="Payment" />
-                            <Step title="Invoice" />
-                        </Steps>
+                    <Steps current={currentStep} className="steps">
+                        <Step title="Select Date" />
+                        <Step title="Patient Info" />
+                        <Step title="Payment" />
+                        <Step title="Invoice" />
+                    </Steps>
+                    <Flex justifyContent="center">
                         {currentStep === 0 && <SelectDate onNext={handleNext} />}
-                        {currentStep === 1 && <PatientInfo onNext={handleNext} onPrev={handlePrev} doctorInfo={selectedDoctorInfo} />}
-                        {currentStep === 2 && <Payment onNext={handleNext} onPrev={handlePrev} doctorInfo={selectedDoctorInfo} patientInfo={patientInfo} />}
-                        {currentStep === 3 && (
-                            <Invoice
-                                doctorInfo={selectedDoctorInfo || {}}
-                                patientInfo={patientInfo || {}}
-                                paymentInfo={paymentInfo || {}}
-                                onPrev={handlePrev}
-                            />
-                        )}
+                        {currentStep === 1 && <PatientInfo onNext={handleNext} onPrev={handlePrev} />}
+                        {currentStep === 2 && <Payment onNext={handleNext} onPrev={handlePrev} />}
+                        {currentStep === 3 && <Invoice onPrev={handlePrev} />}
                     </Flex>
+
                 </>
             ) : (
                 <LoginRequired />

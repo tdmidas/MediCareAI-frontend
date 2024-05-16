@@ -1,98 +1,83 @@
 import React, { useState, useEffect } from 'react';
-import { Row, Col, Card, Form, Input, Button, Typography, Divider } from 'antd';
+import { Row, Col, Card, Form, Input, Button, Typography, Divider, Radio } from 'antd';
 import { useMediaQuery } from 'react-responsive';
-
+import './PatientInfo.css';
 const { Title } = Typography;
 
-const PatientInfo = ({ user, onNext, onPrev, doctorInfo }) => {
+const PatientInfo = ({ onNext, onPrev }) => {
     const isMobile = useMediaQuery({ maxWidth: 768 });
-
-    const [firstName, setFirstName] = useState('');
-    const [lastName, setLastName] = useState('');
+    const [note, setNote] = useState('');
     const [diseaseDescription, setDiseaseDescription] = useState('');
     const [phone, setPhone] = useState('');
-    const [reasonForVisit, setReasonForVisit] = useState('');
     const [address, setAddress] = useState('');
+    const [visitType, setVisitType] = useState('home'); // Default value: 'home'
     const [isFormValid, setIsFormValid] = useState(false);
 
     useEffect(() => {
         const validateForm = () => {
             setIsFormValid(
-                firstName.trim() !== '' &&
-                lastName.trim() !== '' &&
+                note.trim() !== '' &&
                 diseaseDescription.trim() !== '' &&
                 phone.trim() !== '' &&
-                reasonForVisit.trim() !== '' &&
-                address.trim() !== ''
+                (visitType === 'hospital' || address.trim() !== '') // Address is required only for home visit
             );
         };
 
         validateForm();
-    }, [firstName, lastName, diseaseDescription, phone, reasonForVisit, address]);
+    }, [note, diseaseDescription, phone, address, visitType]);
 
     const handleNext = () => {
         const patientInfo = {
-            firstName,
-            lastName,
+            note,
             diseaseDescription,
             phone,
-            reasonForVisit,
-            address
+            address,
+            visitType,
         };
-        onNext(patientInfo, doctorInfo);
+        localStorage.setItem('patientInfo', JSON.stringify(patientInfo));
+        onNext();
     };
 
     return (
         <Row gutter={[16, 16]} justify="center">
-            {user ? (
-                <Col xs={24} sm={20} md={16}>
-                    <Card title={<Title level={3}>Patient Information</Title>}>
-                        <p><strong>Name:</strong> {user.name}</p>
-                        <p><strong>Email:</strong> {user.email}</p>
-                        <Divider />
-                        <Button type="primary" onClick={handleNext} disabled={!isFormValid}>Next</Button>
-                    </Card>
-                </Col>
-            ) : (
-                <>
-                    <Col xs={24} sm={20} md={10}>
-                        <Card title={<Title level={3}>Patient Information</Title>}>
-                            <Form layout="vertical">
-                                <Form.Item label="First Name" required>
-                                    <Input value={firstName} onChange={(e) => setFirstName(e.target.value)} />
-                                </Form.Item>
-                                <Form.Item label="Last Name" required>
-                                    <Input value={lastName} onChange={(e) => setLastName(e.target.value)} />
-                                </Form.Item>
-                                <Form.Item label="Disease Description" required>
-                                    <Input.TextArea rows={4} value={diseaseDescription} onChange={(e) => setDiseaseDescription(e.target.value)} />
-                                </Form.Item>
-                                <Form.Item label="Phone" required>
-                                    <Input value={phone} onChange={(e) => setPhone(e.target.value)} />
-                                </Form.Item>
-                            </Form>
-                        </Card>
-                    </Col>
-                    <Col xs={24} sm={20} md={10}>
-                        <Card title={<Title level={3}>Additional Information</Title>}>
-                            <Form layout="vertical">
-                                <Form.Item label="Reason for Visit" required>
-                                    <Input.TextArea rows={4} value={reasonForVisit} onChange={(e) => setReasonForVisit(e.target.value)} />
-                                </Form.Item>
-                                <Form.Item label="Address" required>
-                                    <Input value={address} onChange={(e) => setAddress(e.target.value)} />
-                                </Form.Item>
-                            </Form>
-                        </Card>
-                    </Col>
-                    <Col xs={24} style={{ marginTop: '24px' }}>
-                        <Row justify="end">
-                            <Button style={{ marginRight: 8 }} onClick={onPrev}>Back</Button>
-                            <Button type="primary" onClick={handleNext} disabled={!isFormValid}>Next</Button>
-                        </Row>
-                    </Col>
-                </>
-            )}
+            <Col xs={24} sm={20} md={10} style={{ marginTop: 20, width: 800 }}>
+                <Card title={<Title level={3}>Thông tin bệnh nhân</Title>} >
+                    <Form layout="vertical">
+                        <Form.Item label="Loại khám">
+                            <Radio.Group onChange={(e) => setVisitType(e.target.value)} value={visitType}>
+                                <Radio value="home" >Khám tại nhà</Radio>
+                                <Radio value="hospital">Khám tại viện</Radio>
+                            </Radio.Group>
+                        </Form.Item>
+                        {visitType === 'home' && (
+                            <Form.Item label="Địa chỉ" required>
+                                <Input value={address} onChange={(e) => setAddress(e.target.value)} />
+                            </Form.Item>
+                        )}
+                        <Form.Item label="Số điện thoại" required>
+                            <Input value={phone} onChange={(e) => setPhone(e.target.value)} />
+                        </Form.Item>
+                    </Form>
+                </Card>
+            </Col>
+            <Col xs={24} sm={20} md={10} style={{ marginTop: 20 }}>
+                <Card title={<Title level={3}>Thông tin thêm</Title>}>
+                    <Form layout="vertical">
+                        <Form.Item label="Miêu tả bệnh" required>
+                            <Input.TextArea rows={4} value={diseaseDescription} onChange={(e) => setDiseaseDescription(e.target.value)} />
+                        </Form.Item>
+                        <Form.Item label="Chú thích thêm với bác sĩ" required>
+                            <Input.TextArea rows={4} value={note} onChange={(e) => setNote(e.target.value)} />
+                        </Form.Item>
+                    </Form>
+                </Card>
+            </Col>
+            <Col xs={24} style={{ marginTop: '24px' }}>
+                <Row justify="end">
+                    <Button style={{ marginRight: 8 }} onClick={onPrev}>Back</Button>
+                    <Button type="primary" onClick={handleNext} disabled={!isFormValid}>Next</Button>
+                </Row>
+            </Col>
         </Row>
     );
 };

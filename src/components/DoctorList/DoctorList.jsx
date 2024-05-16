@@ -43,7 +43,8 @@ const DoctorList = () => {
                                 <Image
                                     alt="example"
                                     src={doctor.photo}
-                                    style={{ display: "block", height: "200px", maxWidth: "100%", objectFit: "cover" }}
+                                    style={{ display: "block", height: "200px", maxWidth: "100%", objectFit: "cover", borderRadius: "100px" }}
+
                                     loading="lazy"
                                     decoding="async"
                                 />

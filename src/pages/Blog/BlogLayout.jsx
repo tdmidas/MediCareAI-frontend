@@ -66,10 +66,10 @@ const BlogLayout = () => {
             <Content className="blog-content" style={{ backgroundColor: "white" }}>
                 <Spin spinning={!selectedBlog || !selectedBlog.title}>
                     {selectedBlog && (
-                        <Col xs={600} md={800} lg={1200}>
+                        <Col xs={{ span: 22, offset: 1 }} md={{ span: 18, offset: 3 }} lg={{ span: 14, offset: 5 }} >
                             <div className="blog-card">
                                 <Flex vertical align="center" justify="center" gap="large">
-                                    <Title level={2}>{selectedBlog.title}</Title>
+                                    <Title level={1}>{selectedBlog.title}</Title>
                                     <Image preview={false} src={selectedBlog.photo} alt={selectedBlog.title} className="blog-image"
                                         style={{ maxWidth: "70%" }} />
                                 </Flex>
@@ -81,7 +81,7 @@ const BlogLayout = () => {
                                         <AiOutlineComment onClick={handleCommentVisible} className="comment-icon" />
                                     </div>
                                 </Flex>
-                                <Flex vertical justify="start" align="left" gap="large">
+                                <div className="'blog-content'" style={{ textAlign: 'left', marginTop: 40 }}>
 
                                     <Suspense fallback={<div>Loading...</div>}>
                                         <Text style={{ fontSize: 15, lineHeight: 2 }} >
@@ -92,7 +92,7 @@ const BlogLayout = () => {
                                         </Text>
 
                                     </Suspense>
-                                </Flex>
+                                </div>
 
                             </div>
                         </Col>

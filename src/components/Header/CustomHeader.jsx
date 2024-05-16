@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import { Flex, Badge, Avatar, Typography, Popover, Card } from 'antd';
+import { Flex, Badge, Avatar, Typography, Popover, Card, Tag } from 'antd';
 import { Button } from 'antd';
 import { Input } from 'antd';
 import './CustomHeader.css';
@@ -11,6 +11,8 @@ import { MenuFoldOutlined } from "@ant-design/icons";
 import { useMediaQuery } from "react-responsive";
 import { doc, setDoc, collection, getDoc } from "firebase/firestore";
 import axios from 'axios';
+import { Link } from 'react-router-dom';
+import slug from 'slug';
 const { Text, Title } = Typography;
 const CustomHeader = ({ toggleDrawer, submitHandler }) => {
     const navigate = useNavigate();
@@ -20,7 +22,8 @@ const CustomHeader = ({ toggleDrawer, submitHandler }) => {
     const isSmallScreen = useMediaQuery({ maxWidth: 1024 });
     const [healthNotifications, setHealthNotifications] = useState([]);
     const [searchQuery, setSearchQuery] = useState('');
-    const [searchResults, setSearchResults] = useState([]);
+    const [doctorData, setDoctorData] = useState([]);
+    const [blogData, setBlogData] = useState([]);
     const [popoverVisible, setPopoverVisible] = useState(false);
 
 
@@ -106,12 +109,23 @@ const CustomHeader = ({ toggleDrawer, submitHandler }) => {
     };
     const handleSearch = async () => {
         try {
-            const response = await axios.get(`http://localhost:5000/api/search?query=${searchQuery}`);
-            setSearchResults(response.data);
+            if (searchQuery.trim() !== '') { // Check if searchQuery is not empty
+                const doctorType = 'doctor';
+                const blogType = 'blog';
+                const doctorResponse = await axios.get(`http://localhost:5000/api/search?type=${doctorType}&query=${searchQuery}`);
+                const blogResponse = await axios.get(`http://localhost:5000/api/search?type=${blogType}&query=${searchQuery}`);
+                setDoctorData(doctorResponse.data);
+                setBlogData(blogResponse.data);
+            } else {
+                // Clear doctorData and blogData if searchQuery is empty
+                setDoctorData([]);
+                setBlogData([]);
+            }
         } catch (error) {
             console.error("Search Error:", error.message);
         }
     };
+
     const handleInputChange = (e) => {
         const query = e.target.value;
         setSearchQuery(query);
@@ -224,13 +238,36 @@ const CustomHeader = ({ toggleDrawer, submitHandler }) => {
                 )}
                 <Popover
                     content={(
-                        <Flex direction="column">
-                            {searchResults.map((result) => (
-                                <Card key={result.id} style={{ width: 300, margin: '20px' }}>
-                                    <p>{result.title}</p>
-                                    {/* Additional content from search result */}
-                                </Card>
-                            ))}
+                        <Flex vertical>
+                            <Card title="Bác sĩ" style={{ width: 300, border: 'none' }}>
+                                {doctorData.map((doctor, index) => (
+                                    <Link to={`/doctors/${doctor.doctorId}`} key={index}>
+                                        <Card.Grid key={index} hoverable={false} style={{ width: '100%', padding: 10, border: 'none', boxShadow: 'none' }}>
+                                            <Flex align="center" gap="10px">
+                                                <Avatar src={doctor.photo} size={50} />
+                                                <Flex vertical gap={5}>
+                                                    <Text strong>{doctor.name}</Text>
+                                                    <Tag color='#069390' style={{ width: 60 }}>{doctor.speciality}</Tag>
+                                                </Flex>
+                                            </Flex>
+                                        </Card.Grid>
+                                    </Link>
+                                ))}
+                            </Card>
+                            <Card title="Blog" style={{ width: 300, marginTop: 20, border: 'none' }}>
+                                {blogData.map((blog, index) => (
+                                    <Link to={`/blog/${slug(blog.title)}`} key={index}>
+                                        <Card.Grid key={index} hoverable={false} style={{ width: '100%', padding: 10, border: 'none', boxShadow: 'none' }}>
+                                            <Flex align="center" gap="10px">
+                                                <Avatar src={blog.photo} style={{ width: 100, height: 50 }} />
+                                                <Flex vertical align='center'>
+                                                    <Text strong>{blog.title}</Text>
+                                                </Flex>
+                                            </Flex>
+                                        </Card.Grid>
+                                    </Link>
+                                ))}
+                            </Card>
                         </Flex>
                     )}
                     trigger="click"
@@ -245,6 +282,7 @@ const CustomHeader = ({ toggleDrawer, submitHandler }) => {
                         onChange={handleInputChange}
                     />
                 </Popover>
+
 
                 <Flex align="center" gap="10px" style={{ marginLeft: 'auto' }}>
                     {user ? (

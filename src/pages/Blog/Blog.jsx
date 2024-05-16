@@ -117,7 +117,7 @@ const Blog = () => {
 
                                 </Link>
                             ))}
-                            <Pagination className="blog-pagination" defaultCurrent={1} total={blogData.length} pageSize={postsPerPage} onChange={handleChangePage} />
+                            <Pagination className="blog-pagination" defaultCurrent={1} total={blogData.length} pageSize={postsPerPage} onChange={handleChangePage} style={{ marginBottom: 30 }} />
                         </Flex>
                     )}
 
@@ -141,7 +141,7 @@ const Blog = () => {
                             <Image
                                 alt="example"
                                 src="https://d1xjlj96to6zqh.cloudfront.net/doctor-1.png"
-                                style={{ float: "right", position: "absolute", paddingBottom: "72px", paddingLeft: "90px", width: "auto", height: "300px" }}
+                                style={{ float: "right", position: "absolute", paddingBottom: "72px", paddingLeft: "90px", width: "100%", height: "300px" }}
                             />
                         }>
                             <Flex vertical gap="large">
@@ -158,7 +158,7 @@ const Blog = () => {
                             <Image
                                 alt="example"
                                 src="https://d1xjlj96to6zqh.cloudfront.net/eat-food.png"
-                                style={{ float: "right", position: "absolute", paddingBottom: "72px", paddingLeft: "90px", width: "auto", height: "300px" }}
+                                style={{ float: "right", position: "absolute", paddingBottom: "72px", paddingLeft: "90px", width: "100%", height: "300px" }}
                             />
                         }>
                             <Flex vertical gap="large">
