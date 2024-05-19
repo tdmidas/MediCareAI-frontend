@@ -2,7 +2,6 @@ import React, { useState } from "react";
 import { useNavigate } from "react-router-dom";
 
 import styles from "../Register/Register.module.css";
-import { ToastContainer } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 import { notify } from "../../config/toast";
 import { Link } from "react-router-dom";
@@ -11,7 +10,7 @@ import { auth, googleAuthProvider, signInWithPopup, db, facebookAuthProvider } f
 import { signInWithEmailAndPassword } from "firebase/auth";
 import { setDoc, doc, collection } from "firebase/firestore";
 import axios from "axios";
-import { Flex, Image, Button } from "antd";
+import { Flex, Image, Button, message } from "antd";
 import { ArrowLeftOutlined } from "@ant-design/icons";
 const googleLogo = require('../../assets/google-18px.svg').default;
 const facebookLogo = require('../../assets/facebook-18px.svg').default;
@@ -56,6 +55,7 @@ const Login = () => {
 			const usersCollection = collection(db, "users");
 			const userDoc = doc(usersCollection, userId);
 			await setDoc(userDoc, { userLastlogin: new Date() }, { merge: true });
+			message.success("Đăng nhập thành công");
 			navigate("/");
 		} catch (error) {
 			console.error('Error:', error);
@@ -74,6 +74,8 @@ const Login = () => {
 			localStorage.setItem('photoURL', user.photoURL);
 			localStorage.setItem('userId', userId);
 			localStorage.setItem('accessToken', accessToken);
+			message.success("Đăng nhập thành công");
+
 			navigate("/");
 			console.log("Google Sign-in Successful:", user);
 		} catch (error) {
@@ -91,6 +93,8 @@ const Login = () => {
 			localStorage.setItem('photoURL', user.photoURL);
 			localStorage.setItem('userId', userId);
 			localStorage.setItem('accessToken', accessToken);
+			message.success("Đăng nhập thành công");
+
 			navigate("/");
 			console.log("Facebook Sign-in Successful:", user);
 		} catch (error) {
@@ -160,7 +164,7 @@ const Login = () => {
 								</div>
 
 							</form>
-							<ToastContainer />
+
 
 							<Image preview={false} src="https://d1xjlj96to6zqh.cloudfront.net/login-bg.png" alt="auth background" style={{ minWidth: 300, maxHeight: 650, borderRadius: 30, padding: 20 }} />
 						</Flex>

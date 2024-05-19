@@ -14,8 +14,6 @@ const SucKhoeDetail = () => {
                 return <HuyetAp />;
             case 'duong-huyet':
                 return <DuongHuyet />
-            case 'nhip-tim':
-                return <HeartRate />;
 
             default:
                 return <div>Invalid health metric</div>;

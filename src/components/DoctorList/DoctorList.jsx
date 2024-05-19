@@ -44,7 +44,7 @@ const DoctorList = () => {
                                     alt="example"
                                     src={doctor.photo}
                                     style={{ display: "block", height: "200px", maxWidth: "100%", objectFit: "cover", borderRadius: "100px" }}
-
+                                    preview={false}
                                     loading="lazy"
                                     decoding="async"
                                 />

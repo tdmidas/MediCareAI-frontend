@@ -40,15 +40,6 @@ const SucKhoe = () => {
             measure: "BMI",
             value: "--",
             color: "#87edfb",
-        },
-        {
-            id: 4,
-            name: "Nhịp tim",
-            picture: "https://d1xjlj96to6zqh.cloudfront.net/heart-rate.png",
-            measure: "bpm",
-            value: "--",
-            color: "#f8aa76",
-
         }
     ]);
     const fetchData = async () => {

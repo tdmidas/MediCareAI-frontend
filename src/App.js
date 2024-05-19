@@ -16,7 +16,7 @@ import WriteBlog from "./pages/Blog/WriteBlog";
 import ChatDetail from "./pages/Chat/ChatDetail";
 import MyAppointment from "./pages/LichKham/MyAppointment";
 import MyBlog from "./pages/Blog/MyBlog";
-
+import AppointmentDetail from "./pages/LichKham/AppointmentDetail";
 import HealthEvaluate from "./components/HealthEvaluate/HealthEvaluate";
 
 function App() {
@@ -28,6 +28,7 @@ function App() {
 				<Route path="/register" element={<Register />} />
 				<Route path="/lichkham" element={<LichKham />} />
 				<Route path="/me/appointment" element={<MyAppointment />} />
+				<Route path="/lichkham/:slug" element={<AppointmentDetail />} />
 				<Route path="/doctors" element={<Doctor />} />
 				<Route path="/doctors/:slug" element={<DoctorDetail />} />
 				<Route path="/chat" element={<Chat />} />

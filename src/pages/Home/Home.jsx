@@ -30,7 +30,7 @@ const Home = () => {
     useEffect(() => {
         fetchAppointment();
     }, []);
-    const doneAppointment = appointments.filter(appointment => appointment.state === 'done');
+    const doneAppointment = appointments.filter(appointment => appointment.state === 'pending');
     const handleClick = () => {
         navigate('/lichkham');
     };
@@ -82,12 +82,15 @@ const Home = () => {
                                 width: isMobile ? "100%" : isTablet ? "50%" : "350px",
                                 boxShadow: "0 4px 8px 0 rgba(0,0,0,0.2)",
                                 transition: "0.3s",
-                                borderRadius: 20,
+                                borderRadius: 25,
                                 backgroundColor: '#21c3c0',
                                 filter: 'drop-shadow(0px 0px 10px rgb(186, 255, 241))'
                             }}>
                                 <Flex gap={10}>
-                                    <Image src={appointment.photo} preview={false} style={{ width: 80, height: 80, borderRadius: 50 }} />
+                                    <Image src={appointment.photo} preview={false} style={{
+                                        width: 80, height: 80,
+                                        borderRadius: 50, boxShadow: "0 4px 8px 0 rgba(0,0,0,0.2)", backgroundColor: 'orange'
+                                    }} />
                                     <Flex vertical >
                                         <Title level={5} style={{ color: "white" }}>{appointment.doctorName}</Title>
                                         <Text style={{ color: "white" }}>{appointment.bookDate}</Text>
