@@ -2,7 +2,6 @@ import React from 'react';
 import { useState } from 'react';
 import { useParams } from 'react-router-dom';
 import { Card, Tabs, Rate, Image, Flex, Typography, Button, Input, Form, message, Spin } from 'antd';
-import reviews from '../../data/reviews';
 import DefaultLayout from '../../layout/DefaultLayout';
 import MainContentLayout from "../../layout/MainContentLayout";
 import SideContentLayout from '../../layout/SideContentLayout';
@@ -35,7 +34,7 @@ const DoctorDetail = () => {
 
     const fetchReviews = async () => {
         try {
-            const response = await axios.get(`http://localhost:5000/api/reviews/${doctor.doctorId}`,);
+            const response = await axios.get(`https://medicareai-backend.onrender.com/api/reviews/${doctor.doctorId}`,);
             setReviews(response.data);
         } catch (error) {
             console.log("Error fetching reviews data", error);
@@ -76,7 +75,7 @@ const DoctorDetail = () => {
                 content: reviewContent,
             };
 
-            await axios.post('http://localhost:5000/api/reviews/', reviewData);
+            await axios.post('https://medicareai-backend.onrender.com/api/reviews/', reviewData);
             message.success('Review submitted successfully');
             setReviewContent('');
             setRating(0);

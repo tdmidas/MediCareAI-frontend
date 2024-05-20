@@ -36,7 +36,7 @@ const Blog = () => {
     const postsPerPage = 6;
 
     React.useEffect(() => {
-        axios.get(`http://localhost:5000/api/blogs`)
+        axios.get(`https://medicareai-backend.onrender.com/api/blogs`)
             .then(response => {
                 const publishedPosts = response.data.filter(
                     (post) => post.state === "published"

@@ -45,9 +45,9 @@ const SucKhoe = () => {
     const fetchData = async () => {
         try {
             const userId = localStorage.getItem("userId");
-            const BMI_response = await axios.get(`${process.env.REACT_APP_API_URL}/api/health/BMI/${userId}`);
-            const BP_response = await axios.get(`${process.env.REACT_APP_API_URL}/api/health/bloodPressure/${userId}`);
-            const glucose_response = await axios.get(`${process.env.REACT_APP_API_URL}/api/health/glucose/${userId}`);
+            const BMI_response = await axios.get(`https://medicareai-backend.onrender.com/api/health/BMI/${userId}`);
+            const BP_response = await axios.get(`https://medicareai-backend.onrender.com/api/health/bloodPressure/${userId}`);
+            const glucose_response = await axios.get(`https://medicareai-backend.onrender.com/api/health/glucose/${userId}`);
 
             const updatedHealthData = healthTrackData.map(item => {
                 switch (item.name) {

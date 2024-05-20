@@ -39,7 +39,7 @@ const HealthEvaluate = () => {
     const fetchChatbotResponse = async (userInput) => {
         try {
             setChatbotLoading(true);
-            const response = await axios.post('http://localhost:5000/api/chat/message', { userInput });
+            const response = await axios.post('https://medicareai-backend.onrender.com/api/chat/message', { userInput });
             setChatbotResponse(response.data.message);
             setChatbotLoading(false);
         } catch (error) {
@@ -58,8 +58,8 @@ const HealthEvaluate = () => {
         try {
             const userId = localStorage.getItem("userId");
             setLoading(true);
-            await axios.post(`http://localhost:5000/api/health/overall/${userId}`);
-            const response = await axios.get(`http://localhost:5000/api/health/overall/${userId}`);
+            await axios.post(`https://medicareai-backend.onrender.com/api/health/overall/${userId}`);
+            const response = await axios.get(`https://medicareai-backend.onrender.com/api/health/overall/${userId}`);
             setHealthData(response.data);
             setLoading(false);
         } catch (error) {
@@ -69,7 +69,7 @@ const HealthEvaluate = () => {
     };
     const fetchBlogData = async (tag) => {
         try {
-            const response = await axios.get(`http://localhost:5000/api/blogs?tag=${tag}`);
+            const response = await axios.get(`https://medicareai-backend.onrender.com/api/blogs?tag=${tag}`);
             setBlogData(response.data);
         } catch (error) {
             console.error("Error fetching blog data:", error);

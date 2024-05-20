@@ -23,7 +23,7 @@ const MyBlog = () => {
         try {
             setLoading(true);
             const userId = localStorage.getItem('userId');
-            const response = await axios.get(`http://localhost:5000/api/blogs/my/${userId}`);
+            const response = await axios.get(`https://medicareai-backend.onrender.com/api/blogs/my/${userId}`);
             setPostData(response.data);
             setLoading(false);
         } catch (error) {

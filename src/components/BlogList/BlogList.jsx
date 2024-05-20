@@ -12,7 +12,7 @@ const BLogList = () => {
     const [BlogData, setBlogData] = useState([]);
     const fetchData = async () => {
         try {
-            const response = await axios.get("http://localhost:5000/api/blogs");
+            const response = await axios.get("https://medicareai-backend.onrender.com/api/blogs");
             setBlogData(response.data);
         }
         catch (error) {

@@ -52,7 +52,7 @@ const Register = () => {
 					displayName: data.name,
 					photoURL: "https://st3.depositphotos.com/9998432/13335/v/450/depositphotos_133352156-stock-illustration-default-placeholder-profile-icon.jpg"
 				});
-				const response = await axios.post(`http://localhost:5000/api/auth/signup`, data);
+				const response = await axios.post(`https://medicareai-backend.onrender.com/api/auth/signup`, data);
 				if (response.status === 201) {
 					message.success("Đăng ký thành công");
 					navigate("/login");

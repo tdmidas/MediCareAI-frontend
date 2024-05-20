@@ -49,7 +49,7 @@ const Payment = ({ onNext, onPrev }) => {
         };
         localStorage.setItem('appointmentInfo', JSON.stringify(appointmentInfo));
         try {
-            await axios.post('http://localhost:5000/api/appointments', appointmentInfo);
+            await axios.post('https://medicareai-backend.onrender.com/api/appointments', appointmentInfo);
             message.success('Appointment created successfully');
             onNext(appointmentInfo);
         } catch (error) {

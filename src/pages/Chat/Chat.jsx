@@ -45,7 +45,7 @@ const Chat = () => {
                                     <Image style={{
                                         float: isMobile ? "none" : "right", width: isMobile ? "100%" : "40%", objectFit: "cover", height: 260, marginTop: "-100px"
                                     }}
-                                        src={chatbotData[3].picture}>
+                                        src='https://d1xjlj96to6zqh.cloudfront.net/chat-3.png'>
 
                                     </Image>
                                 }>

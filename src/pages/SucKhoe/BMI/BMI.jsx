@@ -22,7 +22,7 @@ const BMI = () => {
     useEffect(() => {
         const sendBMItoServer = async () => {
             const userId = localStorage.getItem("userId");
-            await axios.post(`http://localhost:5000/api/health/bmi/${userId}`, {
+            await axios.post(`https://medicareai-backend.onrender.com/api/health/bmi/${userId}`, {
                 weight: parseFloat(weight),
                 height: parseFloat(height),
                 bmi: parseFloat(bmi),

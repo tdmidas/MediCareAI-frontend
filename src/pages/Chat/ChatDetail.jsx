@@ -32,6 +32,8 @@ const ChatDetail = () => {
 
     const getFormattedName = (slug) => {
         switch (slug) {
+            case "bac-si-suc-khoe-ai":
+                return "Bác sĩ sức khỏe AI";
             case "bac-si-tim-mach":
                 return "Bác sĩ tim mạch";
             case "bac-si-noi-khoa":
@@ -54,7 +56,7 @@ const ChatDetail = () => {
         setLoading(true);
 
         try {
-            const response = await axios.post('http://localhost:5000/api/chat/message', { userInput });
+            const response = await axios.post('https://medicareai-backend.onrender.com/api/chat/message', { userInput });
             const { message: botResponse } = response.data;
             const updatedMessagesWithBot = [...updatedMessages, { sender: chatbot.name, content: botResponse }];
             setMessages(updatedMessagesWithBot);
@@ -92,7 +94,7 @@ const ChatDetail = () => {
         setMessages(updatedMessages);
         setLoading(true);
         try {
-            const response = await axios.post('http://localhost:5000/api/chat/message', { userInput: buttonName });
+            const response = await axios.post('https://medicareai-backend.onrender.com/api/chat/message', { userInput: buttonName });
             const { message: botResponse } = response.data;
             const updatedMessagesWithBot = [...messages, { sender: chatbot.name, content: botResponse }];
             setMessages(updatedMessagesWithBot);
@@ -116,22 +118,16 @@ const ChatDetail = () => {
 
                         {messages.map((message, index) => (
                             <div key={index} className={`message ${message.sender.toLowerCase()}`}>
-                                <Avatar src={message.sender === chatbot.name ? chatbot.picture : "https://d1xjlj96to6zqh.cloudfront.net/patient-avatar.png"} style={{ marginBottom: 20 }} alt="chatbot avar message" />
+                                <Avatar src={message.sender === chatbot.name ? chatbot.picture : "https://d1xjlj96to6zqh.cloudfront.net/patient-avatar.png"} style={{ marginBottom: 20 }} alt="chatbot avatar message" />
                                 <div className="message-content">
                                     <Flex vertical gap="small">
                                         <Text strong>{message.sender}:</Text>
                                         {message.sender === chatbot.name ? (
-                                            loading ? (
-                                                <div style={{ textAlign: "center", marginTop: 20 }}>
-                                                    <BouncingDotsLoader />
-                                                </div>
-                                            ) : (
-                                                <div className="message-bubble" style={{
-                                                    backgroundColor: "#069390", borderRadius: 30, padding: 20, color: "white"
-                                                }}>
-                                                    <ReactMarkdown>{message.content}</ReactMarkdown>
-                                                </div>
-                                            )
+                                            <div className="message-bubble" style={{
+                                                backgroundColor: "#069390", borderRadius: 30, padding: 20, color: "white"
+                                            }}>
+                                                <ReactMarkdown>{message.content}</ReactMarkdown>
+                                            </div>
                                         ) : (
                                             <div className="message-bubble" style={{
                                                 backgroundColor: "white", borderRadius: 30, padding: 20, color: "black"
@@ -144,18 +140,32 @@ const ChatDetail = () => {
                             </div>
                         ))}
 
-
+                        {loading && (
+                            <div className="message chatbot">
+                                <Avatar src={chatbot ? chatbot.picture : "https://d1xjlj96to6zqh.cloudfront.net/patient-avatar.png"} style={{ marginBottom: 20 }} alt="chatbot avatar" />
+                                <div className="message-content">
+                                    <Flex vertical gap="small">
+                                        <Text strong>{chatbot ? chatbot.name : "Chatbot"}:</Text>
+                                        <div className="message-bubble" style={{
+                                            backgroundColor: "#069390", borderRadius: 30, padding: 20, color: "white"
+                                        }}>
+                                            <BouncingDotsLoader />
+                                        </div>
+                                    </Flex>
+                                </div>
+                            </div>
+                        )}
 
                     </Card>
                     <Flex gap="large" align="center" wrap="wrap">
                         <Button className="promo-prompt" type="primary" onClick={() => sendPromoMessage("Tôi muốn hỏi về bệnh tim mạch?")}>
                             Tôi muốn hỏi về bệnh tim mạch?
                         </Button>
-                        <Button className="promo-prompt" type="primary" onClick={() => sendPromoMessage("Triệu chứng bệnh tim mạch")}>
-                            Triệu chứng bệnh tim mạch
+                        <Button className="promo-prompt" type="primary" onClick={() => sendPromoMessage("Triệu chứng bệnh sổ mũi")}>
+                            Triệu chứng bệnh sổ mũi
                         </Button>
-                        <Button className="promo-prompt" type="primary" onClick={() => sendPromoMessage("Tôi muốn tìm bác sĩ tim mạch")}>
-                            Tôi muốn tìm bác sĩ tim mạch
+                        <Button className="promo-prompt" type="primary" onClick={() => sendPromoMessage("Bữa ăn thế nào là tốt?")}>
+                            Bữa ăn thế nào là tốt?
                         </Button>
                     </Flex>
                     <Flex className="input-container" justify="center" gap={10} wrap="wrap">
@@ -179,11 +189,8 @@ const ChatDetail = () => {
                         >
 
                         </TextArea>
-                        <Button type="default" className="upload-btn" icon={<UploadOutlined />} />
                         <Button type="default" className="voice-btn" icon={<AudioOutlined />} onClick={handleVoice} />
                         <Button className="send-btn" type="default" icon={<SendOutlined />} onClick={sendMessage} />
-
-
 
                     </Flex>
                 </Flex>
