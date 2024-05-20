@@ -85,7 +85,7 @@ const Chat = () => {
                                             cover={
                                                 <Image
                                                     preview={false}
-                                                    alt="example"
+                                                    alt="chatbot avatar"
                                                     src={chatbot.picture}
                                                     style={{ display: "block", height: "250px", maxWidth: "100%", objectFit: "cover", borderRadius: 120, backgroundColor: "#ccfefd" }}
                                                 />

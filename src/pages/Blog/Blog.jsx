@@ -139,7 +139,7 @@ const Blog = () => {
                         </Flex>
                         <Card className="blog-side-card-1" cover={
                             <Image
-                                alt="example"
+                                alt="doctor side image 1"
                                 src="https://d1xjlj96to6zqh.cloudfront.net/doctor-1.png"
                                 style={{ float: "right", position: "absolute", paddingBottom: "72px", paddingLeft: "90px", width: "100%", height: "300px" }}
                             />
@@ -156,7 +156,7 @@ const Blog = () => {
                         </Card >
                         <Card className="blog-side-card-2" cover={
                             <Image
-                                alt="example"
+                                alt="doctor side image 2"
                                 src="https://d1xjlj96to6zqh.cloudfront.net/eat-food.png"
                                 style={{ float: "right", position: "absolute", paddingBottom: "72px", paddingLeft: "90px", width: "100%", height: "300px" }}
                             />

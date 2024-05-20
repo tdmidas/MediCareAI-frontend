@@ -45,7 +45,7 @@ const BLogList = () => {
                             hoverable
                             cover={
                                 <Image
-                                    alt="example"
+                                    alt="blog images"
                                     src={item.photo}
                                     style={{ display: "block", height: "150px", maxWidth: "100%", objectFit: "cover" }}
                                 />

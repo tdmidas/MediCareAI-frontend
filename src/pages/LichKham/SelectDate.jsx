@@ -100,7 +100,7 @@ const SelectDate = ({ onNext }) => {
                                 justifyContent: 'flex-start',
                             }}
                         >
-                            {filteredDoctors.length > 0 ? ( // Check if there are doctors to display
+                            {filteredDoctors.length > 0 ? (
                                 filteredDoctors.map((doctor, index) => (
                                     <Col key={doctor.id} xs={24} sm={12} md={12} lg={12}>
                                         <Card

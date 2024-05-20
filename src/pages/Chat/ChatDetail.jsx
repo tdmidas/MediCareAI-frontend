@@ -116,7 +116,7 @@ const ChatDetail = () => {
 
                         {messages.map((message, index) => (
                             <div key={index} className={`message ${message.sender.toLowerCase()}`}>
-                                <Avatar src={message.sender === chatbot.name ? chatbot.picture : "https://d1xjlj96to6zqh.cloudfront.net/patient-avatar.png"} style={{ marginBottom: 20 }} />
+                                <Avatar src={message.sender === chatbot.name ? chatbot.picture : "https://d1xjlj96to6zqh.cloudfront.net/patient-avatar.png"} style={{ marginBottom: 20 }} alt="chatbot avar message" />
                                 <div className="message-content">
                                     <Flex vertical gap="small">
                                         <Text strong>{message.sender}:</Text>

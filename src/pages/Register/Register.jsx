@@ -156,7 +156,6 @@ const Register = () => {
 											onFocus={focusHandler}
 											autoComplete="off"
 										/>
-										<img src="../../img/user.svg" alt="" />
 									</div>
 									{errors.name && touched.name && <span className={styles.error}>{errors.name}</span>}
 								</div>
@@ -178,7 +177,7 @@ const Register = () => {
 											onFocus={focusHandler}
 											autoComplete="off"
 										/>
-										<img src="#" alt="" />
+
 									</div>
 									{errors.email && touched.email && <span className={styles.error}>{errors.email}</span>}
 								</div>
@@ -200,7 +199,7 @@ const Register = () => {
 											onFocus={focusHandler}
 											autoComplete="off"
 										/>
-										<img src="#" alt="" />
+
 									</div>
 									{errors.password && touched.password && <span className={styles.error}>{errors.password}</span>}
 								</div>
@@ -224,7 +223,7 @@ const Register = () => {
 											onFocus={focusHandler}
 											autoComplete="off"
 										/>
-										<img src="#" alt="" />
+
 									</div>
 									{errors.confirmPassword && touched.confirmPassword && (
 										<span className={styles.error}>{errors.confirmPassword}</span>
@@ -237,11 +236,11 @@ const Register = () => {
 
 									<button className={styles['facebook-btn']}
 										onClick={signUpWithFacebook}>
-										<img src={facebookLogo} style={{ paddingRight: 10 }} /> Đăng ký với Facebook
+										<img src={facebookLogo} style={{ paddingRight: 10 }} alt="facebook-logo" /> Đăng ký với Facebook
 									</button>
 									<button className={styles['google-btn']}
 										onClick={signUpWithGoogle}>
-										<img src={googleLogo} style={{ paddingRight: 10 }} /> Đăng ký với Google
+										<img src={googleLogo} style={{ paddingRight: 10 }} alt="google-logo" /> Đăng ký với Google
 									</button>
 									<span style={{ color: "#a29494", textAlign: "center", display: "inline-block", width: "100%" }}>
 										Bạn đã có tài khoản? <Link to="/login">Đăng nhập</Link>

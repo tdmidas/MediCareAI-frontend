@@ -41,7 +41,7 @@ const DoctorList = () => {
                             hoverable
                             cover={
                                 <Image
-                                    alt="example"
+                                    alt="doctor images"
                                     src={doctor.photo}
                                     style={{ display: "block", height: "200px", maxWidth: "100%", objectFit: "cover", borderRadius: "100px" }}
                                     preview={false}
@@ -56,7 +56,7 @@ const DoctorList = () => {
                                     <Flex gap="10px">
                                         <Tag color="#069390" style={{ fontSize: 11 }}>{doctor.speciality}</Tag>
                                         <Typography.Text level={4} strong >
-                                            <Image src="https://d1xjlj96to6zqh.cloudfront.net/Star.png" />  {doctor.avgRating}  ({doctor.totalRating})
+                                            <Image src="https://d1xjlj96to6zqh.cloudfront.net/Star.png" alt="star icon" />  {doctor.avgRating}  ({doctor.totalRating})
                                         </Typography.Text>
                                     </Flex>
                                     <Typography.Title level={4} strong>

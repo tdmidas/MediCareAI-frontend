@@ -118,10 +118,11 @@ const MyAppointment = () => {
                                             borderRadius: 15
                                         }}>
                                             <Flex gap={20}>
-                                                <Image src={appointment.photo} preview={false} style={{
-                                                    width: 110, height: 110,
-                                                    borderRadius: 50, backgroundColor: 'orange'
-                                                }} />
+                                                <Image src={appointment.photo} preview={false} alt='doctor avatar'
+                                                    style={{
+                                                        width: 110, height: 110,
+                                                        borderRadius: 50, backgroundColor: 'orange'
+                                                    }} />
                                                 <Flex vertical gap={5} >
                                                     <Title level={4}>{appointment.doctorName}</Title>
                                                     <Text>{appointment.bookDate}</Text>
@@ -146,8 +147,8 @@ const MyAppointment = () => {
                     </Flex>
                 </MainContentLayout>
                 <SideContentLayout>
-                    <Image preview={false} src="https://d1xjlj96to6zqh.cloudfront.net/doctor-2.png" style={{ width: "100%", padding: 20 }} />
-                    <Image preview={false} src="https://d1xjlj96to6zqh.cloudfront.net/doctor-3.png" style={{ width: "100%", padding: 20 }} />
+                    <Image preview={false} src="https://d1xjlj96to6zqh.cloudfront.net/doctor-2.png" style={{ width: "100%", padding: 20 }} alt='side doctor image vector 1' />
+                    <Image preview={false} src="https://d1xjlj96to6zqh.cloudfront.net/doctor-3.png" style={{ width: "100%", padding: 20 }} alt='side doctor image vector 2' />
                 </SideContentLayout>
             </Flex>
         </DefaultLayout>

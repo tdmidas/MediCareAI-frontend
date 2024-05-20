@@ -99,10 +99,11 @@ const SucKhoe = () => {
                         />
                         <Card style={{ marginLeft: isMobile ? 10 : 150 }}>
                             <Flex vertical align="center" gap="large" justify="center" wrap="wrap">
-                                <Image preview={false} src="https://d1xjlj96to6zqh.cloudfront.net/profile-ava.png" style={{
-                                    maxWidth: 230,
-                                    maxHeight: 230,
-                                }} />
+                                <Image preview={false} alt="health-overview"
+                                    src="https://d1xjlj96to6zqh.cloudfront.net/profile-ava.png" style={{
+                                        maxWidth: 230,
+                                        maxHeight: 230,
+                                    }} />
                                 <Title level={5}>Xem đánh giá sức khỏe<br /> tại đây bạn nhé!</Title>
                                 <Link to={"/suckhoe/evaluate"}>
                                     <Button type="primary" style={{ marginTop: 10, boxShadow: "0px 4px 8px rgba(0, 0, 0, 0.3)", backgroundColor: "#15aea1" }} >Xem đánh giá ngay</Button>
@@ -125,7 +126,7 @@ const SucKhoe = () => {
                                     hoverable
                                     cover={
                                         <Image
-                                            alt="example"
+                                            alt="health track icon"
                                             src={item.picture}
                                             style={{ float: "right", width: "120px", height: "120px" }}
 

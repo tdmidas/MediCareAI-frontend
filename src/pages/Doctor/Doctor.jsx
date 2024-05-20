@@ -73,7 +73,7 @@ const Doctor = () => {
                                         hoverable
                                         cover={
                                             <Image
-                                                alt="example"
+                                                alt="doctor list image"
                                                 src={doctor.photo}
                                                 preview={false}
                                                 style={{ display: "block", height: "250px", maxWidth: "100%", objectFit: "cover", borderRadius: 130 }}

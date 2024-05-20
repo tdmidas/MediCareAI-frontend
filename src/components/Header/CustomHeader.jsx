@@ -166,7 +166,7 @@ const CustomHeader = ({ toggleDrawer, submitHandler }) => {
         <Menu onClick={handleMenuClick}>
             <Menu.Item key="userProfile" disabled>
                 <Flex>
-                    <Avatar src={photoURL} size={50} />
+                    <Avatar src={photoURL} size={50} alt='user avatar' />
                     <Flex vertical>
                         <Text style={{ marginLeft: '10px', fontWeight: 500 }}>{displayName || "user"}</Text>
                         <Text style={{ marginLeft: '10px' }}>{user?.email || "email"}</Text>

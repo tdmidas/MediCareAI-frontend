@@ -52,7 +52,7 @@ const Home = () => {
                         <Card className="side-card" cover={
                             <Image
                                 preview={false}
-                                alt="example"
+                                alt="doctor side image"
                                 src="https://d1xjlj96to6zqh.cloudfront.net/doctor-1.png"
                                 style={{ float: "right", position: "absolute", paddingBottom: "72px", paddingLeft: "90px", width: "auto", height: "300px" }}
                                 loading="lazy"
@@ -87,10 +87,12 @@ const Home = () => {
                                 filter: 'drop-shadow(0px 0px 10px rgb(186, 255, 241))'
                             }}>
                                 <Flex gap={10}>
-                                    <Image src={appointment.photo} preview={false} style={{
-                                        width: 80, height: 80,
-                                        borderRadius: 50, boxShadow: "0 4px 8px 0 rgba(0,0,0,0.2)", backgroundColor: 'orange'
-                                    }} />
+                                    <Image src={appointment.photo} preview={false}
+                                        alt='done-appointment'
+                                        style={{
+                                            width: 80, height: 80,
+                                            borderRadius: 50, boxShadow: "0 4px 8px 0 rgba(0,0,0,0.2)", backgroundColor: 'orange'
+                                        }} />
                                     <Flex vertical >
                                         <Title level={5} style={{ color: "white" }}>{appointment.doctorName}</Title>
                                         <Text style={{ color: "white" }}>{appointment.bookDate}</Text>
@@ -107,7 +109,7 @@ const Home = () => {
 
                         <Image
                             preview={false}
-                            alt="example"
+                            alt="doctor side image"
                             src="https://d1xjlj96to6zqh.cloudfront.net/doctor-3.png"
                             style={{ maxHeight: "480px", maxWidth: "400px", boxShadow: "0 0 10px 0 rgba(0,0,0,0.2)", borderRadius: "10px", marginTop: "20px" }}
                             loading="lazy"

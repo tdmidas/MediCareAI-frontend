@@ -76,11 +76,7 @@ const DoctorDetail = () => {
                 content: reviewContent,
             };
 
-            await axios.post('http://localhost:5000/api/reviews/', reviewData, {
-                headers: {
-                    Authorization: `Bearer ${localStorage.getItem('accessToken')}`,
-                },
-            });
+            await axios.post('http://localhost:5000/api/reviews/', reviewData);
             message.success('Review submitted successfully');
             setReviewContent('');
             setRating(0);
