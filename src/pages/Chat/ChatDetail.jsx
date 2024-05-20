@@ -23,7 +23,7 @@ const ChatDetail = () => {
     const [loading, setLoading] = useState(false);
     const [chatbot, setChatbot] = useState(null);
     const isMobile = useMediaQuery({ maxWidth: 768 });
-
+    const userAvatar = localStorage.getItem('photoURL');
     useEffect(() => {
         const bot = chatbotData.find((chatbot) => chatbot.name === getFormattedName(slug));
         setChatbot(bot);
@@ -118,7 +118,7 @@ const ChatDetail = () => {
 
                         {messages.map((message, index) => (
                             <div key={index} className={`message ${message.sender.toLowerCase()}`}>
-                                <Avatar src={message.sender === chatbot.name ? chatbot.picture : "https://d1xjlj96to6zqh.cloudfront.net/patient-avatar.png"} style={{ marginBottom: 20 }} alt="chatbot avatar message" />
+                                <Avatar src={message.sender === chatbot.name ? chatbot.picture : userAvatar} style={{ marginBottom: 20 }} alt="chatbot avatar message" />
                                 <div className="message-content">
                                     <Flex vertical gap="small">
                                         <Text strong>{message.sender}:</Text>
@@ -147,7 +147,8 @@ const ChatDetail = () => {
                                     <Flex vertical gap="small">
                                         <Text strong>{chatbot ? chatbot.name : "Chatbot"}:</Text>
                                         <div className="message-bubble" style={{
-                                            backgroundColor: "#069390", borderRadius: 30, padding: 20, color: "white"
+                                            backgroundColor: "#069390", borderRadius: 30, padding: 20,
+                                            color: "white", maxWidth: 120
                                         }}>
                                             <BouncingDotsLoader />
                                         </div>

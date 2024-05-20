@@ -111,10 +111,10 @@ const HealthEvaluate = () => {
                                             <Text>Nặng, kg</Text>
                                         </Flex>
                                         <Flex vertical>
-                                            <Title level={2} >
+                                            <Title level={2} style={{ color: healthData.predict === "Great" ? "#069390" : "red" }}>
                                                 {healthData.predict === "Great" ? "Tốt" : "Tệ"}
                                             </Title>
-                                            <Text>Tổng thể</Text>
+                                            <Text>Chẩn đoán sức khỏe</Text>
                                         </Flex>
                                     </Flex>
                                 </>

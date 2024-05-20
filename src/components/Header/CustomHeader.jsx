@@ -136,11 +136,10 @@ const CustomHeader = ({ toggleDrawer, submitHandler }) => {
     };
     const handleLogout = async () => {
         try {
-            setUser(null);
             await auth.signOut();
-            await axios.post('http://localhost:5000/api/auth/logout');
+            setUser(null);
             localStorage.clear();
-            navigate('/');
+            navigate('/login');
         } catch (error) {
             console.error("Logout Error:", error.message);
         }

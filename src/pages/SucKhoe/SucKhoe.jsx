@@ -7,14 +7,29 @@ import slug from "slug";
 import { useMediaQuery } from 'react-responsive';
 import axios from "axios";
 import MainContentLayout from "../../layout/MainContentLayout";
+import { auth } from '../../firebaseConfig';
+import LoginRequired from "../LoginRequired/LoginRequired";
 const { Text, Title } = Typography;
 
 const SucKhoe = () => {
     const isMobile = useMediaQuery({ maxWidth: 768 });
     const [animate, setAnimate] = useState(false);
+    const [isLoggedIn, setIsLoggedIn] = useState(false);
+
 
     useEffect(() => {
         setAnimate(true);
+    }, []);
+    useEffect(() => {
+        const unsubscribe = auth.onAuthStateChanged(user => {
+            if (user) {
+                setIsLoggedIn(true);
+            } else {
+                setIsLoggedIn(false);
+            }
+        });
+
+        return () => unsubscribe();
     }, []);
     const [healthTrackData, setHealthTrackData] = useState([
         {
@@ -86,72 +101,78 @@ const SucKhoe = () => {
         <DefaultLayout>
             <Flex gap="large" wrap="wrap">
                 <MainContentLayout>
+                    {isLoggedIn ? (
+                        <>
 
-                    <Flex align="center" gap="large" wrap="wrap" >
-                        <Image preview={false} src="https://d1xjlj96to6zqh.cloudfront.net/health-overall.png"
-                            style={{
-                                maxWidth: 600,
-                                maxHeight: 400,
-                                marginLeft: 30,
-                                float: "left",
+                            <Flex align="center" gap="large" wrap="wrap" >
+                                <Image preview={false} src="https://d1xjlj96to6zqh.cloudfront.net/health-overall.png"
+                                    style={{
+                                        maxWidth: 600,
+                                        maxHeight: 400,
+                                        marginLeft: 30,
+                                        float: "left",
 
-                            }}
-                        />
-                        <Card style={{ marginLeft: isMobile ? 10 : 150 }}>
-                            <Flex vertical align="center" gap="large" justify="center" wrap="wrap">
-                                <Image preview={false} alt="health-overview"
-                                    src="https://d1xjlj96to6zqh.cloudfront.net/profile-ava.png" style={{
-                                        maxWidth: 230,
-                                        maxHeight: 230,
-                                    }} />
-                                <Title level={5}>Xem đánh giá sức khỏe<br /> tại đây bạn nhé!</Title>
-                                <Link to={"/suckhoe/evaluate"}>
-                                    <Button type="primary" style={{ marginTop: 10, boxShadow: "0px 4px 8px rgba(0, 0, 0, 0.3)", backgroundColor: "#15aea1" }} >Xem đánh giá ngay</Button>
-                                </Link>
-                            </Flex>
-                        </Card>
-                    </Flex>
-                    <Flex align="center" justify="space-between">
-                        <Typography.Title level={3} strong>
-                            Nhật ký sức khỏe
-                        </Typography.Title>
-                    </Flex>
-                    <Flex wrap="wrap" align="center" gap="large">
-                        {healthTrackData.map((item, index) => (
-                            <Link to={`/suckhoe/${slug(item.name)}`} key={index}>
-
-
-                                <Card
-                                    key={index}
-                                    hoverable
-                                    cover={
-                                        <Image
-                                            alt="health track icon"
-                                            src={item.picture}
-                                            style={{ float: "right", width: "120px", height: "120px" }}
-
-                                        />
-                                    }
-                                    style={{ height: "180px", width: isMobile ? "310px" : "350px", padding: "20px", marginBottom: "20px", backgroundColor: item.color }}
-                                >
-                                    <Flex>
-                                        <Flex vertical aligh="flex-start">
-                                            <Typography.Title level={2} strong>
-                                                {item.name}
-                                            </Typography.Title>
-                                            <Typography.Text type="secondary" strong>
-                                                <Text style={{ fontSize: 20, padding: 5 }}>
-                                                    {item.value}
-                                                </Text>
-                                                {item.measure}
-                                            </Typography.Text>
-                                        </Flex>
+                                    }}
+                                />
+                                <Card style={{ marginLeft: isMobile ? 10 : 150 }}>
+                                    <Flex vertical align="center" gap="large" justify="center" wrap="wrap">
+                                        <Image preview={false} alt="health-overview"
+                                            src="https://d1xjlj96to6zqh.cloudfront.net/profile-ava.png" style={{
+                                                maxWidth: 230,
+                                                maxHeight: 230,
+                                            }} />
+                                        <Title level={5}>Xem đánh giá sức khỏe<br /> tại đây bạn nhé!</Title>
+                                        <Link to={"/suckhoe/evaluate"}>
+                                            <Button type="primary" style={{ marginTop: 10, boxShadow: "0px 4px 8px rgba(0, 0, 0, 0.3)", backgroundColor: "#15aea1" }} >Xem đánh giá ngay</Button>
+                                        </Link>
                                     </Flex>
                                 </Card>
+                            </Flex>
+                            <Flex align="center" justify="space-between">
+                                <Typography.Title level={3} strong>
+                                    Nhật ký sức khỏe
+                                </Typography.Title>
+                            </Flex>
+                            <Flex wrap="wrap" align="center" gap="large">
+                                {healthTrackData.map((item, index) => (
+                                    <Link to={`/suckhoe/${slug(item.name)}`} key={index}>
 
-                            </Link>
-                        ))}
-                    </Flex>
+
+                                        <Card
+                                            key={index}
+                                            hoverable
+                                            cover={
+                                                <Image
+                                                    alt="health track icon"
+                                                    src={item.picture}
+                                                    style={{ float: "right", width: "120px", height: "120px" }}
+
+                                                />
+                                            }
+                                            style={{ height: "180px", width: isMobile ? "310px" : "350px", padding: "20px", marginBottom: "20px", backgroundColor: item.color }}
+                                        >
+                                            <Flex>
+                                                <Flex vertical aligh="flex-start">
+                                                    <Typography.Title level={2} strong>
+                                                        {item.name}
+                                                    </Typography.Title>
+                                                    <Typography.Text type="secondary" strong>
+                                                        <Text style={{ fontSize: 20, padding: 5 }}>
+                                                            {item.value}
+                                                        </Text>
+                                                        {item.measure}
+                                                    </Typography.Text>
+                                                </Flex>
+                                            </Flex>
+                                        </Card>
+
+                                    </Link>
+                                ))}
+                            </Flex>
+                        </>
+                    ) : (
+                        <LoginRequired />
+                    )}
 
                 </MainContentLayout>
 
