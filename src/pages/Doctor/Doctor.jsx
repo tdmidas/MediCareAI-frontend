@@ -32,7 +32,7 @@ const Doctor = () => {
     React.useEffect(() => {
 
         const apiUrl = process.env.REACT_APP_API_URL;
-        axios.get(`http://localhost:5000/api/doctors`)
+        axios.get(`https://medicareai-backend.onrender.com/api/doctors`)
             .then(response => {
                 setDoctors(response.data);
                 setLoading(false);

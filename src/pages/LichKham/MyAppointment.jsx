@@ -16,7 +16,7 @@ const MyAppointment = () => {
     const fetchData = async () => {
         try {
             const userId = localStorage.getItem('userId');
-            const response = await axios.get(`http://localhost:5000/api/appointments/my/${userId}`);
+            const response = await axios.get(`https://medicareai-backend.onrender.com/api/appointments/my/${userId}`);
             setAppointments(response.data);
         } catch (error) {
             console.error('Error fetching appointments:', error);
@@ -31,7 +31,7 @@ const MyAppointment = () => {
                 okText: 'Xác nhận',
                 cancelText: 'Hủy',
                 onOk: async () => {
-                    await axios.delete(`http://localhost:5000/api/appointments/${appointmentId}`);
+                    await axios.delete(`https://medicareai-backend.onrender.com/api/appointments/${appointmentId}`);
                     message.success('Đã hủy lịch khám');
                     fetchData();
                 }
@@ -48,7 +48,7 @@ const MyAppointment = () => {
                 okText: 'Xác nhận',
                 cancelText: 'Hủy',
                 onOk: async () => {
-                    await axios.put(`http://localhost:5000/api/appointments/${appointmentId}`, { state: stateUpdate });
+                    await axios.put(`https://medicareai-backend.onrender.com/api/appointments/${appointmentId}`, { state: stateUpdate });
                     message.success('Đã cập nhật lịch khám');
                     fetchData();
                 }
