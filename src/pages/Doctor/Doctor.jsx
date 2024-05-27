@@ -85,9 +85,7 @@ const Doctor = () => {
                                             <Flex vertical aligh="center" gap="10px">
                                                 <Flex gap="10px">
                                                     <Tag color="#069390" style={{ fontSize: 15 }}>{doctor.speciality}</Tag>
-                                                    <Typography.Text level={3} strong >
-                                                        <Image src="https://d1xjlj96to6zqh.cloudfront.net/Star.png" />  {doctor.avgRating}  ({doctor.totalRating})
-                                                    </Typography.Text>
+
                                                 </Flex>
                                                 <Typography.Title level={3} strong>
                                                     {doctor.name}

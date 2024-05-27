@@ -74,12 +74,9 @@ const BlogLayout = () => {
                                         style={{ maxWidth: "70%" }} />
                                 </Flex>
                                 <Flex justify="center" align="center" gap={20}>
+                                    <Image src={selectedBlog.userPhoto} preview={false} style={{ width: 50, height: 50, borderRadius: 50 }} />
                                     <Title level={4}>{selectedBlog.userName}</Title>
-                                    <div className="user-info-icons">
-                                        <AiOutlineHeart onClick={increaseLikes} className="like-icon" />
-                                        <Text style={{ fontSize: 20, fontWeight: 500 }} strong>{likes}</Text>
-                                        <AiOutlineComment onClick={handleCommentVisible} className="comment-icon" />
-                                    </div>
+
                                 </Flex>
                                 <div className="'blog-content'" style={{ textAlign: 'left', marginTop: 40 }}>
 

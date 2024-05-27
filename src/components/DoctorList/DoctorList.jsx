@@ -55,9 +55,7 @@ const DoctorList = () => {
                                 <Flex vertical aligh="center" gap="10px">
                                     <Flex gap="10px">
                                         <Tag color="#069390" style={{ fontSize: 11 }}>{doctor.speciality}</Tag>
-                                        <Typography.Text level={4} strong >
-                                            <Image src="https://d1xjlj96to6zqh.cloudfront.net/Star.png" alt="star icon" />  {doctor.avgRating}  ({doctor.totalRating})
-                                        </Typography.Text>
+
                                     </Flex>
                                     <Typography.Title level={4} strong>
                                         {doctor.name}
