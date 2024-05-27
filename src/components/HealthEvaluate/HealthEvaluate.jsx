@@ -94,14 +94,11 @@ const HealthEvaluate = () => {
                             {healthData ? (
                                 <>
                                     <Flex gap={20}>
-                                        <Image preview={false} src={localStorage.getItem("photoURL")} style={{ borderRadius: 50 }} />
+                                        <Image preview={false} src={localStorage.getItem("photoURL")} style={{ borderRadius: 50, width: 80, height: 80 }} />
                                         <Title level={3}>{localStorage.getItem("displayName")}</Title>
                                     </Flex>
                                     <Flex align="left" justify="left" gap={100} wrap='wrap'>
-                                        <Flex vertical>
-                                            <Title level={2}>30</Title>
-                                            <Text>Tuổi</Text>
-                                        </Flex>
+
                                         <Flex vertical>
                                             <Title level={2}>{healthData.height}</Title>
                                             <Text>Cao, cm</Text>
