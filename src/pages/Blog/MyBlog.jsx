@@ -23,7 +23,7 @@ const MyBlog = () => {
         try {
             setLoading(true);
             const userId = localStorage.getItem('userId');
-            const response = await axios.get(`https://medicareai-backend.onrender.com/api/blogs/my/${userId}`);
+            const response = await axios.get(`https://medi-care-ai-backend-qjg1y3sxj-djais-projects.vercel.app/api/blogs/my/${userId}`);
             setPostData(response.data);
             setLoading(false);
         } catch (error) {

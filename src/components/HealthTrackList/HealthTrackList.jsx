@@ -45,10 +45,10 @@ const HealthTrackList = () => {
                     return; // Exit the function early
                 }
 
-                const bpResponse = await axios.get(`https://medicareai-backend.onrender.com/api/health/bloodPressure/${userId}`);
+                const bpResponse = await axios.get(`https://medi-care-ai-backend-qjg1y3sxj-djais-projects.vercel.app/api/health/bloodPressure/${userId}`);
                 const { diaBP, sysBP } = bpResponse.data;
 
-                const glucoseResponse = await axios.get(`https://medicareai-backend.onrender.com/api/health/glucose/${userId}`);
+                const glucoseResponse = await axios.get(`https://medi-care-ai-backend-qjg1y3sxj-djais-projects.vercel.app/api/health/glucose/${userId}`);
                 const { glucose } = glucoseResponse.data;
 
                 const updatedHealthData = [

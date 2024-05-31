@@ -24,7 +24,7 @@ const DoctorDetail = () => {
 
     const fetchData = async () => {
         try {
-            const response = await axios.get(`https://medicareai-backend.onrender.com/api/doctors`);
+            const response = await axios.get(`https://medi-care-ai-backend-qjg1y3sxj-djais-projects.vercel.app/api/doctors`);
             setDoctors(response.data);
         } catch (error) {
             console.log("Error fetching data", error);
@@ -34,7 +34,7 @@ const DoctorDetail = () => {
 
     const fetchReviews = async () => {
         try {
-            const response = await axios.get(`https://medicareai-backend.onrender.com/api/reviews/${doctor.doctorId}`,);
+            const response = await axios.get(`https://medi-care-ai-backend-qjg1y3sxj-djais-projects.vercel.app/api/reviews/${doctor.doctorId}`,);
             setReviews(response.data);
         } catch (error) {
             console.log("Error fetching reviews data", error);
@@ -75,7 +75,7 @@ const DoctorDetail = () => {
                 content: reviewContent,
             };
 
-            await axios.post('https://medicareai-backend.onrender.com/api/reviews/', reviewData);
+            await axios.post('https://medi-care-ai-backend-qjg1y3sxj-djais-projects.vercel.app/api/reviews/', reviewData);
             message.success('Review submitted successfully');
             setReviewContent('');
             setRating(0);

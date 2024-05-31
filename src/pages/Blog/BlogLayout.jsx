@@ -23,7 +23,7 @@ const BlogLayout = () => {
 
     const fetchData = async () => {
         try {
-            const response = await fetch("https://medicareai-backend.onrender.com/api/blogs");
+            const response = await fetch("https://medi-care-ai-backend-qjg1y3sxj-djais-projects.vercel.app/api/blogs");
             const data = await response.json();
             setBlogData(data);
         }

@@ -55,7 +55,7 @@ const Profile = () => {
             formData.append('image', e.target.files[0]);
 
             try {
-                const response = await axios.post('https://medicareai-backend.onrender.com/api/upload', formData, {
+                const response = await axios.post('https://medi-care-ai-backend-qjg1y3sxj-djais-projects.vercel.app/api/upload', formData, {
                     headers: {
                         'Content-Type': 'multipart/form-data',
                         Authorization: `Bearer ${accessToken}`
@@ -97,7 +97,7 @@ const Profile = () => {
             bio: values.bio
         };
         try {
-            await axios.put(`https://medicareai-backend.onrender.com/api/users/update-profile/${userId}`, updatedValues, {
+            await axios.put(`https://medi-care-ai-backend-qjg1y3sxj-djais-projects.vercel.app/api/users/update-profile/${userId}`, updatedValues, {
                 headers: {
                     Authorization: `Bearer ${accessToken}`
                 }
@@ -134,7 +134,7 @@ const Profile = () => {
 
 
         try {
-            await axios.put(`https://medicareai-backend.onrender.com/api/users/update-password/${userId}`, passwordData, {
+            await axios.put(`https://medi-care-ai-backend-qjg1y3sxj-djais-projects.vercel.app/api/users/update-password/${userId}`, passwordData, {
                 headers: {
                     Authorization: `Bearer ${accessToken}`
                 }

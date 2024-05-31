@@ -55,7 +55,7 @@ const HuyetAp = () => {
         setBloodPressureClassification(classification);
         setBloodPressureColor(color);
         const userId = localStorage.getItem("userId");
-        await axios.post(`https://medicareai-backend.onrender.com/api/health/bloodPressure/${userId}`, {
+        await axios.post(`https://medi-care-ai-backend-qjg1y3sxj-djais-projects.vercel.app/api/health/bloodPressure/${userId}`, {
             sysBP: parseFloat(tamTruong),
             diaBP: parseFloat(tamThu),
             heartRate: parseFloat(nhipTim),

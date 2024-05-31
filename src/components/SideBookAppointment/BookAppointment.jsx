@@ -14,7 +14,7 @@ const BookAppointment = ({ doctor }) => {
     useEffect(() => {
         const fetchDoctorDetails = async () => {
             try {
-                const response = await axios.get(`https://medicareai-backend.onrender.com/api/doctors/${doctor.doctorId}`);
+                const response = await axios.get(`https://medi-care-ai-backend-qjg1y3sxj-djais-projects.vercel.app/api/doctors/${doctor.doctorId}`);
                 setAvailableTimes(response.data.availableTimes);
                 setLoading(false);
             } catch (error) {

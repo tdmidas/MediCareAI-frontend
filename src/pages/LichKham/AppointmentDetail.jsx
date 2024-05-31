@@ -19,7 +19,7 @@ const AppointmentDetail = () => {
     const fetchAppointment = async () => {
         try {
             const userId = localStorage.getItem('userId');
-            const response = await axios.get(`https://medicareai-backend.onrender.com/api/appointments/my/${userId}`);
+            const response = await axios.get(`https://medi-care-ai-backend-qjg1y3sxj-djais-projects.vercel.app/api/appointments/my/${userId}`);
             setAppointments(response.data);
         } catch (error) {
             console.error('Error fetching appointments:', error);

@@ -10,7 +10,7 @@ const DoctorList = () => {
     useEffect(() => {
         const fetchDoctors = async () => {
             try {
-                const response = await axios.get(`https://medicareai-backend.onrender.com/api/doctors`);
+                const response = await axios.get(`https://medi-care-ai-backend-qjg1y3sxj-djais-projects.vercel.app/api/doctors`);
                 setDoctors(response.data);
             } catch (error) {
                 console.error(error);

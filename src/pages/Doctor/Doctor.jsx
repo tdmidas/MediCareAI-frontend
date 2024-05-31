@@ -32,7 +32,7 @@ const Doctor = () => {
     React.useEffect(() => {
 
         const apiUrl = process.env.REACT_APP_API_URL;
-        axios.get(`https://medicareai-backend.onrender.com/api/doctors`)
+        axios.get(`https://medi-care-ai-backend-qjg1y3sxj-djais-projects.vercel.app/api/doctors`)
             .then(response => {
                 setDoctors(response.data);
                 setLoading(false);

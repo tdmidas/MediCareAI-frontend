@@ -56,7 +56,7 @@ const ChatDetail = () => {
         setLoading(true);
 
         try {
-            const response = await axios.post('https://medicareai-backend.onrender.com/api/chat/message', { userInput });
+            const response = await axios.post('https://medi-care-ai-backend-qjg1y3sxj-djais-projects.vercel.app/api/chat/message', { userInput });
             const { message: botResponse } = response.data;
             const updatedMessagesWithBot = [...updatedMessages, { sender: chatbot.name, content: botResponse }];
             setMessages(updatedMessagesWithBot);
@@ -94,7 +94,7 @@ const ChatDetail = () => {
         setMessages(updatedMessages);
         setLoading(true);
         try {
-            const response = await axios.post('https://medicareai-backend.onrender.com/api/chat/message', { userInput: buttonName });
+            const response = await axios.post('https://medi-care-ai-backend-qjg1y3sxj-djais-projects.vercel.app/api/chat/message', { userInput: buttonName });
             const { message: botResponse } = response.data;
             const updatedMessagesWithBot = [...messages, { sender: chatbot.name, content: botResponse }];
             setMessages(updatedMessagesWithBot);

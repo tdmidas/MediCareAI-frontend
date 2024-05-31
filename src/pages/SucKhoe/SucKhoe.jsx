@@ -60,9 +60,9 @@ const SucKhoe = () => {
     const fetchData = async () => {
         try {
             const userId = localStorage.getItem("userId");
-            const BMI_response = await axios.get(`https://medicareai-backend.onrender.com/api/health/BMI/${userId}`);
-            const BP_response = await axios.get(`https://medicareai-backend.onrender.com/api/health/bloodPressure/${userId}`);
-            const glucose_response = await axios.get(`https://medicareai-backend.onrender.com/api/health/glucose/${userId}`);
+            const BMI_response = await axios.get(`https://medi-care-ai-backend-qjg1y3sxj-djais-projects.vercel.app/api/health/BMI/${userId}`);
+            const BP_response = await axios.get(`https://medi-care-ai-backend-qjg1y3sxj-djais-projects.vercel.app/api/health/bloodPressure/${userId}`);
+            const glucose_response = await axios.get(`https://medi-care-ai-backend-qjg1y3sxj-djais-projects.vercel.app/api/health/glucose/${userId}`);
 
             const updatedHealthData = healthTrackData.map(item => {
                 switch (item.name) {

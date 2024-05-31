@@ -36,7 +36,7 @@ const Blog = () => {
     const postsPerPage = 6;
 
     React.useEffect(() => {
-        axios.get(`https://medicareai-backend.onrender.com/api/blogs`)
+        axios.get(`https://medi-care-ai-backend-qjg1y3sxj-djais-projects.vercel.app/api/blogs`)
             .then(response => {
                 const publishedPosts = response.data.filter(
                     (post) => post.state === "published"

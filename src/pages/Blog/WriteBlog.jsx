@@ -70,7 +70,7 @@ const WriteBlog = () => {
         };
 
         try {
-            const response = await axios.post('https://medicareai-backend.onrender.com/api/blogs/', blogData);
+            const response = await axios.post('https://medi-care-ai-backend-qjg1y3sxj-djais-projects.vercel.app/api/blogs/', blogData);
             console.log('Blog submitted successfully:', response.data);
             message.success("Blog submitted successfully!");
             setTitle('');
@@ -97,7 +97,7 @@ const WriteBlog = () => {
             formData.append('image', e.target.files[0]);
 
             try {
-                const response = await axios.post('https://medicareai-backend.onrender.com/api/upload', formData);
+                const response = await axios.post('https://medi-care-ai-backend-qjg1y3sxj-djais-projects.vercel.app/api/upload', formData);
                 setBlogImageUrl(response.data.imageUrl);
                 message.success("Image uploaded successfully");
             } catch (error) {
@@ -110,7 +110,7 @@ const WriteBlog = () => {
     const handleGenerateClick = async () => {
         setLoading(true);
         try {
-            const response = await axios.post('https://medicareai-backend.onrender.com/api/chat/message/blog', { userInput: textInput });
+            const response = await axios.post('https://medi-care-ai-backend-qjg1y3sxj-djais-projects.vercel.app/api/chat/message/blog', { userInput: textInput });
             const { title, content } = response.data;
             setTitle(title);
             setContent(content);
