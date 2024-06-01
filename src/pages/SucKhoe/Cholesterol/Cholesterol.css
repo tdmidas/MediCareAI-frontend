@@ -1,0 +1,34 @@
+
+:root {
+    --good: #069390;
+    --high: #f7a440;
+    --critical: #a72420;
+}
+
+.submit-btn:hover {
+    background: #229c9e !important;
+}
+
+.cholesterolCard {
+    box-shadow: 0 10px 15px rgba(5, 125, 129, 0.25);
+}
+
+.cholesterol-scale {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: space-around;
+}
+.cholesterol-scale>div {
+    flex: 1;
+    max-width: 45%;
+    margin-bottom: 20px;
+    padding: 10px;
+    text-align: center;
+    border-top: 5px solid var(--color);    /* Update this line */
+}
+
+@media screen and (max-width: 768px) {
+    .cholesterol-scale>div {
+        max-width: 100%;
+    }
+}

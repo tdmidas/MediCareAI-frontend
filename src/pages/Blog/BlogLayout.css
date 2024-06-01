@@ -31,10 +31,11 @@
     background: #fff;
 }
 
-.like-icon:hover {
-    color: red;
-
+.like-btn:hover {
+background-color: rgb(248, 93, 93) !important;
+border-color: rgb(248, 93, 93) !important;
 }
+
 .like-icon.clicked {
     color: red;
 }

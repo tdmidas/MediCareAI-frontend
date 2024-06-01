@@ -29,7 +29,7 @@ const HealthEvaluate = () => {
     }, []);
 
     useEffect(() => {
-        if (healthData && healthData.bloodStatus && healthData.glucoseStatus && healthData.bmiStatus) {
+        if (healthData && healthData.bloodStatus && healthData.glucoseStatus && healthData.bmiStatus && healthData.cholesterolStatus) {
             setDataComplete(true);
         } else {
             setDataComplete(false);
@@ -49,8 +49,8 @@ const HealthEvaluate = () => {
     };
 
     useEffect(() => {
-        if (healthData && healthData.bmiStatus && healthData.bloodStatus && healthData.glucoseStatus) {
-            const userInput = `Bạn có lời khuyên gì về sức khỏe hiện tại của tôi không:BMI ${healthData.bmiStatus}, Blood ${healthData.bloodStatus}, Glucose ${healthData.glucoseStatus}`;
+        if (healthData && healthData.bmiStatus && healthData.bloodStatus && healthData.glucoseStatus && healthData.cholesterolStatus) {
+            const userInput = `Bạn có lời khuyên gì về sức khỏe hiện tại của tôi không:BMI ${healthData.bmiStatus}, Blood ${healthData.bloodStatus}, Glucose ${healthData.glucoseStatus}, Cholesterol ${healthData.cholesterolStatus}`;
             fetchChatbotResponse(userInput);
         }
     }, [healthData]);
@@ -58,8 +58,8 @@ const HealthEvaluate = () => {
         try {
             const userId = localStorage.getItem("userId");
             setLoading(true);
-            await axios.post(`https://medi-care-ai-backend-qjg1y3sxj-djais-projects.vercel.app/api/health/overall/${userId}`);
-            const response = await axios.get(`https://medi-care-ai-backend-qjg1y3sxj-djais-projects.vercel.app/api/health/overall/${userId}`);
+            await axios.post(`http://localhost:5000/api/health/overall/${userId}`);
+            const response = await axios.get(`http://localhost:5000/api/health/overall/${userId}`);
             setHealthData(response.data);
             setLoading(false);
         } catch (error) {
@@ -98,6 +98,11 @@ const HealthEvaluate = () => {
                                         <Title level={3}>{localStorage.getItem("displayName")}</Title>
                                     </Flex>
                                     <Flex align="left" justify="left" gap={100} wrap='wrap'>
+                                        <Flex vertical>
+                                            <Title level={2}>{healthData.age}</Title>
+                                            <Text>Tuổi</Text>
+                                        </Flex>
+
 
                                         <Flex vertical>
                                             <Title level={2}>{healthData.height}</Title>
@@ -159,19 +164,34 @@ const HealthEvaluate = () => {
                                     )}
                                 </Card>
                             </Flex>
-                            <Card hoverable className="heart-card"
-                                cover={<Image src={heartLine} style={{ maxWidth: '300px', height: 200, float: 'right', objectFit: 'cover' }} />}
-                                style={{ maxWidth: "500px", height: isMobile ? 400 : 230, borderRadius: 40 }}>
-                                <Title level={2} style={{ color: 'white' }}>Nhịp tim</Title>
-                                {healthData ? (
-                                    <Flex vertical justify="left">
-                                        <Text type='secondary' style={{ fontWeight: 500, marginTop: 30, fontSize: 25, color: 'white' }}>bpm</Text>
-                                        <Text style={{ fontWeight: 500, fontSize: 50, color: 'white' }}>{healthData.heartRate}</Text>
-                                    </Flex>
-                                ) : (
-                                    <Text style={{ color: 'white' }}>Chưa có dữ liệu</Text>
-                                )}
-                            </Card>
+                            <Flex gap={30} wrap='wrap'>
+                                <Card hoverable className="cholesterol-card" style={{ width: "250px", height: 230, borderRadius: 40 }}>
+                                    <Title level={4} style={{ color: 'white' }}>Cholesterol</Title>
+                                    {healthData ? (
+                                        <Flex vertical justify="left">
+                                            <Text type='secondary' style={{ fontWeight: 500, marginTop: 30, color: 'white' }}>mg/dl</Text>
+                                            <Text style={{ fontWeight: 500, fontSize: 40, color: 'white' }}>{healthData.totChol}</Text>
+                                            <Text style={{ fontWeight: 500, fontSize: 15, color: 'white' }}>{healthData.cholesterolStatus}</Text>
+                                        </Flex>
+                                    ) : (
+                                        <Text style={{ color: 'white' }}>Chưa có dữ liệu</Text>
+                                    )}
+                                </Card>
+
+                                <Card hoverable className="heart-card"
+                                    cover={<Image src={heartLine} style={{ maxWidth: '300px', height: 200, float: 'right', objectFit: 'cover' }} />}
+                                    style={{ width: isMobile ? 250 : 500, height: isMobile ? 400 : 230, borderRadius: 40 }}>
+                                    <Title level={2} style={{ color: 'white' }}>Nhịp tim</Title>
+                                    {healthData ? (
+                                        <Flex vertical justify="left">
+                                            <Text type='secondary' style={{ fontWeight: 500, marginTop: 30, fontSize: 25, color: 'white' }}>bpm</Text>
+                                            <Text style={{ fontWeight: 500, fontSize: 50, color: 'white' }}>{healthData.heartRate}</Text>
+                                        </Flex>
+                                    ) : (
+                                        <Text style={{ color: 'white' }}>Chưa có dữ liệu</Text>
+                                    )}
+                                </Card>
+                            </Flex>
 
                             <Title level={2}>Đề xuất đọc</Title>
                             {healthData ? (
@@ -205,7 +225,7 @@ const HealthEvaluate = () => {
 
                                         </Flex>
                                     ) : (
-                                        <Card style={{ borderRadius: 20, padding: 10, maxWidth: 500 }}>
+                                        <Card style={{ borderRadius: 20, padding: 10, maxWidth: 500, marginBottom: 30 }}>
                                             <Text>
                                                 <ReactMarkdown>
                                                     {chatbotResponse}

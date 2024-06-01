@@ -46,7 +46,7 @@ const SucKhoe = () => {
             picture: "https://d1xjlj96to6zqh.cloudfront.net/blood-sugar.png",
             measure: "mmol/L",
             value: "--",
-            color: "#f8aa76",
+            color: "#f6c6a5",
         },
         {
             id: 3,
@@ -54,7 +54,16 @@ const SucKhoe = () => {
             picture: "https://d1xjlj96to6zqh.cloudfront.net/bmi.png",
             measure: "BMI",
             value: "--",
-            color: "#87edfb",
+            color: "#a3f9be",
+        },
+        {
+            id: 4,
+            name: "Cholesterol",
+            picture: "https://d1xjlj96to6zqh.cloudfront.net/blood.png",
+            measure: "mg/dL",
+            value: "--",
+            color: "#faa9a0",
+
         }
     ]);
     const fetchData = async () => {
@@ -63,6 +72,7 @@ const SucKhoe = () => {
             const BMI_response = await axios.get(`https://medi-care-ai-backend-qjg1y3sxj-djais-projects.vercel.app/api/health/BMI/${userId}`);
             const BP_response = await axios.get(`https://medi-care-ai-backend-qjg1y3sxj-djais-projects.vercel.app/api/health/bloodPressure/${userId}`);
             const glucose_response = await axios.get(`https://medi-care-ai-backend-qjg1y3sxj-djais-projects.vercel.app/api/health/glucose/${userId}`);
+            const cholesterol_response = await axios.get(`https://medi-care-ai-backend-qjg1y3sxj-djais-projects.vercel.app/api/health/cholesterol/${userId}`);
 
             const updatedHealthData = healthTrackData.map(item => {
                 switch (item.name) {
@@ -80,6 +90,11 @@ const SucKhoe = () => {
                         return {
                             ...item,
                             value: BMI_response.data.BMI
+                        };
+                    case "Cholesterol":
+                        return {
+                            ...item,
+                            value: cholesterol_response.data.totChol
                         };
                     default:
                         return item;

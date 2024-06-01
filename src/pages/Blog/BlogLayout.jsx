@@ -1,12 +1,12 @@
-import React, { useState, useEffect, Suspense } from "react";
-import { Layout, Typography, Image, Col, Modal, Form, Input, Button, Flex, Spin } from 'antd';
+import React, { useState, useEffect } from "react";
+import { Layout, Typography, Image, Col, Form, Input, Button, Spin, Divider, message, Card } from 'antd';
 import './BlogLayout.css';
 import { AiOutlineHeart, AiOutlineComment } from 'react-icons/ai';
 import CustomHeader from "../../components/Header/CustomHeader";
 import { useParams } from "react-router-dom";
 import slug from 'slug';
 import ReactMarkdown from 'react-markdown';
-
+import axios from "axios";
 
 const { Content } = Layout;
 const { Title, Text } = Typography;
@@ -17,7 +17,8 @@ const BlogLayout = () => {
     const [comments, setComments] = useState([]);
     const [blogData, setBlogData] = useState([]);
     const [selectedBlog, setSelectedBlog] = useState({});
-    const LazyMarkdown = React.lazy(() => import('react-markdown'));
+    const [commentContent, setCommentContent] = useState('');
+    const [hasLiked, setHasLiked] = useState(false);
 
     const { slugName } = useParams(); // Extract slug from URL
 
@@ -26,8 +27,7 @@ const BlogLayout = () => {
             const response = await fetch("https://medi-care-ai-backend-qjg1y3sxj-djais-projects.vercel.app/api/blogs");
             const data = await response.json();
             setBlogData(data);
-        }
-        catch (error) {
+        } catch (error) {
             console.log("Error fetching data", error);
         }
     };
@@ -37,26 +37,72 @@ const BlogLayout = () => {
     }, []);
 
     useEffect(() => {
-        console.log(slug);
-
         const selectedBlog = blogData.find(blog => slug(blog.title) === slugName);
         setSelectedBlog(selectedBlog);
-        console.log(selectedBlog);
 
         if (selectedBlog) {
             setLikes(selectedBlog.likes);
-            setComments(selectedBlog.comments);
+            setComments(selectedBlog.comments || []);
+            const hasUserLiked = localStorage.getItem(`hasLiked_${selectedBlog.blogId}`);
+            setHasLiked(hasUserLiked === 'true');
         }
     }, [slug, blogData]);
 
-    const increaseLikes = () => {
-        setLikes(likes + 1);
+    useEffect(() => {
+        const fetchComments = async () => {
+            if (!selectedBlog.blogId) {
+                return;
+            }
+            try {
+                const response = await axios.get(`https://medi-care-ai-backend-qjg1y3sxj-djais-projects.vercel.app/api/comments/blog/${selectedBlog.blogId}`);
+                setComments(response.data);
+            } catch (error) {
+                console.error("Error fetching comments:", error);
+            }
+        };
+
+        if (selectedBlog && selectedBlog.blogId) {
+            fetchComments();
+        }
+    }, [selectedBlog]);
+
+    const increaseLikes = async () => {
+        if (!hasLiked) {
+            setLikes(parseInt(likes) + 1);
+            await axios.put(`https://medi-care-ai-backend-qjg1y3sxj-djais-projects.vercel.app/api/blogs/like/${selectedBlog.blogId}`);
+            localStorage.setItem(`hasLiked_${selectedBlog.blogId}`, 'true');
+            setHasLiked(true);
+        }
     };
 
     const handleCommentVisible = () => {
         setCommentVisible(!isCommentVisible);
     };
 
+    const handleCommentSubmit = async () => {
+        if (!commentContent) {
+            return;
+        }
+        const userId = localStorage.getItem("userId");
+        const photoURL = localStorage.getItem("photoURL");
+        const displayName = localStorage.getItem("displayName");
+        try {
+            const response = await axios.post("https://medi-care-ai-backend-qjg1y3sxj-djais-projects.vercel.app/api/comments", {
+                blogId: selectedBlog.blogId,
+                userId: userId,
+                photoURL: photoURL,
+                content: commentContent,
+                displayName: displayName,
+            });
+            message.success("Comment created successfully");
+            const newComment = response.data.comment;
+            setComments([...comments, newComment]);
+            setCommentContent('');
+        } catch (error) {
+            console.log("Error creating comment", error);
+            message.error("Error creating comment");
+        }
+    };
 
     return (
         <Layout className="blog-layout" style={{ height: "100vh", overflowY: "scroll", overflowX: "hidden" }}>
@@ -66,41 +112,68 @@ const BlogLayout = () => {
             <Content className="blog-content" style={{ backgroundColor: "white" }}>
                 <Spin spinning={!selectedBlog || !selectedBlog.title}>
                     {selectedBlog && (
-                        <Col xs={{ span: 22, offset: 1 }} md={{ span: 18, offset: 3 }} lg={{ span: 14, offset: 5 }} >
+                        <Col xs={{ span: 22, offset: 1 }} md={{ span: 18, offset: 3 }} lg={{ span: 14, offset: 5 }}>
                             <div className="blog-card">
-                                <Flex vertical align="center" justify="center" gap="large">
-                                    <Title level={1}>{selectedBlog.title}</Title>
-                                    <Image preview={false} src={selectedBlog.photo} alt={selectedBlog.title} className="blog-image"
-                                        style={{ maxWidth: "70%" }} />
-                                </Flex>
-                                <Flex justify="center" align="center" gap={20}>
-                                    <Image src={selectedBlog.userPhoto} preview={false} style={{ width: 50, height: 50, borderRadius: 50 }} />
-                                    <Title level={4}>{selectedBlog.userName}</Title>
-
-                                </Flex>
-                                <div className="'blog-content'" style={{ textAlign: 'left', marginTop: 40 }}>
-
-                                    <Suspense fallback={<div>Loading...</div>}>
-                                        <Text style={{ fontSize: 15, lineHeight: 2 }} >
-
-                                            <LazyMarkdown>
-                                                {selectedBlog.content}
-                                            </LazyMarkdown>
-                                        </Text>
-
-                                    </Suspense>
+                                <Title level={1}>{selectedBlog.title}</Title>
+                                <Image preview={false} src={selectedBlog.photo} alt={selectedBlog.title} className="blog-image" style={{ maxWidth: "70%" }} />
+                                <div className="blog-content" style={{ textAlign: 'left', marginTop: 40 }}>
+                                    <ReactMarkdown>{selectedBlog.content}</ReactMarkdown>
                                 </div>
 
+                                <div style={{ display: 'flex', gap: '10px', justifyContent: 'center', alignItems: 'center' }}>
+                                    <Button className="like-btn" icon={<AiOutlineHeart />} onClick={increaseLikes} style={{ backgroundColor: hasLiked ? 'rgb(248, 93, 93)' : 'inherit' }}>
+                                        {likes} Like
+                                    </Button>
+                                    <Button icon={<AiOutlineComment />} onClick={handleCommentVisible}>Comment</Button>
+                                </div>
+
+                                {isCommentVisible && (
+                                    <div style={{ marginTop: 20 }}>
+                                        <Divider />
+                                        <Form layout="vertical">
+                                            <Form.Item label="Comment">
+                                                <Input.TextArea rows={4} value={commentContent} onChange={(e) => setCommentContent(e.target.value)} />
+                                            </Form.Item>
+                                            <Form.Item>
+                                                <Button type="primary" onClick={handleCommentSubmit}>Submit</Button>
+                                            </Form.Item>
+                                        </Form>
+                                    </div>
+                                )}
+
+                                {comments.length > 0 && (
+                                    <div style={{ marginTop: 20 }}>
+                                        <Divider />
+                                        <Title level={4}>Comments</Title>
+                                        {comments.map(comment => (
+                                            <div key={comment.commentId} style={{ display: 'flex', flexDirection: 'column', gap: '10px', alignItems: 'flex-start' }}>
+                                                <Card key={comment.commentId} style={{ borderRadius: 20, marginBottom: 15 }}>
+                                                    <div style={{ display: 'flex', gap: '10px', alignItems: 'center' }}>
+                                                        <Image src={comment.photoURL} alt={comment.displayName} style={{ width: 40, height: 40, borderRadius: 25, marginBottom: 10 }} />
+                                                        <Text strong>{comment.displayName}</Text>
+                                                    </div>
+                                                    <div style={{ display: 'flex', gap: '10px', justifyContent: 'left', alignItems: 'left' }}>
+                                                        <Text>{comment.content}</Text>
+                                                    </div>
+                                                </Card>
+                                            </div>
+                                        ))}
+                                    </div>
+                                )}
+
+                                {comments.length === 0 && isCommentVisible && (
+                                    <div style={{ marginTop: 20 }}>
+                                        <Divider />
+                                        <Text>This post has no comments.</Text>
+                                    </div>
+                                )}
                             </div>
                         </Col>
                     )}
                 </Spin>
-
             </Content>
-
         </Layout>
     );
-}
-
+};
 
 export default BlogLayout;

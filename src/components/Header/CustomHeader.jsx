@@ -54,9 +54,9 @@ const CustomHeader = ({ toggleDrawer, submitHandler }) => {
             try {
                 const userId = localStorage.getItem('userId');
                 const responses = await Promise.all([
-                    fetch(`https://medicareai-backend.onrender.com/api/health/bmi/${userId}`),
-                    fetch(`https://medicareai-backend.onrender.com/api/health/glucose/${userId}`),
-                    fetch(`https://medicareai-backend.onrender.com/api/health/bloodPressure/${userId}`),
+                    fetch(`https://medi-care-ai-backend-qjg1y3sxj-djais-projects.vercel.app/api/health/bmi/${userId}`),
+                    fetch(`https://medi-care-ai-backend-qjg1y3sxj-djais-projects.vercel.app/api/health/glucose/${userId}`),
+                    fetch(`https://medi-care-ai-backend-qjg1y3sxj-djais-projects.vercel.app/api/health/bloodPressure/${userId}`),
                 ]);
 
                 const notifications = [];
@@ -112,8 +112,8 @@ const CustomHeader = ({ toggleDrawer, submitHandler }) => {
             if (searchQuery.trim() !== '') { // Check if searchQuery is not empty
                 const doctorType = 'doctor';
                 const blogType = 'blog';
-                const doctorResponse = await axios.get(`http://localhost:5000/api/search?type=${doctorType}&query=${searchQuery}`);
-                const blogResponse = await axios.get(`http://localhost:5000/api/search?type=${blogType}&query=${searchQuery}`);
+                const doctorResponse = await axios.get(`https://medi-care-ai-backend-qjg1y3sxj-djais-projects.vercel.app/api/search?type=${doctorType}&query=${searchQuery}`);
+                const blogResponse = await axios.get(`https://medi-care-ai-backend-qjg1y3sxj-djais-projects.vercel.app/api/search?type=${blogType}&query=${searchQuery}`);
                 setDoctorData(doctorResponse.data);
                 setBlogData(blogResponse.data);
             } else {
@@ -258,7 +258,7 @@ const CustomHeader = ({ toggleDrawer, submitHandler }) => {
                                     <Link to={`/blog/${slug(blog.title)}`} key={index}>
                                         <Card.Grid key={index} hoverable={false} style={{ width: '100%', padding: 10, border: 'none', boxShadow: 'none' }}>
                                             <Flex align="center" gap="10px">
-                                                <Avatar src={blog.photo} style={{ width: 100, height: 50 }} />
+                                                <Avatar src={blog.photo} style={{ width: 150, height: 50 }} />
                                                 <Flex vertical align='center'>
                                                     <Text strong>{blog.title}</Text>
                                                 </Flex>
@@ -297,7 +297,7 @@ const CustomHeader = ({ toggleDrawer, submitHandler }) => {
                                     </Dropdown>
 
                                     <Dropdown overlay={menu}>
-                                        <img src={user.photoURL} alt="Profile" className="profile-photo" style={{ borderRadius: 30, width: 35, height: 35, marginRight: 10 }} />
+                                        <img src={photoURL} alt="Profile" className="profile-photo" style={{ borderRadius: 30, width: 35, height: 35, marginRight: 10 }} />
                                     </Dropdown>
                                 </>
                             )}

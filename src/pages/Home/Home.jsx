@@ -1,6 +1,6 @@
 import './Home.css';
 import DefaultLayout from '../../layout/DefaultLayout';
-import { Flex, Card, Image, Typography, Button } from "antd";
+import { Flex, Card, Image, Typography, Button, Modal } from "antd";
 import React, { useState, useEffect } from "react";
 import Banner from '../../components/Banner/Banner';
 import HealthTrackList from '../../components/HealthTrackList/HealthTrackList';
@@ -12,12 +12,17 @@ import BasicDateCalendar from '../../components/Calendar/Calendar';
 import { useNavigate } from 'react-router-dom';
 import { useMediaQuery } from 'react-responsive';
 import axios from 'axios';
+
 const { Title, Text } = Typography;
+
 const Home = () => {
     const navigate = useNavigate();
     const isMobile = useMediaQuery({ maxWidth: 768 });
     const isTablet = useMediaQuery({ minWidth: 769, maxWidth: 1024 });
     const [appointments, setAppointments] = useState([]);
+    const [isModalVisible, setIsModalVisible] = useState(false);
+
+
     const fetchAppointment = async () => {
         try {
             const userId = localStorage.getItem('userId');
@@ -27,15 +32,52 @@ const Home = () => {
             console.error('Error fetching appointments:', error);
         }
     };
+
+    const checkBirthdate = async () => {
+        try {
+            const userId = localStorage.getItem('userId');
+            const response = await axios.get(`https://medi-care-ai-backend-qjg1y3sxj-djais-projects.vercel.app/api/users/${userId}`);
+            if (!response.data.age) {
+                setIsModalVisible(true);
+            }
+        } catch (error) {
+            console.error('Error checking birthdate:', error);
+        }
+    };
+
     useEffect(() => {
         fetchAppointment();
+        checkBirthdate();
     }, []);
+
+    const handleModalOk = () => {
+        navigate('/profile');
+        setIsModalVisible(false);
+    };
+
+    const handleModalCancel = () => {
+        setIsModalVisible(false);
+    };
+
     const doneAppointment = appointments.filter(appointment => appointment.state === 'pending');
     const handleClick = () => {
         navigate('/lichkham');
     };
+
     return (
         <DefaultLayout>
+            <Modal
+                title="Update Your Profile"
+                visible={isModalVisible}
+                onOk={handleModalOk}
+                onCancel={handleModalCancel}
+                okText="Update Now"
+                cancelText="Later"
+            >
+                <p>Please update your birthdate to get the most accurate health recommendations.</p>
+            </Modal>
+
+
             <Flex gap="large" wrap='wrap'>
                 <MainContentLayout />
                 <Flex vertical gap="2.3rem" wrap='wrap'>
@@ -43,8 +85,6 @@ const Home = () => {
                     <HealthTrackList />
                     <BLogList />
                     <DoctorList />
-
-
                 </Flex>
                 <MainContentLayout />
                 <SideContentLayout>
@@ -66,11 +106,9 @@ const Home = () => {
                                 <Typography.Title level={4} strong style={{ color: 'white' }}>
                                     The better<br /> life
                                 </Typography.Title>
-
-                            </Flex >
-                        </Card >
+                            </Flex>
+                        </Card>
                         <Card style={{ maxWidth: 400 }}>
-
                             <BasicDateCalendar />
                             <Button className="calendar-btn" size="large" type="primary" onClick={handleClick} style={{ alignContent: "center" }}>
                                 Đặt lịch khám
@@ -100,13 +138,10 @@ const Home = () => {
                                             <Text style={{ color: "white" }}>{appointment.dayTime}</Text>
                                             <Text style={{ color: "white" }}>{appointment.startHour}h-{appointment.endHour}h {appointment.dayTime === 'morning' ? 'AM' : 'PM'} </Text>
                                         </Flex>
-
-
                                     </Flex>
                                 </Flex>
                             </Card>
                         ))}
-
                         <Image
                             preview={false}
                             alt="doctor side image"
@@ -115,19 +150,11 @@ const Home = () => {
                             loading="lazy"
                             decoding="async"
                         />
-
-
-
                     </Flex>
-
-
                 </SideContentLayout>
-            </Flex >
-
-
-        </DefaultLayout >
-
+            </Flex>
+        </DefaultLayout>
     );
-}
+};
 
 export default Home;

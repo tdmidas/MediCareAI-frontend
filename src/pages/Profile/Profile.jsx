@@ -42,7 +42,9 @@ const Profile = () => {
     const [userData, setUserData] = useState({
         displayName: '',
         photoURL: '',
-        bio: ''
+        bio: '',
+        age: ''
+
     });
 
     useEffect(() => {
@@ -58,7 +60,6 @@ const Profile = () => {
                 const response = await axios.post('https://medi-care-ai-backend-qjg1y3sxj-djais-projects.vercel.app/api/upload', formData, {
                     headers: {
                         'Content-Type': 'multipart/form-data',
-                        Authorization: `Bearer ${accessToken}`
                     }
                 });
                 setUploadedImageUrl(response.data.imageUrl);
@@ -91,24 +92,30 @@ const Profile = () => {
     };
 
     const onFinishProfile = async (values) => {
+        const age = parseInt(values.age);
+
+        // Check if age is a valid number
+        if (isNaN(age)) {
+            message.error('Please enter a valid age');
+            return;
+        }
         const updatedValues = {
             displayName: values.name,
+            age: age,
             photoURL: uploadedImageUrl || values.photoURL,
             bio: values.bio
         };
+        console.log("Sending updated values to backend:", updatedValues);
         try {
-            await axios.put(`https://medi-care-ai-backend-qjg1y3sxj-djais-projects.vercel.app/api/users/update-profile/${userId}`, updatedValues, {
-                headers: {
-                    Authorization: `Bearer ${accessToken}`
-                }
-            }
-            );
+            await axios.put(`https://medi-care-ai-backend-qjg1y3sxj-djais-projects.vercel.app/api/users/update-profile/${userId}`, updatedValues);
+
             if (updatedValues.displayName) {
                 localStorage.setItem('displayName', updatedValues.displayName);
             }
             if (updatedValues.photoURL) {
                 localStorage.setItem('photoURL', updatedValues.photoURL);
             }
+
             setUserData(updatedValues);
             message.success("Profile updated successfully");
         } catch (error) {
@@ -178,6 +185,22 @@ const Profile = () => {
 
                                         </div>
                                         <div className="form-item">
+                                            <label htmlFor="age" style={{ marginTop: 15 }}>Tuổi</label>
+                                            <Flex align='center'>
+                                                <Form.Item
+                                                    name="age"
+
+                                                >
+                                                    <Input id="age" style={{ width: '300px' }} disabled={!editingFields.age} className='form-input' />
+                                                </Form.Item>
+                                                <Button type="primary" onClick={() => toggleEditing("age")} className='form-btn'>Chỉnh sửa</Button>
+                                            </Flex>
+                                            <Text type="secondary">Tuổi của bạn sẽ giúp chúng tôi dự đoán sức khỏe tốt hơn. </Text>
+                                        </div>
+
+
+
+                                        <div className="form-item">
                                             <label htmlFor="email" style={{ marginTop: 15 }}>Email</label>
                                             <Flex align='center'>
                                                 <Form.Item
@@ -196,7 +219,7 @@ const Profile = () => {
                                                     <Input id="photoURL" style={{ width: '300px' }} disabled={!editingFields.photoURL} placeholder={uploadedImageUrl || photoURL} className='form-input' />
                                                     <Text type="secondary">Nên là ảnh vuông, chấp nhận các tệp: JPG, PNG hoặc GIF.</Text>
                                                 </Flex>
-                                                <img src={photoURL} alt="Profile" className="profile-photo" style={{ borderRadius: 50, width: 100, height: 100, marginRight: 10 }} />
+                                                <img src={uploadedImageUrl || photoURL} alt="Profile" className="profile-photo" style={{ borderRadius: 50, width: 100, height: 100, marginRight: 10 }} />
                                                 <Button type="primary" onClick={() => document.getElementById('avatar').click()} className='form-btn'>Upload</Button>
                                             </Flex>
 
