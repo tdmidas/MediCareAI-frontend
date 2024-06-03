@@ -39,7 +39,7 @@ const HealthEvaluate = () => {
     const fetchChatbotResponse = async (userInput) => {
         try {
             setChatbotLoading(true);
-            const response = await axios.post('https://medi-care-ai-backend-qjg1y3sxj-djais-projects.vercel.app/api/chat/message', { userInput });
+            const response = await axios.post('http://localhost:5000/api/chat/message', { userInput });
             setChatbotResponse(response.data.message);
             setChatbotLoading(false);
         } catch (error) {
@@ -69,7 +69,7 @@ const HealthEvaluate = () => {
     };
     const fetchBlogData = async (tag) => {
         try {
-            const response = await axios.get(`https://medi-care-ai-backend-qjg1y3sxj-djais-projects.vercel.app/api/blogs?tag=${tag}`);
+            const response = await axios.get(`http://localhost:5000/api/blogs?tag=${tag}`);
             setBlogData(response.data);
         } catch (error) {
             console.error("Error fetching blog data:", error);
