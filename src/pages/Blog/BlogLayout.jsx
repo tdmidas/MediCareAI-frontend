@@ -24,7 +24,7 @@ const BlogLayout = () => {
 
     const fetchData = async () => {
         try {
-            const response = await axios.get("http://localhost:5000/api/blogs");
+            const response = await axios.get("https://medi-care-ai-backend-qjg1y3sxj-djais-projects.vercel.app/api/blogs");
             setBlogData(response.data);
         } catch (error) {
             console.log("Error fetching data", error);
@@ -53,7 +53,7 @@ const BlogLayout = () => {
                 return;
             }
             try {
-                const response = await axios.get(`http://localhost:5000/api/comments/blog/${selectedBlog.blogId}`);
+                const response = await axios.get(`https://medi-care-ai-backend-qjg1y3sxj-djais-projects.vercel.app/api/comments/blog/${selectedBlog.blogId}`);
                 setComments(response.data);
             } catch (error) {
                 console.error("Error fetching comments:", error);
@@ -68,7 +68,7 @@ const BlogLayout = () => {
     const increaseLikes = async () => {
         if (!hasLiked) {
             setLikes(parseInt(likes) + 1);
-            await axios.put(`http://localhost:5000/api/blogs/like/${selectedBlog.blogId}`);
+            await axios.put(`https://medi-care-ai-backend-qjg1y3sxj-djais-projects.vercel.app/api/blogs/like/${selectedBlog.blogId}`);
             localStorage.setItem(`hasLiked_${selectedBlog.blogId}`, 'true');
             setHasLiked(true);
         }
@@ -86,7 +86,7 @@ const BlogLayout = () => {
         const photoURL = localStorage.getItem("photoURL");
         const displayName = localStorage.getItem("displayName");
         try {
-            const response = await axios.post("http://localhost:5000/api/comments", {
+            const response = await axios.post("https://medi-care-ai-backend-qjg1y3sxj-djais-projects.vercel.app/api/comments", {
                 blogId: selectedBlog.blogId,
                 userId: userId,
                 photoURL: photoURL,

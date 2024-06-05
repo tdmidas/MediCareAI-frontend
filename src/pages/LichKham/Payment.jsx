@@ -49,7 +49,7 @@ const Payment = ({ onNext, onPrev }) => {
         };
         localStorage.setItem('appointmentInfo', JSON.stringify(appointmentInfo));
         try {
-            await axios.post('https://medicareai-backend.onrender.com/api/appointments', appointmentInfo);
+            await axios.post('https://medi-care-ai-backend-qjg1y3sxj-djais-projects.vercel.app/api/appointments', appointmentInfo);
             message.success('Appointment created successfully');
             onNext(appointmentInfo);
         } catch (error) {
