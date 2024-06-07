@@ -19,13 +19,17 @@ const BlogLayout = () => {
     const [selectedBlog, setSelectedBlog] = useState({});
     const [commentContent, setCommentContent] = useState('');
     const [hasLiked, setHasLiked] = useState(false);
-
+    const [user, setUser] = useState({});
     const { slugName } = useParams(); // Extract slug from URL
 
     const fetchData = async () => {
         try {
-            const response = await axios.get("https://medi-care-ai-backend-qjg1y3sxj-djais-projects.vercel.app/api/blogs");
-            setBlogData(response.data);
+            const blogResponse = await axios.get("https://medi-care-ai-backend-qjg1y3sxj-djais-projects.vercel.app/api/blogs");
+            // user likedBlogs array
+            const userId = localStorage.getItem("userId");
+            const userResponse = await axios.get(`https://medi-care-ai-backend-qjg1y3sxj-djais-projects.vercel.app/api/users/${userId}`);
+            setUser(userResponse.data);
+            setBlogData(blogResponse.data);
         } catch (error) {
             console.log("Error fetching data", error);
         }
@@ -42,8 +46,11 @@ const BlogLayout = () => {
         if (selectedBlog) {
             setLikes(selectedBlog.likes);
             setComments(selectedBlog.comments || []);
-            const hasUserLiked = localStorage.getItem(`hasLiked_${selectedBlog.blogId}`);
-            setHasLiked(hasUserLiked === 'true');
+            // Check if user has liked the blog in user database likedBlogs array
+            if (user.likedBlogs && user.likedBlogs.includes(selectedBlog.blogId)) {
+                setHasLiked(true);
+            }
+
         }
     }, [slug, blogData]);
 
@@ -66,10 +73,12 @@ const BlogLayout = () => {
     }, [selectedBlog]);
 
     const increaseLikes = async () => {
+        const userId = localStorage.getItem("userId");
         if (!hasLiked) {
             setLikes(parseInt(likes) + 1);
-            await axios.put(`https://medi-care-ai-backend-qjg1y3sxj-djais-projects.vercel.app/api/blogs/like/${selectedBlog.blogId}`);
-            localStorage.setItem(`hasLiked_${selectedBlog.blogId}`, 'true');
+            await axios.put(`https://medi-care-ai-backend-qjg1y3sxj-djais-projects.vercel.app/api/blogs/like/${selectedBlog.blogId}`, {
+                userId: userId,
+            });
             setHasLiked(true);
         }
     };
@@ -120,7 +129,7 @@ const BlogLayout = () => {
                                 </div>
 
                                 <div style={{ display: 'flex', gap: '10px', justifyContent: 'center', alignItems: 'center' }}>
-                                    <Button className="like-btn" icon={<AiOutlineHeart />} onClick={increaseLikes} style={{ backgroundColor: hasLiked ? 'rgb(248, 93, 93)' : 'inherit' }}>
+                                    <Button className="like-btn" icon={<AiOutlineHeart />} onClick={increaseLikes} style={{ backgroundColor: hasLiked ? 'rgb(248, 93, 93)' : 'inherit', color: hasLiked ? 'white' : 'black' }}>
                                         {likes} Like
                                     </Button>
                                     <Button icon={<AiOutlineComment />} onClick={handleCommentVisible}>Comment</Button>

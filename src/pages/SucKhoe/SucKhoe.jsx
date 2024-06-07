@@ -94,7 +94,8 @@ const SucKhoe = () => {
                     case "Cholesterol":
                         return {
                             ...item,
-                            value: cholesterol_response.data.totChol
+                            value: cholesterol_response.data.totalCholesterol
+
                         };
                     default:
                         return item;
