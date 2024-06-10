@@ -14,7 +14,7 @@ const BookAppointment = ({ doctor }) => {
     useEffect(() => {
         const fetchDoctorDetails = async () => {
             try {
-                const response = await axios.get(`http://medicare-ai-backend-env.eba-wt2prnnx.ap-southeast-1.elasticbeanstalk.com/api/doctors/${doctor.doctorId}`);
+                const response = await axios.get(`https://tdmidas.id.vn/api/doctors/${doctor.doctorId}`);
                 setAvailableTimes(response.data.availableTimes);
                 setLoading(false);
             } catch (error) {

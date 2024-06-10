@@ -24,7 +24,7 @@ const DoctorDetail = () => {
 
     const fetchData = async () => {
         try {
-            const response = await axios.get(`http://medicare-ai-backend-env.eba-wt2prnnx.ap-southeast-1.elasticbeanstalk.com/api/doctors`);
+            const response = await axios.get(`https://tdmidas.id.vn/api/doctors`);
             setDoctors(response.data);
         } catch (error) {
             console.log("Error fetching data", error);
@@ -34,7 +34,7 @@ const DoctorDetail = () => {
 
     const fetchReviews = async () => {
         try {
-            const response = await axios.get(`http://medicare-ai-backend-env.eba-wt2prnnx.ap-southeast-1.elasticbeanstalk.com/api/reviews/${doctor.doctorId}`,);
+            const response = await axios.get(`https://tdmidas.id.vn/api/reviews/${doctor.doctorId}`,);
             setReviews(response.data);
         } catch (error) {
             console.log("Error fetching reviews data", error);
@@ -75,7 +75,7 @@ const DoctorDetail = () => {
                 content: reviewContent,
             };
 
-            await axios.post('http://medicare-ai-backend-env.eba-wt2prnnx.ap-southeast-1.elasticbeanstalk.com/api/reviews/', reviewData);
+            await axios.post('https://tdmidas.id.vn/api/reviews/', reviewData);
             message.success('Review submitted successfully');
             setReviewContent('');
             setRating(0);

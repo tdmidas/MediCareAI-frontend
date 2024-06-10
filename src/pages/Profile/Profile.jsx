@@ -57,7 +57,7 @@ const Profile = () => {
             formData.append('image', e.target.files[0]);
 
             try {
-                const response = await axios.post('http://medicare-ai-backend-env.eba-wt2prnnx.ap-southeast-1.elasticbeanstalk.com/api/upload', formData, {
+                const response = await axios.post('https://tdmidas.id.vn/api/upload', formData, {
                     headers: {
                         'Content-Type': 'multipart/form-data',
                     }
@@ -107,7 +107,7 @@ const Profile = () => {
         };
         console.log("Sending updated values to backend:", updatedValues);
         try {
-            await axios.put(`http://medicare-ai-backend-env.eba-wt2prnnx.ap-southeast-1.elasticbeanstalk.com/api/users/update-profile/${userId}`, updatedValues);
+            await axios.put(`https://tdmidas.id.vn/api/users/update-profile/${userId}`, updatedValues);
 
             if (updatedValues.displayName) {
                 localStorage.setItem('displayName', updatedValues.displayName);
@@ -141,7 +141,7 @@ const Profile = () => {
 
 
         try {
-            await axios.put(`http://medicare-ai-backend-env.eba-wt2prnnx.ap-southeast-1.elasticbeanstalk.com/api/users/update-password/${userId}`, passwordData, {
+            await axios.put(`https://tdmidas.id.vn/api/users/update-password/${userId}`, passwordData, {
                 headers: {
                     Authorization: `Bearer ${accessToken}`
                 }

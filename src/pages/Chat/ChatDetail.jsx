@@ -56,7 +56,7 @@ const ChatDetail = () => {
         setLoading(true);
 
         try {
-            const response = await axios.post('http://medicare-ai-backend-env.eba-wt2prnnx.ap-southeast-1.elasticbeanstalk.com/api/chat/message', { userInput });
+            const response = await axios.post('https://tdmidas.id.vn/api/chat/message', { userInput });
             const { message: botResponse } = response.data;
             const updatedMessagesWithBot = [...updatedMessages, { sender: chatbot.name, content: botResponse }];
             setMessages(updatedMessagesWithBot);
@@ -94,7 +94,7 @@ const ChatDetail = () => {
         setMessages(updatedMessages);
         setLoading(true);
         try {
-            const response = await axios.post('http://medicare-ai-backend-env.eba-wt2prnnx.ap-southeast-1.elasticbeanstalk.com/api/chat/message', { userInput: buttonName });
+            const response = await axios.post('https://tdmidas.id.vn/api/chat/message', { userInput: buttonName });
             const { message: botResponse } = response.data;
             const updatedMessagesWithBot = [...messages, { sender: chatbot.name, content: botResponse }];
             setMessages(updatedMessagesWithBot);

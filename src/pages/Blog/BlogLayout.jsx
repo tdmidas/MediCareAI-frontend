@@ -24,10 +24,10 @@ const BlogLayout = () => {
 
     const fetchData = async () => {
         try {
-            const blogResponse = await axios.get("http://medicare-ai-backend-env.eba-wt2prnnx.ap-southeast-1.elasticbeanstalk.com/api/blogs");
+            const blogResponse = await axios.get("https://tdmidas.id.vn/api/blogs");
             // user likedBlogs array
             const userId = localStorage.getItem("userId");
-            const userResponse = await axios.get(`http://medicare-ai-backend-env.eba-wt2prnnx.ap-southeast-1.elasticbeanstalk.com/api/users/${userId}`);
+            const userResponse = await axios.get(`https://tdmidas.id.vn/api/users/${userId}`);
             setUser(userResponse.data);
             setBlogData(blogResponse.data);
         } catch (error) {
@@ -60,7 +60,7 @@ const BlogLayout = () => {
                 return;
             }
             try {
-                const response = await axios.get(`http://medicare-ai-backend-env.eba-wt2prnnx.ap-southeast-1.elasticbeanstalk.com/api/comments/blog/${selectedBlog.blogId}`);
+                const response = await axios.get(`https://tdmidas.id.vn/api/comments/blog/${selectedBlog.blogId}`);
                 setComments(response.data);
             } catch (error) {
                 console.error("Error fetching comments:", error);
@@ -76,7 +76,7 @@ const BlogLayout = () => {
         const userId = localStorage.getItem("userId");
         if (!hasLiked) {
             setLikes(parseInt(likes) + 1);
-            await axios.put(`http://medicare-ai-backend-env.eba-wt2prnnx.ap-southeast-1.elasticbeanstalk.com/api/blogs/like/${selectedBlog.blogId}`, {
+            await axios.put(`https://tdmidas.id.vn/api/blogs/like/${selectedBlog.blogId}`, {
                 userId: userId,
             });
             setHasLiked(true);
@@ -95,7 +95,7 @@ const BlogLayout = () => {
         const photoURL = localStorage.getItem("photoURL");
         const displayName = localStorage.getItem("displayName");
         try {
-            const response = await axios.post("http://medicare-ai-backend-env.eba-wt2prnnx.ap-southeast-1.elasticbeanstalk.com/api/comments", {
+            const response = await axios.post("https://tdmidas.id.vn/api/comments", {
                 blogId: selectedBlog.blogId,
                 userId: userId,
                 photoURL: photoURL,

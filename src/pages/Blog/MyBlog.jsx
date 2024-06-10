@@ -23,7 +23,7 @@ const MyBlog = () => {
         try {
             setLoading(true);
             const userId = localStorage.getItem('userId');
-            const response = await axios.get(`http://medicare-ai-backend-env.eba-wt2prnnx.ap-southeast-1.elasticbeanstalk.com/api/blogs/my/${userId}`);
+            const response = await axios.get(`https://tdmidas.id.vn/api/blogs/my/${userId}`);
             setPostData(response.data);
             setLoading(false);
         } catch (error) {

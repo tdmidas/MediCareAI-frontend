@@ -54,9 +54,9 @@ const CustomHeader = ({ toggleDrawer, submitHandler }) => {
             try {
                 const userId = localStorage.getItem('userId');
                 const responses = await Promise.all([
-                    fetch(`http://medicare-ai-backend-env.eba-wt2prnnx.ap-southeast-1.elasticbeanstalk.com/api/health/bmi/${userId}`),
-                    fetch(`http://medicare-ai-backend-env.eba-wt2prnnx.ap-southeast-1.elasticbeanstalk.com/api/health/glucose/${userId}`),
-                    fetch(`http://medicare-ai-backend-env.eba-wt2prnnx.ap-southeast-1.elasticbeanstalk.com/api/health/bloodPressure/${userId}`),
+                    fetch(`https://tdmidas.id.vn/api/health/bmi/${userId}`),
+                    fetch(`https://tdmidas.id.vn/api/health/glucose/${userId}`),
+                    fetch(`https://tdmidas.id.vn/api/health/bloodPressure/${userId}`),
                 ]);
 
                 const notifications = [];
@@ -112,8 +112,8 @@ const CustomHeader = ({ toggleDrawer, submitHandler }) => {
             if (searchQuery.trim() !== '') { // Check if searchQuery is not empty
                 const doctorType = 'doctor';
                 const blogType = 'blog';
-                const doctorResponse = await axios.get(`http://medicare-ai-backend-env.eba-wt2prnnx.ap-southeast-1.elasticbeanstalk.com/api/search?type=${doctorType}&query=${searchQuery}`);
-                const blogResponse = await axios.get(`http://medicare-ai-backend-env.eba-wt2prnnx.ap-southeast-1.elasticbeanstalk.com/api/search?type=${blogType}&query=${searchQuery}`);
+                const doctorResponse = await axios.get(`https://tdmidas.id.vn/api/search?type=${doctorType}&query=${searchQuery}`);
+                const blogResponse = await axios.get(`https://tdmidas.id.vn/api/search?type=${blogType}&query=${searchQuery}`);
                 setDoctorData(doctorResponse.data);
                 setBlogData(blogResponse.data);
             } else {

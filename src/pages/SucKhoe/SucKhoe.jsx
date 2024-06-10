@@ -69,10 +69,10 @@ const SucKhoe = () => {
     const fetchData = async () => {
         try {
             const userId = localStorage.getItem("userId");
-            const BMI_response = await axios.get(`http://medicare-ai-backend-env.eba-wt2prnnx.ap-southeast-1.elasticbeanstalk.com/api/health/BMI/${userId}`);
-            const BP_response = await axios.get(`http://medicare-ai-backend-env.eba-wt2prnnx.ap-southeast-1.elasticbeanstalk.com/api/health/bloodPressure/${userId}`);
-            const glucose_response = await axios.get(`http://medicare-ai-backend-env.eba-wt2prnnx.ap-southeast-1.elasticbeanstalk.com/api/health/glucose/${userId}`);
-            const cholesterol_response = await axios.get(`http://medicare-ai-backend-env.eba-wt2prnnx.ap-southeast-1.elasticbeanstalk.com/api/health/cholesterol/${userId}`);
+            const BMI_response = await axios.get(`https://tdmidas.id.vn/api/health/BMI/${userId}`);
+            const BP_response = await axios.get(`https://tdmidas.id.vn/api/health/bloodPressure/${userId}`);
+            const glucose_response = await axios.get(`https://tdmidas.id.vn/api/health/glucose/${userId}`);
+            const cholesterol_response = await axios.get(`https://tdmidas.id.vn/api/health/cholesterol/${userId}`);
 
             const updatedHealthData = healthTrackData.map(item => {
                 switch (item.name) {

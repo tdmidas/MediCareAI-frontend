@@ -70,7 +70,7 @@ const WriteBlog = () => {
         };
 
         try {
-            const response = await axios.post('http://medicare-ai-backend-env.eba-wt2prnnx.ap-southeast-1.elasticbeanstalk.com/api/blogs/', blogData);
+            const response = await axios.post('https://tdmidas.id.vn/api/blogs/', blogData);
             console.log('Blog submitted successfully:', response.data);
             message.success("Blog submitted successfully!");
             setTitle('');
@@ -97,7 +97,7 @@ const WriteBlog = () => {
             formData.append('image', e.target.files[0]);
 
             try {
-                const response = await axios.post('http://medicare-ai-backend-env.eba-wt2prnnx.ap-southeast-1.elasticbeanstalk.com/api/upload', formData);
+                const response = await axios.post('https://tdmidas.id.vn/api/upload', formData);
                 setBlogImageUrl(response.data.imageUrl);
                 message.success("Image uploaded successfully");
             } catch (error) {
@@ -110,7 +110,7 @@ const WriteBlog = () => {
     const handleGenerateClick = async () => {
         setLoading(true);
         try {
-            const response = await axios.post('http://medicare-ai-backend-env.eba-wt2prnnx.ap-southeast-1.elasticbeanstalk.com/api/chat/message/blog', { userInput: textInput });
+            const response = await axios.post('https://tdmidas.id.vn/api/chat/message/blog', { userInput: textInput });
             const { title, content } = response.data;
             setTitle(title);
             setContent(content);

@@ -19,7 +19,7 @@ const AppointmentDetail = () => {
     const fetchAppointment = async () => {
         try {
             const userId = localStorage.getItem('userId');
-            const response = await axios.get(`http://medicare-ai-backend-env.eba-wt2prnnx.ap-southeast-1.elasticbeanstalk.com/api/appointments/my/${userId}`);
+            const response = await axios.get(`https://tdmidas.id.vn/api/appointments/my/${userId}`);
             setAppointments(response.data);
         } catch (error) {
             console.error('Error fetching appointments:', error);

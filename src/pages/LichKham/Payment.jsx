@@ -49,7 +49,7 @@ const Payment = ({ onNext, onPrev }) => {
         };
         localStorage.setItem('appointmentInfo', JSON.stringify(appointmentInfo));
         try {
-            await axios.post('http://medicare-ai-backend-env.eba-wt2prnnx.ap-southeast-1.elasticbeanstalk.com/api/appointments', appointmentInfo);
+            await axios.post('https://tdmidas.id.vn/api/appointments', appointmentInfo);
             message.success('Appointment created successfully');
             onNext(appointmentInfo);
         } catch (error) {
