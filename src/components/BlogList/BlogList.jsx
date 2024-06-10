@@ -12,7 +12,7 @@ const BLogList = () => {
     const [BlogData, setBlogData] = useState([]);
     const fetchData = async () => {
         try {
-            const response = await axios.get("https://medi-care-ai-backend-qjg1y3sxj-djais-projects.vercel.app/api/blogs");
+            const response = await axios.get("http://medicare-ai-backend-env.eba-wt2prnnx.ap-southeast-1.elasticbeanstalk.com/api/blogs");
             setBlogData(response.data);
         }
         catch (error) {

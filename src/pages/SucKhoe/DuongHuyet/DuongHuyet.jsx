@@ -59,7 +59,7 @@ const DuongHuyet = () => {
         setBloodSugarClassification(classification);
         setBloodSugarColor(color);
         const userId = localStorage.getItem("userId");
-        await axios.post(`https://medi-care-ai-backend-qjg1y3sxj-djais-projects.vercel.app/api/health/glucose/${userId}`, {
+        await axios.post(`http://medicare-ai-backend-env.eba-wt2prnnx.ap-southeast-1.elasticbeanstalk.com/api/health/glucose/${userId}`, {
             glucose: parseFloat(glucose),
             status: classification,
         });

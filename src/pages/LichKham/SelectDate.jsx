@@ -20,7 +20,7 @@ const SelectDate = ({ onNext }) => {
     useEffect(() => {
         const fetchDoctors = async () => {
             try {
-                const response = await axios.get(`https://medi-care-ai-backend-qjg1y3sxj-djais-projects.vercel.app/api/doctors/`);
+                const response = await axios.get(`http://medicare-ai-backend-env.eba-wt2prnnx.ap-southeast-1.elasticbeanstalk.com/api/doctors/`);
                 setAvailableDoctors(response.data);
             } catch (error) {
                 console.error('Error fetching doctors:', error);

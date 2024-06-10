@@ -45,7 +45,7 @@ const Cholesterol = () => {
         setCholesterolClassification(classification);
         setCholesterolColor(color);
         const userId = localStorage.getItem("userId");
-        await axios.post(`https://medi-care-ai-backend-qjg1y3sxj-djais-projects.vercel.app/api/health/cholesterol/${userId}`, {
+        await axios.post(`http://medicare-ai-backend-env.eba-wt2prnnx.ap-southeast-1.elasticbeanstalk.com/api/health/cholesterol/${userId}`, {
             totalCholesterol: parseFloat(totalCholesterol),
             hdlCholesterol: parseFloat(hdlCholesterol),
             ldlCholesterol: parseFloat(ldlCholesterol),

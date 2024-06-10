@@ -26,7 +26,7 @@ const Home = () => {
     const fetchAppointment = async () => {
         try {
             const userId = localStorage.getItem('userId');
-            const response = await axios.get(`https://medi-care-ai-backend-qjg1y3sxj-djais-projects.vercel.app/api/appointments/my/${userId}`);
+            const response = await axios.get(`http://medicare-ai-backend-env.eba-wt2prnnx.ap-southeast-1.elasticbeanstalk.com/api/appointments/my/${userId}`);
             setAppointments(response.data);
         } catch (error) {
             console.error('Error fetching appointments:', error);
@@ -36,7 +36,7 @@ const Home = () => {
     const checkBirthdate = async () => {
         try {
             const userId = localStorage.getItem('userId');
-            const response = await axios.get(`https://medi-care-ai-backend-qjg1y3sxj-djais-projects.vercel.app/api/users/${userId}`);
+            const response = await axios.get(`http://medicare-ai-backend-env.eba-wt2prnnx.ap-southeast-1.elasticbeanstalk.com/api/users/${userId}`);
             if (!response.data.age) {
                 setIsModalVisible(true);
             }

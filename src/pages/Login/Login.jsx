@@ -41,7 +41,7 @@ const Login = () => {
 			await signInWithEmailAndPassword(auth, data.email, data.password);
 			notify("You logged in to your account successfully", "success");
 			//store accessToken
-			const response = await axios.post(`https://medi-care-ai-backend-qjg1y3sxj-djais-projects.vercel.app/api/auth/login`, {
+			const response = await axios.post(`http://medicare-ai-backend-env.eba-wt2prnnx.ap-southeast-1.elasticbeanstalk.com/api/auth/login`, {
 				email: data.email,
 				password: data.password,
 			});

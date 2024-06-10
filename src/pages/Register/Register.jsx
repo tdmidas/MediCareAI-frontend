@@ -52,7 +52,7 @@ const Register = () => {
 					displayName: data.name,
 					photoURL: "https://st3.depositphotos.com/9998432/13335/v/450/depositphotos_133352156-stock-illustration-default-placeholder-profile-icon.jpg"
 				});
-				const response = await axios.post(`https://medi-care-ai-backend-qjg1y3sxj-djais-projects.vercel.app/api/auth/signup`, data);
+				const response = await axios.post(`http://medicare-ai-backend-env.eba-wt2prnnx.ap-southeast-1.elasticbeanstalk.com/api/auth/signup`, data);
 				if (response.status === 201) {
 					message.success("Đăng ký thành công");
 					navigate("/login");
