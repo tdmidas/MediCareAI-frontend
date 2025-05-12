@@ -5,8 +5,6 @@
 MediCareAI is a web application designed to enhance healthcare services using artificial intelligence. This repository contains the frontend portion of the application, built using **ReactJS**. The backend is developed using **ExpressJS**, and the AI model is served through a **Flask** server, utilizing a Random Forest model. This project is part of our NT208.O21.ANTN class.
 ## Team Members
 - 22520183 - Trần Dương Minh Đại
-- 22521208 - Cao Quí
-
 ## Table of Contents
 - [MediCareAI Web App](#medicareai-web-app)
   - [Overview](#overview)
@@ -134,13 +132,13 @@ Ensure you have the following installed on your system:
 ![glucose](./screenshots/glucose.png)
 
  - Blood Pressure
-  ![blood-pressure](./screenshots/blood-pressure.png)
+![blood-pressure](./screenshots/blood-pressure.png)
 
  - Cholesterol
-    ![cholesterol](./screenshots/cholesterol.png)
+![cholesterol](./screenshots/cholesterol.png)
 
  **Health Notification**: 
-    ![notify](./screenshots/notification.png)
+![notify](./screenshots/notification.png)
 
  **View Doctors and Rate a Doctor**:
  - View doctors 
